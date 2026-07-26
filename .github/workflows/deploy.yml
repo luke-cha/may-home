@@ -31,13 +31,23 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Trim non-web source documents from the artifact
+        run: find dist -type f \( -name '*.docx' -o -name '*.pdf' -o -name '*.txt' \) -delete
+
       - name: Disable Jekyll processing
         run: touch dist/.nojekyll
 
       - name: Add SPA fallback
         run: cp dist/index.html dist/404.html
 
+      - name: Report artifact size
+        run: du -sh dist && find dist -type f | wc -l
+
       - uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on automatically so the first run does not fail with
+          # "Get Pages site failed".
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
