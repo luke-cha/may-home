@@ -1,0 +1,133 @@
+/* Final parity layer derived from mayfleur-standalone.html.
+   This file intentionally loads last and mirrors the mockup's tokens,
+   typography, spacing, and responsive breakpoints. */
+:root{
+  --bg:#f7f4ec;--surface:#efeadc;--text:#2a2521;--accent:#4a4139;
+  --accent-2:#8a7256;--divider:color-mix(in srgb,#2a2521 13%,transparent);
+  --serif:"Cormorant Garamond","Source Serif 4",serif;
+  --body:"Source Serif 4",Georgia,serif;
+}
+body{font-family:var(--body);font-size:15px;line-height:1.55;font-weight:400;color:var(--text)}
+h1,h2,h3,h4,h5,h6{font-family:var(--serif);font-weight:500;letter-spacing:-.015em}
+a{color:#5f5d3d}a:hover{color:var(--accent-2)}
+.container,.page-head{width:min(1192px,calc(100% - clamp(40px,10vw,88px)))}
+.eyebrow{font-family:var(--body);font-size:11px;line-height:1.4;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+
+/* Shared header */
+.site-header{height:74px;padding:0;display:block;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
+.header-inner{max-width:1280px;height:74px;margin:0 auto;padding:0 clamp(20px,5vw,44px);display:flex;align-items:center;gap:24px}
+.header-inner .wordmark{font-family:var(--serif);font-weight:500;font-size:27px;letter-spacing:.22em;color:var(--text);margin-right:auto;line-height:1}
+.desktop-nav{margin:0;gap:clamp(14px,1.6vw,26px)}
+.desktop-nav a{font-family:var(--body);font-size:14px;line-height:1.55;letter-spacing:.02em;color:var(--text);padding:0;white-space:nowrap}
+.desktop-nav a::after{display:none}.desktop-nav a.active{color:var(--accent)}
+.language{margin:0;padding-left:14px;border-left:1px solid var(--divider);gap:9px}
+.language button{font-family:var(--body);font-size:12px;letter-spacing:.1em;padding:2px;background:none;color:rgba(42,37,33,.5)}
+.language button.active{color:var(--accent);font-weight:600}.language i{width:auto;height:auto;background:none;color:var(--divider);font-style:normal}
+.menu-button{width:42px;height:42px;align-items:center;justify-content:center;background:transparent;border:1px solid var(--divider);border-radius:2px;padding:10px;color:var(--text)}
+.menu-button span{width:18px;height:1px;margin:4px auto;background:currentColor}
+
+/* Shared buttons and fields */
+.button{font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:11.5px;border-radius:2px;padding:15px 26px;line-height:1}
+.button.primary{background:#dbd0b6;color:#2a2521;border-color:rgba(42,37,33,.22)}
+.button.ghost{border:1px solid var(--divider);color:var(--text)}
+.text-link{font-family:var(--body);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);padding-bottom:0;border:0}
+
+/* Shared page heading; page-specific values below follow the mockup inline CSS. */
+.page-head{border:0;padding-top:clamp(56px,8vw,104px);padding-bottom:clamp(28px,4vw,44px)}
+.page-head .eyebrow{font-size:12px;letter-spacing:.28em;margin-bottom:16px}
+.page-head h1{font-size:clamp(28px,3.4vw,42px);line-height:.98;letter-spacing:0;margin:0 0 18px}
+.page-head p{font-family:var(--body);font-size:16px;line-height:1.75;color:rgba(42,37,33,.72);margin:0;max-width:620px}
+.page-head .page-note{font-size:13px;line-height:1.55;letter-spacing:.02em;color:rgba(42,37,33,.5);margin-top:8px}
+
+/* Home */
+.home-hero{padding-top:clamp(40px,5.5vw,72px)}
+.home-kicker{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.3em;text-transform:uppercase;color:rgba(42,37,33,.62);margin-bottom:16px}
+.home-hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.8vw,66px);line-height:.98;letter-spacing:-.01em;margin:0}
+.home-hero>p{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2vw,26px);line-height:1.55;color:rgba(42,37,33,.72);margin:12px 0 0}
+.home-portrait{max-width:620px;margin-top:clamp(24px,3vw,36px)}.home-portrait img{aspect-ratio:3/4}
+.home-works{padding-top:clamp(64px,9vw,120px);padding-bottom:clamp(64px,9vw,120px)}
+.home-introduction .eyebrow{font-size:12px;letter-spacing:.28em;margin-bottom:22px}
+.home-introduction p{font-family:var(--serif);font-size:clamp(17px,1.6vw,21px);line-height:1.45;color:var(--text)}
+.preview-head h2{font-size:clamp(20px,2.1vw,26px);line-height:1.12;letter-spacing:-.015em}
+.preview-head a{font-family:var(--body);font-size:11.5px;letter-spacing:.16em;color:var(--accent)}
+.home-contact h2{font-size:clamp(20px,2vw,25px);line-height:1.12}.home-contact p{font-size:14.5px;line-height:1.55}
+
+/* Shop */
+.shop-page .page-head{padding-bottom:clamp(28px,4vw,48px)}
+.shop-page .page-head h1{font-size:clamp(24px,2.7vw,33px)}
+.shop-layout{padding-top:clamp(20px,3vw,36px);padding-bottom:clamp(56px,8vw,104px);gap:clamp(24px,4vw,56px)}
+.shop-filter{flex:0 0 200px;min-width:170px;top:98px}
+.shop-filter>.eyebrow{font-size:11px;letter-spacing:.2em;color:rgba(42,37,33,.5);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--divider)}
+.shop-filter button{font-family:var(--body);font-size:15px;line-height:1.55;letter-spacing:.01em;padding:9px 0;color:rgba(42,37,33,.68);font-weight:400}
+.shop-filter button.active{color:var(--accent);font-weight:600}
+.product-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(16px,2.4vw,34px)}
+.card-media{margin-bottom:11px}.card-kicker{font-family:var(--body);font-size:10.5px;line-height:1.55;letter-spacing:.2em;color:var(--accent);margin-bottom:6px}
+.product-card h3{font-family:var(--serif);font-weight:500;font-size:18px;line-height:1.15;letter-spacing:-.015em;margin:0 0 3px}
+.product-card p{font-family:var(--body);font-size:12.5px;line-height:1.55;color:rgba(42,37,33,.62);margin:0}
+.custom-order h2{font-size:clamp(24px,2.7vw,33px);line-height:1.06;letter-spacing:-.015em}.custom-order p{line-height:1.55;color:rgba(42,37,33,.68)}
+.fresh-collection h2{font-size:clamp(24px,2.7vw,33px);line-height:1.12}.fresh-collection p{line-height:1.55}
+.detail-copy .eyebrow{font-size:11px;letter-spacing:.2em}.detail-copy h1{font-size:clamp(26px,3vw,38px);line-height:1;letter-spacing:-.015em}.detail-copy>p:not(.detail-price){font-size:16px;line-height:1.7}
+
+/* About */
+.about-banner{padding-top:clamp(32px,4vw,52px)}
+.about-page .page-head{padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(28px,3.5vw,44px)}
+.about-page .page-head h1{font-size:clamp(28px,3.4vw,42px);margin-bottom:24px}
+.about-page .page-head p{font-size:16px;line-height:1.75;max-width:620px}
+.about-story-photos{gap:clamp(14px,2vw,24px);padding-bottom:clamp(48px,6vw,80px)}
+.philosophy .eyebrow{font-size:12px;letter-spacing:.28em;margin-bottom:20px}.philosophy p{font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);line-height:1.34;letter-spacing:-.015em}
+.profile{padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(64px,9vw,120px)}
+.profile-role{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.24em}.profile-copy h2{font-size:clamp(22px,2.3vw,28px);line-height:1.1}
+.credentials h3{font-size:11px;line-height:1.55;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}.credentials p{font-size:15.5px;line-height:1.65;color:rgba(42,37,33,.84)}
+
+/* Gallery — four columns requested after mockup parity. */
+.filter-chips{padding-bottom:clamp(24px,3vw,40px);gap:10px}
+.filter-chips button{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.06em;text-transform:uppercase;padding:9px 16px;border-radius:2px;color:rgba(42,37,33,.72)}
+.filter-chips button.active{background:var(--accent);color:#fbf8f1}
+@media(min-width:1101px){.masonry{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,22px)}}
+
+/* Portfolio */
+.portfolio-page .page-head{padding-bottom:56px}.portfolio-page .page-head h1{margin:0}
+.portfolio-list{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:clamp(18px,2.6vw,34px);padding-bottom:clamp(64px,9vw,120px)}
+.project-card h2{font-family:var(--serif);font-weight:500;font-size:19px;line-height:1.15;letter-spacing:-.015em;margin:14px 0 4px}
+.project-card>span{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.06em;color:var(--accent)}
+.project-detail .back{font-family:var(--body);font-size:13px;letter-spacing:.04em;color:rgba(42,37,33,.66)}
+.project-feature h1{font-size:clamp(26px,3vw,38px);line-height:1.04}.project-feature p{font-family:var(--body);font-size:16px;line-height:1.75}
+
+/* Services */
+.services-page .page-head{padding-bottom:clamp(28px,4vw,44px)}
+.services-page .page-head h1{margin:0}
+.service{padding:clamp(40px,5vw,64px) 0;gap:clamp(28px,4vw,60px);border-top:1px solid var(--divider);border-bottom:0}
+.service-heading{gap:14px;margin-bottom:16px}.service-no{font-family:var(--serif);font-size:24px;line-height:1.55;color:var(--accent)}
+.service-copy .service-heading h2{font-family:var(--serif);font-weight:500;font-size:clamp(23px,2.5vw,31px);line-height:1;letter-spacing:-.015em}
+.service-copy>p{font-family:var(--body);font-size:16px;line-height:1.75;color:rgba(42,37,33,.74);margin-bottom:22px}
+.service-list-title{display:block;font-family:var(--body);font-size:11px;line-height:1.55;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.service-list{gap:7px;margin:0 0 22px}.service-list span{font-family:var(--body);font-size:15.5px;line-height:1.6;color:rgba(42,37,33,.84);padding:0;border:0}
+.service-images{gap:clamp(10px,1.4vw,16px)}
+
+/* Books */
+.books-page .page-head,.books-page .books,.contact-page .page-head,.contact-page .contact-grid{width:min(992px,calc(100% - clamp(40px,10vw,88px)))}
+.books-page .page-head{padding-bottom:clamp(28px,4vw,44px)}.books-page .page-head h1{margin:0}
+.books article{display:flex;min-height:0;gap:clamp(20px,3vw,36px);padding:clamp(22px,3vw,32px) 0}
+.book-cover{flex:0 0 210px;max-width:210px}.books article>div:last-child{flex:1 1 300px;min-width:240px;padding-top:6px}
+.books .eyebrow{font-size:11px;letter-spacing:.2em;margin-bottom:8px}.books h2{font-size:21px;line-height:1.15;margin-bottom:14px}
+
+/* Contact */
+.contact-page .page-head{padding-top:clamp(56px,8vw,104px);padding-bottom:clamp(40px,5vw,64px)}
+.contact-page .page-head h1{font-size:clamp(24px,2.7vw,33px);line-height:.98;margin-bottom:16px}.contact-page .page-head p{font-size:14.5px;line-height:1.7;max-width:480px}
+.contact-grid{gap:clamp(36px,5vw,72px);padding-bottom:clamp(64px,9vw,120px)}
+.contact-grid form{gap:20px}.contact-grid label,.contact-grid legend{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:0;text-transform:none;color:rgba(42,37,33,.7)}
+.contact-grid input,.contact-grid textarea{font-family:var(--body);font-size:14px;line-height:1.55;min-height:36px;padding:6px 10px;background:#fbf8f1;border:1px solid var(--divider);border-radius:2px}
+.contact-grid textarea{min-height:130px;height:130px}.type-buttons{gap:8px;margin-top:2px}.type-buttons button{font-family:var(--body);font-size:13px;line-height:1.55;letter-spacing:.02em;padding:10px 16px;border-radius:2px}
+.contact-grid aside>.eyebrow{font-size:11px;letter-spacing:.2em;margin-bottom:20px}.contact-grid aside>div{padding:0;border:0;margin-bottom:18px}.contact-grid aside small{font-family:var(--body);font-size:11px;line-height:1.55;letter-spacing:.14em;margin-bottom:4px}.contact-grid aside a,.contact-grid aside div>span{font-family:var(--serif);font-size:24px;line-height:1.55}
+
+/* Footer */
+footer{font-family:var(--body)}.footer-main{padding-top:clamp(56px,8vw,96px);padding-bottom:40px}.footer-main .wordmark{font-size:22px;letter-spacing:.22em}.footer-tag{font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.55}.footer-main small{font-size:13px}.footer-main .eyebrow{font-size:11px;letter-spacing:.2em;margin-bottom:16px}.footer-main nav{font-size:14px;line-height:1.55;gap:8px}.copyright{font-size:12px;line-height:1.55;padding-top:22px;padding-bottom:22px}
+
+@media(max-width:920px){.desktop-nav,.language{display:none}.menu-button{display:block;margin-left:auto}.header-inner{padding-inline:clamp(20px,6vw,44px)}}
+@media(max-width:760px){
+  .container,.page-head,.footer-main,.books-page .page-head,.books-page .books,.contact-page .page-head,.contact-page .contact-grid{width:calc(100% - 40px)}
+  .shop-layout{display:block}.shop-filter{position:static;width:100%;margin-bottom:28px}
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .portfolio-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .books article{display:grid;grid-template-columns:120px 1fr}.book-cover{max-width:none}
+}
