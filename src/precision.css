@@ -26,6 +26,17 @@ a{color:#5f5d3d}a:hover{color:var(--accent-2)}
 .menu-button{width:42px;height:42px;align-items:center;justify-content:center;background:transparent;border:1px solid var(--divider);border-radius:2px;padding:10px;color:var(--text)}
 .menu-button span{width:18px;height:1px;margin:4px auto;background:currentColor}
 
+/* Mobile menu overlay, matching the mockup's inline styles. */
+.mobile-menu{inset:0;z-index:60;display:flex;flex-direction:column;background:var(--bg);padding:24px clamp(20px,6vw,44px)}
+.mobile-top{height:26px;align-items:center}
+.mobile-top .wordmark{font-family:var(--serif);font-size:24px;font-weight:500;letter-spacing:.22em;line-height:1;margin-right:auto}
+.mobile-top button{width:42px;height:42px;font:20px/1 var(--body);background:transparent;border:1px solid var(--divider);border-radius:2px;color:var(--text)}
+.mobile-menu nav{display:flex;flex-direction:column;gap:4px;margin-top:34px;border-top:0}
+.mobile-menu nav a{display:block;font-family:var(--serif);font-size:34px;font-weight:500;line-height:1.55;letter-spacing:0;color:var(--text);padding:8px 0;border-bottom:1px solid var(--divider)}
+.mobile-language{display:flex;gap:12px;margin-top:34px}
+.mobile-language button,.mobile-language span{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.14em;text-transform:uppercase}
+.mobile-language button{padding:0;color:rgba(42,37,33,.5)}.mobile-language button.active{color:var(--accent);font-weight:600}.mobile-language span{color:var(--divider)}
+
 /* Shared buttons and fields */
 .button{font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:11.5px;border-radius:2px;padding:15px 26px;line-height:1}
 .button.primary{background:#dbd0b6;color:#2a2521;border-color:rgba(42,37,33,.22)}

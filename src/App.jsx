@@ -130,7 +130,7 @@ function Header({ page, lang, setLang }) {
     </div></header>
     {open && <div className="mobile-menu">
       <div className="mobile-top"><span className="wordmark">MAYFLEUR</span><button onClick={() => setOpen(false)} aria-label="Close menu">×</button></div>
-      <nav>{NAV.map(([id, text], i) => <a key={id} href={`#${id}`}><small>0{i + 1}</small>{text}<span>↗</span></a>)}</nav>
+      <nav>{NAV.map(([id, text]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{text}</a>)}</nav>
       <div className="mobile-language"><button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>English</button><span>·</span><button className={lang === 'ko' ? 'active' : ''} onClick={() => setLang('ko')}>한국어</button></div>
     </div>}
   </>
