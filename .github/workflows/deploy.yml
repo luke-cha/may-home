@@ -43,9 +43,11 @@ jobs:
       - name: Report artifact size
         run: du -sh dist && find dist -type f | wc -l
 
-      # Pages must be switched on once under Settings -> Pages -> Source: GitHub Actions.
-      # Automatic enablement is not used because GITHUB_TOKEN cannot create a Pages site.
+      # The repository is public, so GITHUB_TOKEN may create the Pages site on
+      # the first run instead of requiring a manual Settings -> Pages change.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
