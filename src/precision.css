@@ -3,7 +3,10 @@
    typography, spacing, and responsive breakpoints. */
 :root{
   --bg:#f7f4ec;--surface:#efeadc;--text:#2a2521;--accent:#4a4139;
-  --accent-2:#8a7256;--divider:color-mix(in srgb,#2a2521 13%,transparent);
+  --accent-2:#8a7256;
+  /* rgba() first so Safari below 16.2 (no color-mix) still draws the dividers. */
+  --divider:rgba(42,37,33,.13);
+  --divider:color-mix(in srgb,#2a2521 13%,transparent);
   --serif:"Cormorant Garamond","Source Serif 4",serif;
   --body:"Source Serif 4",Georgia,serif;
 }
@@ -13,8 +16,17 @@ a{color:#5f5d3d}a:hover{color:var(--accent-2)}
 .container,.page-head{width:min(1192px,calc(100% - clamp(40px,10vw,88px)))}
 .eyebrow{font-family:var(--body);font-size:11px;line-height:1.4;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 
+/* iOS Safari resolves height:100% against an indefinite grid row, so images that
+   also declare aspect-ratio overflowed their cell and painted over nearby text
+   (most visibly on the Services page). Let the aspect ratio drive the height and
+   keep height:100% only where the parent has a definite height. */
+img,video{height:auto}
+.hero-image img,.intro-photo img,.project-hero img,.story-small{height:100%}
+.service-images img{aspect-ratio:1;height:auto;min-height:0}
+.service{overflow:hidden}
+
 /* Shared header */
-.site-header{height:74px;padding:0;display:block;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
+.site-header{height:74px;padding:0;display:block;background:rgba(247,244,236,.88);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
 .header-inner{max-width:1280px;height:74px;margin:0 auto;padding:0 clamp(20px,5vw,44px);display:flex;align-items:center;gap:24px}
 .header-inner .wordmark{font-family:var(--serif);font-weight:500;font-size:27px;letter-spacing:.22em;color:var(--text);margin-right:auto;line-height:1}
 .desktop-nav{margin:0;gap:clamp(14px,1.6vw,26px)}
@@ -140,5 +152,12 @@ footer{font-family:var(--body)}.footer-main{padding-top:clamp(56px,8vw,96px);pad
   .shop-layout{display:block}.shop-filter{position:static;width:100%;margin-bottom:28px}
   .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .portfolio-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* Use flex instead of an auto-row grid on mobile. Older iOS Safari can
+     calculate an indefinite grid row incorrectly when its images use
+     aspect-ratio, causing the following copy to paint over the photos. */
+  .service{display:flex;flex-direction:column;align-items:stretch;overflow:hidden}
+  .service-images{order:-1;display:grid;width:100%;min-width:0;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+  .service-images img{display:block;width:100%;height:auto;min-width:0;aspect-ratio:1/1;object-fit:cover}
+  .service-copy{order:0;position:relative;min-width:0;width:100%}
   .books article{display:grid;grid-template-columns:120px 1fr}.book-cover{max-width:none}
 }
