@@ -121,6 +121,7 @@ function Header({ page, lang, setLang }) {
   return <>
     <header className="site-header"><div className="header-inner">
       <a className="wordmark" href="#home">MAYFLEUR</a>
+      <div className="mobile-header-language" aria-label="Language selection"><button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button><span>·</span><button className={lang === 'ko' ? 'active' : ''} onClick={() => setLang('ko')}>KO</button></div>
       <nav className="desktop-nav" aria-label="Main navigation">
         {NAV.map(([id, text]) => <a key={id} className={page === id ? 'active' : ''} href={`#${id}`}>{text}</a>)}
       </nav>
