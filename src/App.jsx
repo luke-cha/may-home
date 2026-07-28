@@ -142,7 +142,7 @@ function Footer({ lang }) {
     <div className="footer-main">
       <div><div className="wordmark">MAYFLEUR</div><p className="footer-tag">Nature-Inspired Floral Creations</p><small>Based in Korea</small></div>
       <div><span className="eyebrow">{lang === 'ko' ? '둘러보기' : 'Explore'}</span><nav>{NAV.map(([id, text]) => <a key={id} href={`#${id}`}>{text}</a>)}</nav></div>
-      <div><span className="eyebrow">{lang === 'ko' ? '연결' : 'Connect'}</span><nav><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">{lang === 'ko' ? '인스타그램' : 'Instagram'}</a><a href="mailto:hello@mayfleur.com">{lang === 'ko' ? '이메일' : 'Email'}</a></nav></div>
+      <div><span className="eyebrow">{lang === 'ko' ? '연결' : 'Connect'}</span><nav><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">{lang === 'ko' ? '인스타그램' : 'Instagram'}</a><a href="mailto:mayfleurstudio@gmail.com">{lang === 'ko' ? '이메일' : 'Email'}</a></nav></div>
     </div>
     <div className="copyright"><span>© 2026 MAYFLEUR. All rights reserved.</span><span>Seoul · Korea</span></div>
   </footer>
@@ -279,7 +279,7 @@ function Contact({ lang }) {
   const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
     <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><button className="button primary" type="submit">{ko ? '메시지 보내기' : 'Send Message'}</button></form>}
-      <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:hello@mayfleur.com">hello@mayfleur.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
+      <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
   </div>
 }
 
