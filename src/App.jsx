@@ -239,8 +239,8 @@ function About({ lang }) {
       { name: 'Hwigyeomjae' },
     ] },
     { title: 'International Teaching', items: [
-      { name: 'Los Angeles Workshop', meta: ko ? '진행 완료' : 'Completed', status: 'complete' },
-      { name: 'Taiwan Flower Workshop', meta: ko ? '진행 완료' : 'Completed', status: 'complete' },
+      { name: 'Los Angeles Workshop', meta: '(2025. 5 / 2025. 11)' },
+      { name: 'Taiwan Flower Workshop', meta: '(2025. 9)' },
       { name: 'Manila Flower Workshop', meta: ko ? '2026년 12월 예정' : 'Scheduled · December 2026', status: 'upcoming' },
     ] },
     { title: 'International Private Teaching', items: [
