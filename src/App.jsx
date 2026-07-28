@@ -67,14 +67,27 @@ const under = (prefix) => manifest.files.filter((file) => file.startsWith(prefix
 const imagesOnly = (files) => files.filter((file) => !/\.(mp4|mov)$/i.test(file))
 const directFolders = (prefix, depth) => [...new Set(under(prefix).map((file) => file.split('/')[depth]).filter(Boolean))]
 const cleanFolderName = (value) => label(value).replace(/^\d+\s+/, '')
+const numericMediaSort = (files) => [...files].sort((a, b) => {
+  const parts = (file) => file.split('/').pop().replace(/\.[^.]+$/, '').split('.').map(Number)
+  const aa = parts(a); const bb = parts(b)
+  if (aa.every(Number.isFinite) && bb.every(Number.isFinite)) {
+    for (let i = 0; i < Math.max(aa.length, bb.length); i += 1) {
+      if (aa[i] === undefined) return -1
+      if (bb[i] === undefined) return 1
+      if (aa[i] !== bb[i]) return aa[i] - bb[i]
+    }
+    return 0
+  }
+  return a.localeCompare(b, undefined, { numeric: true })
+})
 
 const hero = imagesOnly(under('01 Home/01 Hero/'))
-const selectedWorks = under('01 Home/02 Selected Works/').sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+const selectedWorks = numericMediaSort(under('01 Home/02 Selected Works/'))
 const storyPhotos = imagesOnly(under('03 About/Our Story/'))
 const profilePhoto = imagesOnly(under('03 About/Profile/'))[0]
 const galleryGroups = {
-  works: under('04 Gallery/Floral Works/'),
-  spaces: under('04 Gallery/Space Styling/'),
+  works: numericMediaSort(under('04 Gallery/Floral Works/')),
+  spaces: numericMediaSort(under('04 Gallery/Space Styling/')),
 }
 const bookFiles = imagesOnly(under('07 Books/'))
 
@@ -84,7 +97,7 @@ const shopCategories = directFolders('02 Shop/', 1)
     raw: name,
     name: cleanFolderName(name),
     products: directFolders(`02 Shop/${name}/`, 2).map((product) => ({
-      raw: product, name: label(product), category: cleanFolderName(name),
+      raw: product, name: cleanFolderName(product), category: cleanFolderName(name),
       media: under(`02 Shop/${name}/${product}/`),
     })).filter((product) => product.media.length),
   }))
