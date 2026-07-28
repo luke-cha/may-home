@@ -120,6 +120,8 @@ img,video{height:auto}
 .filter-chips button{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.06em;text-transform:uppercase;padding:9px 16px;border-radius:2px;color:rgba(42,37,33,.72)}
 .filter-chips button.active{background:var(--accent);color:#fbf8f1}
 @media(min-width:1101px){.masonry{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,22px)}}
+/* Gallery photos are 2:3; crop the taller 9:16 phone videos into the same frame. */
+.masonry video{display:block;width:100%;height:auto;min-height:0;max-height:none;aspect-ratio:2/3;object-fit:cover}
 
 /* Portfolio */
 .portfolio-page .page-head{padding-bottom:56px}.portfolio-page .page-head h1{margin:0}
