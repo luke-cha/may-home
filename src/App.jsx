@@ -230,9 +230,14 @@ function About({ lang }) {
       { name: ko ? '원예치료 프로그램' : 'Horticultural Therapy Program' },
     ] },
     { title: ko ? '클라이언트 및 기관' : 'Clients & Institutions', items: [
-      { name: 'NAVER · Kakao · Hyundai Department Store' },
-      { name: 'Daelim Museum · Gimpo Airport · Zigzag' },
-      { name: 'Seongdong Cultural Foundation · Hwigyeomjae' },
+      { name: 'NAVER' },
+      { name: 'Kakao' },
+      { name: 'Hyundai Department Store' },
+      { name: 'Daelim Museum' },
+      { name: 'Gimpo Airport' },
+      { name: 'Zigzag' },
+      { name: 'Seongdong Cultural Foundation' },
+      { name: 'Hwigyeomjae' },
     ] },
     { title: ko ? '해외 워크샵' : 'International Teaching', items: [
       { name: 'Los Angeles Workshop', meta: ko ? '진행 완료' : 'Completed', status: 'complete' },
