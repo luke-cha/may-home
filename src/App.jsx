@@ -223,13 +223,12 @@ function ProductGuide({ lang }) {
 function About({ lang }) {
   const ko = lang === 'ko'
   const profileCredentials = [
-    { title: ko ? '교육 및 자격' : 'Education', items: [
+    { title: 'Education & Qualifications', items: [
       { name: 'L’École Artistique de Catherine Muller', meta: 'Paris' },
-      { name: 'Madison Hartley', meta: 'Special Workshop' },
       { name: ko ? '화훼장식기능사' : 'Korean Floral Design Craftsman Certificate' },
-      { name: ko ? '원예치료 프로그램' : 'Horticultural Therapy Program' },
+      { name: ko ? '원예치료프로그램 수료' : 'Horticultural Therapy Program · Completed' },
     ] },
-    { title: ko ? '클라이언트 및 기관' : 'Clients & Institutions', items: [
+    { title: 'Clients & Institutions', items: [
       { name: 'NAVER' },
       { name: 'Kakao' },
       { name: 'Hyundai Department Store' },
@@ -239,21 +238,19 @@ function About({ lang }) {
       { name: 'Seongdong Cultural Foundation' },
       { name: 'Hwigyeomjae' },
     ] },
-    { title: ko ? '해외 워크샵' : 'International Teaching', items: [
+    { title: 'International Teaching', items: [
       { name: 'Los Angeles Workshop', meta: ko ? '진행 완료' : 'Completed', status: 'complete' },
       { name: 'Taiwan Flower Workshop', meta: ko ? '진행 완료' : 'Completed', status: 'complete' },
       { name: 'Manila Flower Workshop', meta: ko ? '2026년 12월 예정' : 'Scheduled · December 2026', status: 'upcoming' },
     ] },
-    { title: ko ? '프라이빗 티칭' : 'Private Teaching', items: [
-      { name: ko ? '해외 수강생 대상 1:1 및 소그룹 클래스' : 'One-to-one & small-group international classes' },
-      { name: ko ? '싱가포르 · 홍콩 · 중국 · 필리핀 · 인도네시아' : 'Singapore · Hong Kong · China · Philippines · Indonesia' },
-      { name: ko ? '호주 · 프랑스 · 대만 · 미국' : 'Australia · France · Taiwan · USA' },
+    { title: 'International Private Teaching', items: [
+      { name: 'Singapore · Hong Kong · China · Philippines · Indonesia · Australia · France · Taiwan · USA' },
     ] },
-    { title: ko ? '도서 출판' : 'Book Publications', items: [
+    { title: 'Book Publications', items: [
       { name: ko ? '메이플레르 플라워 클래스' : 'Mayfleur Flower Class', meta: '2020' },
       { name: ko ? '꽃은 나에게 마음의 숲이 되어주었다' : 'Flowers Became My Forest', meta: '2024' },
     ] },
-    { title: ko ? '전시 및 연재' : 'Exhibitions & Editorial', items: [
+    { title: 'Exhibitions & Editorial', items: [
       { name: ko ? '플로럴 사진전' : 'Floral Photography Exhibition', meta: ko ? '아르케 갤러리 · 서울' : 'Arke Gallery · Seoul' },
       { name: ko ? '월간 플로리스트 · 월간 플로라' : 'Monthly Florist · Monthly Flora', meta: ko ? '연재' : 'Series' },
       { name: 'SK Happiness Discovery', meta: ko ? '칼럼' : 'Column' },
