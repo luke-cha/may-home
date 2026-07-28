@@ -66,9 +66,10 @@ const slug = (value) => label(value).toLowerCase().replace(/[^a-z0-9가-힣]+/g,
 const under = (prefix) => manifest.files.filter((file) => file.startsWith(prefix))
 const imagesOnly = (files) => files.filter((file) => !/\.(mp4|mov)$/i.test(file))
 const directFolders = (prefix, depth) => [...new Set(under(prefix).map((file) => file.split('/')[depth]).filter(Boolean))]
+const cleanFolderName = (value) => label(value).replace(/^\d+\s+/, '')
 
 const hero = imagesOnly(under('01 Home/01 Hero/'))
-const selectedWorks = imagesOnly(under('01 Home/02 Selected Works/'))
+const selectedWorks = under('01 Home/02 Selected Works/').sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
 const storyPhotos = imagesOnly(under('03 About/Our Story/'))
 const profilePhoto = imagesOnly(under('03 About/Profile/'))[0]
 const galleryGroups = {
@@ -78,12 +79,12 @@ const galleryGroups = {
 const bookFiles = imagesOnly(under('07 Books/'))
 
 const shopCategories = directFolders('02 Shop/', 1)
-  .filter((name) => categoryNames[label(name)])
+  .filter((name) => categoryNames[cleanFolderName(name)])
   .map((name) => ({
     raw: name,
-    name: label(name),
+    name: cleanFolderName(name),
     products: directFolders(`02 Shop/${name}/`, 2).map((product) => ({
-      raw: product, name: label(product), category: label(name),
+      raw: product, name: label(product), category: cleanFolderName(name),
       media: under(`02 Shop/${name}/${product}/`),
     })).filter((product) => product.media.length),
   }))
@@ -169,7 +170,7 @@ function Home({ lang }) {
       <p>Nature-Inspired Floral Creations</p>
       <div className="home-portrait"><Media file={hero[2] || hero[0]} alt="Mayfleur floral arrangement" eager /></div>
     </section>
-    <section className="home-works container"><div className="simple-photo-grid">{selectedWorks.slice(0, 8).map((file, i) => <Media key={file} file={file} alt={`Selected work ${i + 1}`} />)}</div></section>
+    <section className="home-works container"><div className="simple-photo-grid">{selectedWorks.slice(0, 10).map((file, i) => <Media key={file} file={file} alt={`Selected work ${i + 1}`} />)}</div></section>
     <section className="paper-panel home-introduction"><span className="eyebrow">{ko ? '소개' : 'Introduction'}</span><p>{ko ? '메이플레르는 자연과 색, 계절의 아름다움에서 영감을 받은 플로럴 브랜드입니다. 일상의 공간에 따뜻함과 아름다움을 더하는, 시간을 초월한 플로럴 디자인을 만듭니다.' : 'Mayfleur is a floral brand inspired by nature, colour and seasonal beauty. We create timeless floral designs that bring warmth and beauty to everyday spaces.'}</p></section>
     <HomePreview title="Shop" href="#shop" link={ko ? '컬렉션 보기' : 'Shop Collection'} files={shopProducts.slice(0, 4).map((p) => imagesOnly(p.media)[0])} />
     <HomePreview title="Gallery" href="#gallery" link={ko ? '갤러리 보기' : 'View Gallery'} files={imagesOnly(galleryGroups.works).slice(0, 4)} />
