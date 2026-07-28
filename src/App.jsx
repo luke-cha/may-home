@@ -222,14 +222,46 @@ function ProductGuide({ lang }) {
 
 function About({ lang }) {
   const ko = lang === 'ko'
+  const profileCredentials = [
+    { title: ko ? '교육 및 자격' : 'Education', items: [
+      { name: 'L’École Artistique de Catherine Muller', meta: 'Paris' },
+      { name: 'Madison Hartley', meta: 'Special Workshop' },
+      { name: ko ? '화훼장식기능사' : 'Korean Floral Design Craftsman Certificate' },
+      { name: ko ? '원예치료 프로그램' : 'Horticultural Therapy Program' },
+    ] },
+    { title: ko ? '클라이언트 및 기관' : 'Clients & Institutions', items: [
+      { name: 'NAVER · Kakao · Hyundai Department Store' },
+      { name: 'Daelim Museum · Gimpo Airport · Zigzag' },
+      { name: 'Seongdong Cultural Foundation · Hwigyeomjae' },
+    ] },
+    { title: ko ? '해외 워크샵' : 'International Teaching', items: [
+      { name: 'Los Angeles Workshop', meta: ko ? '진행 완료' : 'Completed', status: 'complete' },
+      { name: 'Taiwan Flower Workshop', meta: ko ? '진행 완료' : 'Completed', status: 'complete' },
+      { name: 'Manila Flower Workshop', meta: ko ? '2026년 12월 예정' : 'Scheduled · December 2026', status: 'upcoming' },
+    ] },
+    { title: ko ? '프라이빗 티칭' : 'Private Teaching', items: [
+      { name: ko ? '해외 수강생 대상 1:1 및 소그룹 클래스' : 'One-to-one & small-group international classes' },
+      { name: ko ? '싱가포르 · 홍콩 · 중국 · 필리핀 · 인도네시아' : 'Singapore · Hong Kong · China · Philippines · Indonesia' },
+      { name: ko ? '호주 · 프랑스 · 대만 · 미국' : 'Australia · France · Taiwan · USA' },
+    ] },
+    { title: ko ? '도서 출판' : 'Book Publications', items: [
+      { name: ko ? '메이플레르 플라워 클래스' : 'Mayfleur Flower Class', meta: '2020' },
+      { name: ko ? '꽃은 나에게 마음의 숲이 되어주었다' : 'Flowers Became My Forest', meta: '2024' },
+    ] },
+    { title: ko ? '전시 및 연재' : 'Exhibitions & Editorial', items: [
+      { name: ko ? '플로럴 사진전' : 'Floral Photography Exhibition', meta: ko ? '아르케 갤러리 · 서울' : 'Arke Gallery · Seoul' },
+      { name: ko ? '월간 플로리스트 · 월간 플로라' : 'Monthly Florist · Monthly Flora', meta: ko ? '연재' : 'Series' },
+      { name: 'SK Happiness Discovery', meta: ko ? '칼럼' : 'Column' },
+    ] },
+  ]
   return <div className="page fade-in about-page"><section className="about-banner container"><Media file={storyPhotos[1]} alt="Mayfleur story" eager /></section><PageHead eyebrow={`— ${ko ? '소개' : 'About'}`} title="Our Story" sub={ko ? '메이플레르는 꽃과 그 꽃을 빚어내는 계절에 대한 순수한 애정에서 시작되었습니다. 자연의 색, 고요한 구성, 그리고 꽃이 일상에 따뜻함을 더해야 한다는 믿음이 우리의 철학입니다.' : 'Mayfleur began with a simple devotion to flowers and the seasons that shape them. Our philosophy is rooted in natural colour, quiet composition, and the belief that flowers should bring warmth to everyday life.'} />
     <section className="about-story-photos container"><Media file={storyPhotos[0]} alt="Mayfleur studio" /><Media file={storyPhotos[3]} alt="Flowers in the studio" /></section>
     <section className="philosophy"><span className="rule" /><span className="eyebrow">{ko ? '브랜드 철학' : 'Brand Philosophy'}</span><p>{ko ? '자연에서 길어 올린, 시간을 초월한 플로럴 디자인 — 일상의 공간에 따뜻함과 아름다움을 더합니다.' : 'Timeless floral design, drawn from nature — created to bring warmth and beauty to everyday spaces.'}</p></section>
-    <section className="profile container"><div className="profile-image"><Media file={profilePhoto} alt="Yeajin Kim" /></div><div className="profile-copy"><span className="eyebrow">Profile</span><h2>{ko ? '김예진' : 'Yeajin Kim'}</h2><p className="profile-role">Floral Artist, Author & Educator</p><p>Founder of Mayfleur · Based in Korea</p><div className="credentials"><Credential title="Education" items={["L’École Artistique de Catherine Muller (Paris)", 'Madison Hartley Special Workshop', 'Korean Floral Design Craftsman Certificate', 'Horticultural Therapy Program']} /><Credential title="Clients & Institutions" items={['NAVER · Kakao · Hyundai Department Store', 'Daelim Museum · Gimpo Airport · Zigzag', 'Seongdong Cultural Foundation · Hwigyeomjae']} /><Credential title="International Teaching" items={['Los Angeles · Taiwan · Manila', 'Private students from Asia, Europe, Australia & USA']} /><Credential title="Publications" items={['Mayfleur Flower Class (2020)', 'Flowers Became My Forest (2024)', 'Floral Photography Exhibition · Arke Gallery']} /></div></div></section>
+    <section className="profile container"><div className="profile-image"><Media file={profilePhoto} alt="Yeajin Kim" /></div><div className="profile-copy"><span className="eyebrow">Profile</span><h2>{ko ? '김예진' : 'Yeajin Kim'}</h2><p className="profile-role">Floral Artist, Author & Educator</p><p>Founder of Mayfleur · Based in Korea</p><div className="credentials">{profileCredentials.map((section) => <Credential key={section.title} {...section} />)}</div></div></section>
   </div>
 }
 
-function Credential({ title, items }) { return <div><h3>{title}</h3>{items.map((item) => <p key={item}>{item}</p>)}</div> }
+function Credential({ title, items }) { return <section className="credential-section"><h3>{title}</h3><ul className="credential-list">{items.map((item) => { const entry = typeof item === 'string' ? { name: item } : item; return <li key={`${entry.name}-${entry.meta || ''}`}><span>{entry.name}</span>{entry.meta && <small className={entry.status ? `status ${entry.status}` : ''}>{entry.meta}</small>}</li> })}</ul></section> }
 
 function Gallery({ lang }) {
   const ko = lang === 'ko'; const [filter, setFilter] = useState('all'); const [limit, setLimit] = useState(60)

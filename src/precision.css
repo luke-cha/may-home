@@ -97,14 +97,21 @@ img,video{height:auto}
 
 /* About */
 .about-banner{padding-top:clamp(32px,4vw,52px)}
-.about-page .page-head{padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(28px,3.5vw,44px)}
-.about-page .page-head h1{font-size:clamp(28px,3.4vw,42px);margin-bottom:24px}
-.about-page .page-head p{font-size:16px;line-height:1.75;max-width:620px}
+.about-page .page-head{padding-top:clamp(36px,4vw,52px);padding-bottom:clamp(20px,2.4vw,28px)}
+.about-page .page-head h1{font-size:clamp(28px,3.4vw,42px);margin-bottom:20px}
+.about-page .page-head p{font-size:16px;line-height:1.75;max-width:760px;word-break:keep-all;overflow-wrap:break-word}
 .about-story-photos{gap:clamp(14px,2vw,24px);padding-bottom:clamp(48px,6vw,80px)}
 .philosophy .eyebrow{font-size:12px;letter-spacing:.28em;margin-bottom:20px}.philosophy p{font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);line-height:1.34;letter-spacing:-.015em}
 .profile{padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(64px,9vw,120px)}
 .profile-role{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.24em}.profile-copy h2{font-size:clamp(22px,2.3vw,28px);line-height:1.1}
-.credentials h3{font-size:11px;line-height:1.55;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}.credentials p{font-size:15.5px;line-height:1.65;color:rgba(42,37,33,.84)}
+.credentials h3{font-size:11px;line-height:1.55;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.credential-section{display:grid;grid-template-columns:170px minmax(0,1fr);gap:24px;padding:24px 0;border-bottom:1px solid var(--divider)}
+.credential-section h3{margin:2px 0 0}.credential-list{list-style:none;margin:0;padding:0;min-width:0}
+.credential-list li{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:8px 0;font-family:var(--body);font-size:15px;line-height:1.5;color:rgba(42,37,33,.84)}
+.credential-list li+li{border-top:1px solid rgba(42,37,33,.07)}.credential-list li>span{min-width:0}
+.credential-list small{flex:none;font-family:var(--body);font-size:11px;line-height:1.4;letter-spacing:.05em;color:rgba(42,37,33,.52);text-align:right}
+.credential-list small.status{padding:4px 8px;border:1px solid var(--divider);border-radius:2px;text-transform:uppercase;letter-spacing:.09em}
+.credential-list small.status.complete{color:#66654a}.credential-list small.status.upcoming{background:rgba(138,114,86,.1);color:var(--accent-2);border-color:rgba(138,114,86,.28)}
 
 /* Gallery — four columns requested after mockup parity. */
 .filter-chips{padding-bottom:clamp(24px,3vw,40px);gap:10px}
@@ -159,6 +166,7 @@ footer{font-family:var(--body)}.footer-main{padding-top:clamp(56px,8vw,96px);pad
   .shop-filter button span{margin-left:9px;font-size:9px;line-height:1;color:inherit;opacity:.65}.shop-filter button.active{background:var(--accent);border-color:var(--accent);color:#fbf8f1;font-weight:600}
   .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .portfolio-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .credential-section{grid-template-columns:1fr;gap:10px;padding:22px 0}.credential-section h3{margin:0 0 2px}.credential-list li{font-size:14px;gap:12px}.credential-list small{font-size:10px}
   /* Use flex instead of an auto-row grid on mobile. Older iOS Safari can
      calculate an indefinite grid row incorrectly when its images use
      aspect-ratio, causing the following copy to paint over the photos. */
