@@ -76,7 +76,7 @@ img,video{height:auto}
 .home-portrait{max-width:620px;margin-top:clamp(24px,3vw,36px)}.home-portrait img{aspect-ratio:3/4}
 .home-works{padding-top:clamp(64px,9vw,120px);padding-bottom:clamp(64px,9vw,120px)}
 .home-introduction{display:grid;grid-template-columns:1fr;align-items:center;gap:28px;text-align:center}
-.home-brand-logo{display:flex;justify-content:center}.home-brand-logo img{display:block;width:100%;max-width:173px;height:auto;object-fit:contain;background:transparent}
+.home-brand-logo{display:flex;justify-content:center}.home-brand-logo img{display:block;width:100%;max-width:150px;height:auto;object-fit:contain;background:transparent}
 .home-introduction .eyebrow{font-size:12px;letter-spacing:.28em;margin-bottom:22px}
 .home-introduction p{max-width:680px;margin-inline:auto;font-family:var(--serif);font-size:clamp(17px,1.6vw,21px);line-height:1.45;color:var(--text)}
 .preview-head h2{font-size:clamp(20px,2.1vw,26px);line-height:1.12;letter-spacing:-.015em}
@@ -192,7 +192,7 @@ footer{font-family:var(--body)}.footer-main{padding-top:clamp(56px,8vw,96px);pad
   .shop-filter>.eyebrow{display:none}.shop-filter button{width:auto;min-height:38px;margin:0;padding:9px 13px;border:1px solid var(--divider);border-radius:2px;font-family:var(--body);font-size:12px;line-height:1.35;letter-spacing:.02em;white-space:normal;gap:9px;color:rgba(42,37,33,.72)}
   .shop-filter button span{margin-left:9px;font-size:9px;line-height:1;color:inherit;opacity:.65}.shop-filter button.active{background:var(--accent);border-color:var(--accent);color:#fbf8f1;font-weight:600}
   .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .home-introduction{gap:24px}.home-brand-logo img{max-width:120px}
+  .home-introduction{gap:24px}.home-brand-logo img{max-width:105px}
   .portfolio-list{grid-template-columns:repeat(2,minmax(0,1fr))}
   .credential-section{display:block;padding:22px 0}.credential-section h3{margin:0 0 10px}.credential-list li{font-size:14px;gap:12px}.credential-list small{font-size:10px}
   /* Use flex instead of an auto-row grid on mobile. Older iOS Safari can
