@@ -47,7 +47,7 @@ const serviceCopy = {
 }
 
 const projectCopy = {
-  'Gimpo Airport': { ko: '김포공항 국제선 터미널에서 한국의 정서와 자연의 색을 담아낸 3주간의 플로럴 설치 프로젝트입니다.', en: 'A three-week floral installation for Gimpo Airport International Terminal, inspired by Korean heritage and natural colour.' },
+  'Gimpo Airport': { ko: '김포공항 국제선 터미널에서 한국의 전통과 자연의 색을 담아낸 3주간의 플로럴 설치 프로젝트입니다.', en: 'A three-week floral installation for Gimpo Airport International Terminal, inspired by Korean heritage and natural colour.' },
   'Greystone Mansion Wedding (Los Angeles)': { ko: '로스앤젤레스의 역사적인 Greystone Mansion에서 Fleurina Flowers와 함께 완성한 웨딩 플로럴 디자인입니다.', en: 'Wedding floral design at the historic Greystone Mansion in Los Angeles, created with Fleurina Flowers.' },
   'US Wedding Photoshoot (Los Angeles)': { ko: 'Fleurina Flowers와 협업해 진행한 미국 웨딩 에디토리얼 플로럴 디렉션입니다.', en: 'Floral direction for a US wedding editorial, produced in collaboration with Fleurina Flowers.' },
   'Laura Studio Floral Directing': { ko: '스튜디오의 시각적 정체성을 계절의 꽃과 자연스러운 구성으로 풀어낸 플로럴 디렉팅입니다.', en: 'Seasonal floral direction shaping the visual identity of Laura Studio.' },
@@ -56,7 +56,7 @@ const projectCopy = {
   KAKAO: { ko: '계절의 소재와 직접 만드는 경험을 중심으로 구성한 카카오 기업 워크숍입니다.', en: 'A Kakao corporate workshop centred on seasonal materials and hands-on making.' },
   NAVER: { ko: '조직의 공간과 참여자를 고려해 설계한 네이버 기업 플로럴 워크숍입니다.', en: 'A NAVER corporate floral workshop designed around its people and place.' },
   'Los Angeles Workshop': { ko: '계절의 표현과 자연스러운 플로럴 구성을 나눈 로스앤젤레스 워크숍입니다.', en: 'A Los Angeles workshop exploring seasonal expression and natural composition.' },
-  'Taiwan Workshop': { ko: '메이플레르의 색과 계절에 대한 접근을 나눈 대만 플라워 워크숍입니다.', en: 'A Taiwan workshop sharing Mayfleur’s approach to colour and the seasons.' },
+  'Taiwan Workshop': { ko: '가을의 계절을 꽃으로 표현한 대만 플라워 워크숍입니다.', en: 'A Taiwan workshop sharing Mayfleur’s approach to colour and the seasons.' },
   'Private International Classes': { ko: '세계 각지의 수강생들과 함께한 1:1 및 소규모 국제 플라워 클래스입니다.', en: 'One-to-one and small-group floral classes for students from around the world.' },
 }
 
