@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import manifest from './data/content-manifest.json'
+import mayfleurLogo from './assets/mayfleur-logo.png'
 
 const KAKAO_CHANNEL_URL = 'https://pf.kakao.com/_tnxmxixb'
 
@@ -190,7 +191,7 @@ function Home({ lang }) {
       <div className="home-portrait"><Media file={hero[2] || hero[0]} alt="Mayfleur floral arrangement" eager /></div>
     </section>
     <section className="home-works container"><div className="simple-photo-grid">{selectedWorks.slice(0, 10).map((file, i) => <Media key={file} file={file} alt={`Selected work ${i + 1}`} />)}</div></section>
-    <section className="paper-panel home-introduction"><span className="eyebrow">{ko ? '소개' : 'Introduction'}</span><p>{ko ? '메이플레르는 자연과 색, 계절의 아름다움에서 영감을 받은 플로럴 브랜드입니다. 일상의 공간에 따뜻함과 아름다움을 더하는, 시간을 초월한 플로럴 디자인을 만듭니다.' : 'Mayfleur is a floral brand inspired by nature, colour and seasonal beauty. We create timeless floral designs that bring warmth and beauty to everyday spaces.'}</p></section>
+    <section className="paper-panel home-introduction"><div className="home-brand-logo"><img src={mayfleurLogo} alt="Mayfleur" /></div><div className="home-introduction-copy"><span className="eyebrow">{ko ? '소개' : 'Introduction'}</span><p>{ko ? '메이플레르는 자연과 색, 계절의 아름다움에서 영감을 받은 플로럴 브랜드입니다. 일상의 공간에 따뜻함과 아름다움을 더하는, 시간을 초월한 플로럴 디자인을 만듭니다.' : 'Mayfleur is a floral brand inspired by nature, colour and seasonal beauty. We create timeless floral designs that bring warmth and beauty to everyday spaces.'}</p></div></section>
     <HomePreview title="Shop" href="#shop" link={ko ? '컬렉션 보기' : 'Shop Collection'} files={shopProducts.slice(0, 4).map((p) => imagesOnly(p.media)[0])} />
     <HomePreview title="Gallery" href="#gallery" link={ko ? '갤러리 보기' : 'View Gallery'} files={imagesOnly(galleryGroups.works).slice(0, 4)} />
     <HomePreview title="Portfolio" href="#portfolio" link={ko ? '포트폴리오 보기' : 'View Portfolio'} files={portfolioProjects.slice(0, 4).map((p) => imagesOnly(p.media)[0])} type="landscape" />
