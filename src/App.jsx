@@ -70,7 +70,7 @@ const slug = (value) => label(value).toLowerCase().replace(/[^a-z0-9가-힣]+/g,
 const under = (prefix) => manifest.files.filter((file) => file.startsWith(prefix))
 const imagesOnly = (files) => files.filter((file) => !/\.(mp4|mov)$/i.test(file))
 const directFolders = (prefix, depth) => [...new Set(under(prefix).map((file) => file.split('/')[depth]).filter(Boolean))]
-const cleanFolderName = (value) => label(value).replace(/^\d+\s+/, '')
+const cleanFolderName = (value) => label(value).replace(/^(?:\d+(?:\.\d+)?|new)\s+/i, '').trim()
 const numericMediaSort = (files) => [...files].sort((a, b) => {
   const parts = (file) => file.split('/').pop().replace(/\.[^.]+$/, '').split('.').map(Number)
   const aa = parts(a); const bb = parts(b)
