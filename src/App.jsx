@@ -110,7 +110,7 @@ const portfolioProjects = directFolders('05 Portfolio/', 1)
   }))
 const serviceOrder = ['Floral Styling', 'Brand Collaboration', 'Corporate Workshops', 'Global Workshops']
 const services = directFolders('06 Services/', 1).map((name) => ({
-  raw: name, name: label(name), media: under(`06 Services/${name}/`),
+  raw: name, name: label(name), media: numericMediaSort(under(`06 Services/${name}/`)),
 })).sort((a, b) => serviceOrder.indexOf(a.name) - serviceOrder.indexOf(b.name))
 
 function useRoute() {
@@ -189,7 +189,7 @@ function Home({ lang }) {
     <section className="paper-panel home-introduction"><span className="eyebrow">{ko ? '소개' : 'Introduction'}</span><p>{ko ? '메이플레르는 자연과 색, 계절의 아름다움에서 영감을 받은 플로럴 브랜드입니다. 일상의 공간에 따뜻함과 아름다움을 더하는, 시간을 초월한 플로럴 디자인을 만듭니다.' : 'Mayfleur is a floral brand inspired by nature, colour and seasonal beauty. We create timeless floral designs that bring warmth and beauty to everyday spaces.'}</p></section>
     <HomePreview title="Shop" href="#shop" link={ko ? '컬렉션 보기' : 'Shop Collection'} files={shopProducts.slice(0, 4).map((p) => imagesOnly(p.media)[0])} />
     <HomePreview title="Gallery" href="#gallery" link={ko ? '갤러리 보기' : 'View Gallery'} files={imagesOnly(galleryGroups.works).slice(0, 4)} />
-    <HomePreview title="Portfolio" href="#portfolio" link={ko ? '포트폴리오 보기' : 'View Portfolio'} files={portfolioProjects.slice(0, 3).map((p) => imagesOnly(p.media)[0])} type="landscape" />
+    <HomePreview title="Portfolio" href="#portfolio" link={ko ? '포트폴리오 보기' : 'View Portfolio'} files={portfolioProjects.slice(0, 4).map((p) => imagesOnly(p.media)[0])} type="landscape" />
     <section className="home-contact container"><div><h2>{ko ? '문의하기' : 'Get in touch'}</h2><p>{ko ? '인스타그램 / 이메일 — 언제든 연락 주세요.' : 'Instagram / Email — we would love to hear from you.'}</p></div><div className="button-row"><a className="button primary" href="#contact">Contact</a><a className="button ghost" href="#about">{ko ? '우리의 이야기' : 'Our Story'}</a></div></section>
   </div>
 }
@@ -309,9 +309,19 @@ function Portfolio({ lang, detail }) {
 }
 
 function ProjectDetail({ project, lang }) {
-  const ko = lang === 'ko'; const photos = imagesOnly(project.media)
+  const ko = lang === 'ko'; const photos = imagesOnly(project.media); const [selected, setSelected] = useState(null)
   const description = projectCopy[project.name]?.[lang] || (ko ? '브랜드와 공간의 고유한 분위기를 꽃의 색과 형태로 해석한 메이플레르의 플로럴 프로젝트입니다.' : 'A Mayfleur project translating the character of a brand and place through floral colour and form.')
-  return <div className="page fade-in project-detail container"><a className="back" href="#portfolio">← {ko ? '포트폴리오로 돌아가기' : 'Back to Portfolio'}</a><section className="project-feature"><div><span className="eyebrow">Project Detail</span><h1>{project.name}</h1><p>{description}</p><small>{photos.length} Photographs · Mayfleur Archive</small></div><Media file={photos[0]} alt={project.name} eager /></section><span className="gallery-label">{ko ? '프로젝트 갤러리' : 'Project Gallery'}</span><section className="project-gallery">{photos.slice(1).map((file, i) => <Media key={file} file={file} alt={`${project.name} ${i + 2}`} />)}</section></div>
+  useEffect(() => {
+    if (!selected) return undefined
+    const close = (event) => { if (event.key === 'Escape') setSelected(null) }
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', close)
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener('keydown', close) }
+  }, [selected])
+  return <div className="page fade-in project-detail container"><a className="back" href="#portfolio">← {ko ? '포트폴리오로 돌아가기' : 'Back to Portfolio'}</a><section className="project-feature"><div><span className="eyebrow">Project Detail</span><h1>{project.name}</h1><p>{description}</p><small>{photos.length} Photographs · Mayfleur Archive</small></div><Media file={photos[0]} alt={project.name} eager /></section><span className="gallery-label">{ko ? '프로젝트 갤러리' : 'Project Gallery'}</span><section className="project-gallery">{photos.slice(1).map((file, i) => <button type="button" className="project-gallery-button" key={file} onClick={() => setSelected({ file, index: i + 2 })} aria-label={`${project.name} ${i + 2} ${ko ? '크게 보기' : 'view larger'}`}><Media file={file} alt={`${project.name} ${i + 2}`} /></button>)}</section>
+    {selected && <div className="project-lightbox" role="dialog" aria-modal="true" aria-label={`${project.name} image ${selected.index}`} onClick={() => setSelected(null)}><div className="project-lightbox-content" onClick={(event) => event.stopPropagation()}><button type="button" className="project-lightbox-close" onClick={() => setSelected(null)} aria-label={ko ? '닫기' : 'Close'}>×</button><Media file={selected.file} alt={`${project.name} ${selected.index}`} eager /><small>{project.name} · {selected.index} / {photos.length}</small></div></div>}
+  </div>
 }
 
 function Services({ lang }) {
