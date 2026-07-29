@@ -103,9 +103,11 @@ const shopCategories = directFolders('02 Shop/', 1)
   }))
 
 const shopProducts = shopCategories.flatMap((category) => category.products)
-const portfolioProjects = directFolders('05 Portfolio/', 1).map((name) => ({
-  raw: name, name: label(name), media: under(`05 Portfolio/${name}/`),
-}))
+const portfolioProjects = directFolders('05 Portfolio/', 1)
+  .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+  .map((name) => ({
+    raw: name, name: cleanFolderName(name), media: numericMediaSort(under(`05 Portfolio/${name}/`)),
+  }))
 const serviceOrder = ['Floral Styling', 'Brand Collaboration', 'Corporate Workshops', 'Global Workshops']
 const services = directFolders('06 Services/', 1).map((name) => ({
   raw: name, name: label(name), media: under(`06 Services/${name}/`),
