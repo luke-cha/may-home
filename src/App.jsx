@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import manifest from './data/content-manifest.json'
 
+const KAKAO_CHANNEL_URL = 'https://pf.kakao.com/_tnxmxixb'
+
 const NAV = [
   ['home', 'Home'], ['shop', 'Shop'], ['about', 'About'], ['gallery', 'Gallery'],
   ['portfolio', 'Portfolio'], ['services', 'Services'], ['books', 'Books'], ['contact', 'Contact'],
@@ -160,7 +162,7 @@ function Footer({ lang }) {
     <div className="footer-main">
       <div><div className="wordmark">MAYFLEUR</div><p className="footer-tag">Nature-Inspired Floral Creations</p><small>Based in Korea</small></div>
       <div><span className="eyebrow">{lang === 'ko' ? '둘러보기' : 'Explore'}</span><nav>{NAV.map(([id, text]) => <a key={id} href={`#${id}`}>{text}</a>)}</nav></div>
-      <div><span className="eyebrow">{lang === 'ko' ? '연결' : 'Connect'}</span><nav><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">{lang === 'ko' ? '인스타그램' : 'Instagram'}</a><a href="mailto:mayfleurstudio@gmail.com">{lang === 'ko' ? '이메일' : 'Email'}</a></nav></div>
+      <div><span className="eyebrow">{lang === 'ko' ? '연결' : 'Connect'}</span><nav><a href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{lang === 'ko' ? '카카오채널' : 'Kakao Channel'}</a><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">{lang === 'ko' ? '인스타그램' : 'Instagram'}</a><a href="mailto:mayfleurstudio@gmail.com">{lang === 'ko' ? '이메일' : 'Email'}</a></nav></div>
     </div>
     <div className="copyright"><span>© 2026 MAYFLEUR. All rights reserved.</span><span>Seoul · Korea</span></div>
   </footer>
@@ -209,7 +211,7 @@ function Shop({ lang, detail }) {
       <div className="product-grid">{products.map((product) => <a href={`#shop/${slug(product.name)}`} className="product-card" key={product.name}><div className="card-media"><Media file={imagesOnly(product.media)[0]} alt={product.name} /></div><span className="card-kicker">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h3>{product.name}</h3><p>{ko ? '주문 제작 · 상담 후 안내' : 'Made to order · Price on request'}</p></a>)}</div>
     </section>
     <ProductGuide lang={lang} />
-    <section className="paper-panel custom-order"><div><span className="rule" /><h2>{ko ? '맞춤 플로럴 작품을 찾고 계신가요?' : 'Looking for a custom floral piece?'}</h2><p>{ko ? '공간과 행사, 원하시는 색감을 알려주세요. 메이플레르의 감각으로 맞춤 제작합니다.' : 'Tell us about your space, occasion and palette. We design bespoke arrangements to order.'}</p><a className="button primary" href="#contact">Custom Order Inquiry</a></div></section>
+    <section className="paper-panel custom-order"><div><span className="rule" /><h2>{ko ? '맞춤 플로럴 작품을 찾고 계신가요?' : 'Looking for a custom floral piece?'}</h2><p>{ko ? '공간과 행사, 원하시는 색감을 알려주세요. 메이플레르의 감각으로 맞춤 제작합니다.' : 'Tell us about your space, occasion and palette. We design bespoke arrangements to order.'}</p><a className="button primary" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">Custom Order Inquiry</a></div></section>
     <section className="fresh-collection container"><div><span className="coming-label">{ko ? '준비 중' : 'Coming Soon'}</span><h2>{ko ? '생화 컬렉션' : 'Fresh Flower Collection'}</h2><p>{ko ? '계절의 생화 어레인지먼트가 곧 준비됩니다. 가장 먼저 소식을 받아보세요.' : 'Seasonal fresh flower arrangements are arriving soon. Join us to be the first to know.'}</p></div><Media file={selectedWorks[0]} alt="Fresh flower collection" /></section>
   </div>
 }
@@ -217,7 +219,7 @@ function Shop({ lang, detail }) {
 function ProductDetail({ product, lang }) {
   const ko = lang === 'ko'; const media = product.media
   return <div className="page fade-in product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
-    <div className="detail-top"><div className="detail-main"><Media file={media[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></div>
+    <div className="detail-top"><div className="detail-main"><Media file={media[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 주문 문의' : 'Order via Kakao'}</a></div></div>
     <div className="detail-gallery">{media.slice(1).map((file, i) => <figure className="detail-gallery-item" key={file}><Media file={file} alt={`${product.name} detail ${i + 2}`} /></figure>)}</div>
   </div>
 }
@@ -348,8 +350,12 @@ function Contact({ lang }) {
   const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
     <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><button className="button primary" type="submit">{ko ? '메시지 보내기' : 'Send Message'}</button></form>}
-      <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
+      <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '메이플레르 카카오채널' : 'Mayfleur Kakao Channel'}</a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
   </div>
+}
+
+function KakaoChannelButton({ lang }) {
+  return <a className="kakao-channel-button" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={lang === 'ko' ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><span className="kakao-channel-icon" aria-hidden="true" /><span>{lang === 'ko' ? '카카오 문의' : 'Kakao Chat'}</span></a>
 }
 
 function App() {
@@ -361,7 +367,7 @@ function App() {
     gallery: <Gallery lang={lang} />, portfolio: <Portfolio lang={lang} detail={route[1]} />,
     services: <Services lang={lang} />, books: <Books lang={lang} />, contact: <Contact lang={lang} />,
   }), [page, route[1], lang])
-  return <><Header page={page} lang={lang} setLang={setLang} /><main>{content[page]}</main><Footer lang={lang} /></>
+  return <><Header page={page} lang={lang} setLang={setLang} /><main>{content[page]}</main><Footer lang={lang} /><KakaoChannelButton lang={lang} /></>
 }
 
 export default App
