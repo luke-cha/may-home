@@ -25,7 +25,7 @@ const serviceCopy = {
     en: 'We create floral environments that enhance the atmosphere and purpose of each space — from retail displays and events to weddings and photoshoots.',
     ko: '꽃과 자연의 요소를 활용해 공간의 분위기와 목적에 맞는 플로럴 스타일링을 제공합니다.',
     listTitle: 'Areas',
-    list: ['Retail & Showroom Styling', 'Event & Wedding Styling', 'Brand Space Styling', 'Photoshoot Set Styling'],
+    list: ['Retail & Showroom Styling', 'Brand Space Styling', 'Wedding Photoshoot Styling'],
   },
   'Brand Collaboration': {
     en: 'We collaborate with brands to create floral concepts and visual experiences that reflect their identity and values.',
@@ -98,7 +98,7 @@ const shopCategories = directFolders('02 Shop/', 1)
     name: cleanFolderName(name),
     products: directFolders(`02 Shop/${name}/`, 2).map((product) => ({
       raw: product, name: cleanFolderName(product), category: cleanFolderName(name),
-      media: under(`02 Shop/${name}/${product}/`),
+      media: numericMediaSort(under(`02 Shop/${name}/${product}/`)),
     })).filter((product) => product.media.length),
   }))
 
@@ -211,10 +211,10 @@ function Shop({ lang, detail }) {
 }
 
 function ProductDetail({ product, lang }) {
-  const ko = lang === 'ko'; const photos = imagesOnly(product.media)
+  const ko = lang === 'ko'; const media = product.media
   return <div className="page fade-in product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
-    <div className="detail-top"><div className="detail-main"><Media file={photos[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></div>
-    <div className="detail-gallery">{photos.slice(1).map((file, i) => <Media key={file} file={file} alt={`${product.name} detail ${i + 2}`} />)}</div>
+    <div className="detail-top"><div className="detail-main"><Media file={media[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></div>
+    <div className="detail-gallery">{media.slice(1).map((file, i) => <figure className="detail-gallery-item" key={file}><Media file={file} alt={`${product.name} detail ${i + 2}`} /></figure>)}</div>
   </div>
 }
 
