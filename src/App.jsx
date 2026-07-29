@@ -51,7 +51,7 @@ const projectCopy = {
   'Greystone Mansion Wedding (Los Angeles)': { ko: '로스앤젤레스의 역사적인 Greystone Mansion에서 Fleurina Flowers와 함께 완성한 웨딩 플로럴 디자인입니다.', en: 'Wedding floral design at the historic Greystone Mansion in Los Angeles, created with Fleurina Flowers.' },
   'US Wedding Photoshoot (Los Angeles)': { ko: 'Fleurina Flowers와 협업해 진행한 미국 웨딩 에디토리얼 플로럴 디렉션입니다.', en: 'Floral direction for a US wedding editorial, produced in collaboration with Fleurina Flowers.' },
   'Laura Studio Floral Directing': { ko: '스튜디오의 시각적 정체성을 계절의 꽃과 자연스러운 구성으로 풀어낸 플로럴 디렉팅입니다.', en: 'Seasonal floral direction shaping the visual identity of Laura Studio.' },
-  'studio madive': { ko: 'Studio Madive의 톤을 고요하고 자연스러운 플로럴 세팅으로 번역한 프로젝트입니다.', en: 'Quiet, natural floral settings translating the distinctive tone of Studio Madive.' },
+  'studio madive': { ko: '화사한 색감의 꽃으로 공간에 생동감을 더한 Studio Madive 플로럴 세팅 프로젝트입니다.', en: 'A vibrant floral setting for Studio Madive, bringing the space to life with bright, expressive colour.' },
   Zigzag: { ko: '브랜드의 따뜻한 인상을 전하는 지그재그 웰컴 플라워 기프트 프로젝트입니다.', en: 'A floral welcome-gift programme designed to carry Zigzag’s warmth.' },
   KAKAO: { ko: '계절의 소재와 직접 만드는 경험을 중심으로 구성한 카카오 기업 워크숍입니다.', en: 'A Kakao corporate workshop centred on seasonal materials and hands-on making.' },
   NAVER: { ko: '조직의 공간과 참여자를 고려해 설계한 네이버 기업 플로럴 워크숍입니다.', en: 'A NAVER corporate floral workshop designed around its people and place.' },
