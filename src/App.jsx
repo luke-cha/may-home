@@ -204,9 +204,9 @@ function Shop({ lang, detail }) {
       <aside className="shop-filter"><span className="eyebrow">{ko ? '카테고리' : 'Browse'}</span><button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{ko ? '전체' : 'All'}<span>{shopProducts.length}</span></button>{shopCategories.map((cat) => <button key={cat.name} className={category === slug(cat.name) ? 'active' : ''} onClick={() => setCategory(slug(cat.name))}>{categoryNames[cat.name]?.[ko ? 1 : 0] || cat.name}<span>{cat.products.length}</span></button>)}</aside>
       <div className="product-grid">{products.map((product) => <a href={`#shop/${slug(product.name)}`} className="product-card" key={product.name}><div className="card-media"><Media file={imagesOnly(product.media)[0]} alt={product.name} /></div><span className="card-kicker">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h3>{product.name}</h3><p>{ko ? '주문 제작 · 상담 후 안내' : 'Made to order · Price on request'}</p></a>)}</div>
     </section>
+    <ProductGuide lang={lang} />
     <section className="paper-panel custom-order"><div><span className="rule" /><h2>{ko ? '맞춤 플로럴 작품을 찾고 계신가요?' : 'Looking for a custom floral piece?'}</h2><p>{ko ? '공간과 행사, 원하시는 색감을 알려주세요. 메이플레르의 감각으로 맞춤 제작합니다.' : 'Tell us about your space, occasion and palette. We design bespoke arrangements to order.'}</p><a className="button primary" href="#contact">Custom Order Inquiry</a></div></section>
     <section className="fresh-collection container"><div><span className="coming-label">{ko ? '준비 중' : 'Coming Soon'}</span><h2>{ko ? '생화 컬렉션' : 'Fresh Flower Collection'}</h2><p>{ko ? '계절의 생화 어레인지먼트가 곧 준비됩니다. 가장 먼저 소식을 받아보세요.' : 'Seasonal fresh flower arrangements are arriving soon. Join us to be the first to know.'}</p></div><Media file={selectedWorks[0]} alt="Fresh flower collection" /></section>
-    <ProductGuide lang={lang} />
   </div>
 }
 
@@ -281,7 +281,14 @@ function Credential({ title, items }) { return <section className="credential-se
 
 function Gallery({ lang }) {
   const ko = lang === 'ko'; const [filter, setFilter] = useState('all'); const [limit, setLimit] = useState(60)
-  const list = filter === 'all' ? [...galleryGroups.works, ...galleryGroups.spaces] : galleryGroups[filter]
+  const alternateRows = (first, second, rowSize = 4) => {
+    const rows = Math.max(Math.ceil(first.length / rowSize), Math.ceil(second.length / rowSize))
+    return Array.from({ length: rows }, (_, i) => [
+      ...first.slice(i * rowSize, (i + 1) * rowSize),
+      ...second.slice(i * rowSize, (i + 1) * rowSize),
+    ]).flat()
+  }
+  const list = filter === 'all' ? alternateRows(galleryGroups.spaces, galleryGroups.works) : galleryGroups[filter]
   useEffect(() => setLimit(60), [filter])
   return <div className="page fade-in"><PageHead eyebrow={`— ${ko ? '갤러리' : 'Gallery'}`} title="A Visual Archive of Mayfleur" sub={ko ? '꽃, 오브제, 계절 그리고 순간들' : 'Flowers, objects, seasons and moments'} note={ko ? '생화 · 공간 스타일링 · 워크샵 · 순간 · 작업 과정 모음집' : 'Fresh flowers · spatial styling · workshops · moments · process'} />
     <section className="container"><div className="filter-chips">{[['all', ko ? '전체' : 'All'], ['works', ko ? '플로럴 작품' : 'Floral Works'], ['spaces', ko ? '공간 스타일링' : 'Space Styling']].map(([id, text]) => <button key={id} className={filter === id ? 'active' : ''} onClick={() => setFilter(id)}>{text}</button>)}</div>
