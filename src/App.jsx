@@ -332,7 +332,7 @@ function Services({ lang }) {
   const ko = lang === 'ko'
   return <div className="page fade-in services-page"><PageHead title="Services" />
     <section className="services container">{services.map((service, i) => { const copy = serviceCopy[service.name]; const photos = imagesOnly(service.media); return <article key={service.name} className="service"><div className="service-copy"><div className="service-heading"><span className="service-no">0{i + 1}</span><h2>{service.name}</h2></div><p>{copy?.[lang] || copy?.en}</p>{copy?.listTitle && <span className="service-list-title">{copy.listTitle}</span>}<div className="service-list">{copy?.list.map((item) => <span key={item}>{item}</span>)}</div><a className="button ghost" href="#contact">{service.name === 'Global Workshops' ? 'Host Inquiry' : 'Inquiry'}</a></div><div className="service-images">{photos.slice(0, 4).map((file) => <Media key={file} file={file} alt={service.name} />)}</div></article>})}</section>
-    <section className="coming-soon"><span className="eyebrow">Coming Soon</span><h2>Private Classes</h2><p>{ko ? '소수를 위한 프라이빗 클래스를 준비하고 있습니다.' : 'Intimate private classes are in preparation.'}</p></section>
+
   </div>
 }
 
