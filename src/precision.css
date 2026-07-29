@@ -96,9 +96,9 @@ img,video{height:auto}
 .guide .section-title h2{font-size:clamp(22px,2.2vw,28px);line-height:1.1}
 .detail-copy .eyebrow{font-size:11px;letter-spacing:.2em}.detail-copy h1{font-size:clamp(26px,3vw,38px);line-height:1;letter-spacing:-.015em}.detail-copy>p:not(.detail-price){font-size:16px;line-height:1.7}
 .detail-main img,.detail-main video{width:100%;height:auto;aspect-ratio:1;object-fit:cover}
-.product-detail .detail-gallery{display:flex;flex-direction:column;align-items:center;gap:clamp(38px,5vw,68px);margin-top:clamp(48px,7vw,84px)}
+.product-detail .detail-gallery{display:flex;flex-direction:column;align-items:center;gap:clamp(24px,3vw,40px);margin-top:clamp(44px,6vw,72px)}
 .detail-gallery-item{display:flex;width:100%;margin:0;justify-content:center;align-items:flex-start}
-.detail-gallery-item img,.detail-gallery-item video{display:block;width:min(100%,600px);height:auto;max-height:780px;aspect-ratio:auto;object-fit:contain;background:transparent}
+.detail-gallery-item img,.detail-gallery-item video{display:block;width:min(100%,520px);height:auto;max-height:none;aspect-ratio:2/3;object-fit:cover;background:transparent}
 
 /* About */
 .about-banner{padding-top:clamp(32px,4vw,52px)}
@@ -114,7 +114,7 @@ img,video{height:auto}
 .credential-section{display:block;padding:26px 0;border-bottom:1px solid var(--divider)}
 .credential-section h3{margin:0 0 12px}.credential-list{display:block!important;list-style:none;margin:0;padding:0;min-width:0}
 .credential-list li{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:8px 0;font-family:var(--body);font-size:15px;line-height:1.5;color:rgba(42,37,33,.84)}
-.credential-list li+li{border-top:1px solid rgba(42,37,33,.07)}.credential-list li>span{min-width:0}
+.credential-list li+li{border-top:1px solid rgba(42,37,33,.07)}.credential-list li>span{min-width:0;font-weight:400}
 .credential-list small{flex:none;font-family:var(--body);font-size:11px;line-height:1.4;letter-spacing:.05em;color:rgba(42,37,33,.52);text-align:right}
 .credential-list small.status{padding:4px 8px;border:1px solid var(--divider);border-radius:2px;text-transform:uppercase;letter-spacing:.09em}
 .credential-list small.status.complete{color:#66654a}.credential-list small.status.upcoming{background:rgba(138,114,86,.1);color:var(--accent-2);border-color:rgba(138,114,86,.28)}
