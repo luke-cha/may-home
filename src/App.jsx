@@ -53,7 +53,7 @@ const projectCopy = {
   'Laura Studio Floral Directing': { ko: '스튜디오의 시각적 정체성을 계절의 꽃과 자연스러운 구성으로 풀어낸 플로럴 디렉팅입니다.', en: 'Seasonal floral direction shaping the visual identity of Laura Studio.' },
   'studio madive': { ko: '화사한 색감의 꽃으로 공간에 생동감을 더한 Studio Madive 플로럴 세팅 프로젝트입니다.', en: 'A vibrant floral setting for Studio Madive, bringing the space to life with bright, expressive colour.' },
   'revemoire studio': { ko: '동화 같은 색감을 테마로, 웨딩 촬영을 위한 꽃과 공간을 함께 구성한 레브무아르 스튜디오 플라워 디렉팅 프로젝트입니다.', en: 'Floral direction for a wedding photoshoot at Revemoire Studio, composing flowers and space around a storybook-inspired colour palette.' },
-  Zigzag: { ko: '브랜드의 따뜻한 인상을 전하는 지그재그 웰컴 플라워 기프트 프로젝트입니다.', en: 'A floral welcome-gift programme designed to carry Zigzag’s warmth.' },
+  Zigzag: { ko: '지그재그 파트너 크리에이터를 위한 웰컴 플라워 기프트 프로젝트입니다.', en: 'A floral welcome-gift project created for Zigzag’s partner creators.' },
   KAKAO: { ko: '계절의 소재와 직접 만드는 경험을 중심으로 구성한 카카오 기업 워크숍입니다.', en: 'A Kakao corporate workshop centred on seasonal materials and hands-on making.' },
   NAVER: { ko: '조직의 공간과 참여자를 고려해 설계한 네이버 기업 플로럴 워크숍입니다.', en: 'A NAVER corporate floral workshop designed around its people and place.' },
   hwigyumjae: { ko: '브랜드 웨딩 장소로 사랑받는 한국 전통 한옥 휘겸재를 위해, 자연 소재와 계절 꽃으로 완성한 친환경 센터피스 프로젝트입니다.', en: 'Eco-conscious centrepieces made with natural materials and seasonal flowers for Hwigyumjae, a traditional Korean hanok celebrated as a brand wedding venue.' },
