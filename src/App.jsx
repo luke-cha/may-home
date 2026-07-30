@@ -154,6 +154,7 @@ const profilePhoto = imagesOnly(under('03 About/Profile/'))[0]
 const galleryGroups = {
   works: numericMediaSort(under('04 Gallery/Floral Works/')),
   spaces: numericMediaSort(under('04 Gallery/Space Styling/')),
+  artificial: numericMediaSort(under('04 Gallery/Artificial Flower/')),
 }
 const bookFiles = imagesOnly(under('07 Books/'))
 
@@ -355,14 +356,11 @@ function Credential({ title, items }) { return <section className="credential-se
 
 function Gallery({ lang }) {
   const ko = lang === 'ko'; const [filter, setFilter] = useState('all'); const [limit, setLimit] = useState(60); const [selected, setSelected] = useState(null)
-  const alternateRows = (first, second, rowSize = 4) => {
-    const rows = Math.max(Math.ceil(first.length / rowSize), Math.ceil(second.length / rowSize))
-    return Array.from({ length: rows }, (_, i) => [
-      ...first.slice(i * rowSize, (i + 1) * rowSize),
-      ...second.slice(i * rowSize, (i + 1) * rowSize),
-    ]).flat()
+  const alternateRows = (groups, rowSize = 4) => {
+    const rows = Math.max(...groups.map((group) => Math.ceil(group.length / rowSize)))
+    return Array.from({ length: rows }, (_, i) => groups.flatMap((group) => group.slice(i * rowSize, (i + 1) * rowSize))).flat()
   }
-  const list = filter === 'all' ? alternateRows(galleryGroups.spaces, galleryGroups.works) : galleryGroups[filter]
+  const list = filter === 'all' ? alternateRows([galleryGroups.spaces, galleryGroups.works, galleryGroups.artificial]) : galleryGroups[filter]
   useEffect(() => { setLimit(60); setSelected(null) }, [filter])
   useEffect(() => {
     if (!selected) return undefined
@@ -373,7 +371,7 @@ function Gallery({ lang }) {
     return () => { document.body.style.overflow = previousOverflow; window.removeEventListener('keydown', close) }
   }, [selected])
   return <div className="page fade-in gallery-page"><PageHead eyebrow={`— ${ko ? '갤러리' : 'Gallery'}`} title="A Visual Archive of Mayfleur" sub={ko ? '꽃, 오브제, 계절 그리고 순간들' : 'Flowers, objects, seasons and moments'} note={ko ? '생화 · 공간 스타일링 · 워크샵 · 순간 · 작업 과정 모음집' : 'Fresh flowers · spatial styling · workshops · moments · process'} />
-    <section className="container"><div className="filter-chips">{[['all', ko ? '전체' : 'All'], ['works', ko ? '플로럴 작품' : 'Floral Works'], ['spaces', ko ? '공간 스타일링' : 'Space Styling']].map(([id, text]) => <button key={id} className={filter === id ? 'active' : ''} onClick={() => setFilter(id)}>{text}</button>)}</div>
+    <section className="container"><div className="filter-chips">{[['all', ko ? '전체' : 'All'], ['works', ko ? '플로럴 작품' : 'Floral Works'], ['spaces', ko ? '공간 스타일링' : 'Space Styling'], ['artificial', ko ? '조화' : 'Artificial Flowers']].map(([id, text]) => <button key={id} className={filter === id ? 'active' : ''} onClick={() => setFilter(id)}>{text}</button>)}</div>
       <div className="masonry">{list.slice(0, limit).map((file, i) => <figure key={file}><button type="button" className="gallery-media-button" onClick={() => setSelected({ file, index: i + 1 })} aria-label={`${ko ? '갤러리 이미지 크게 보기' : 'View gallery image larger'} ${i + 1}`}><Media file={file} alt={`Mayfleur gallery ${i + 1}`} /></button></figure>)}</div>
       {limit < list.length && <button className="button ghost load-more" onClick={() => setLimit((v) => v + 60)}>{ko ? '더 보기' : 'Load More'}</button>}
     </section>
