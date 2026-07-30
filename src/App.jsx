@@ -23,6 +23,39 @@ const categoryNames = {
   'Floral Objects': ['Floral Objects', '플로럴 오브제'],
 }
 
+const shopInquiryTemplate = {
+  ko: `생화
+
+□ 카카오 T 퀵
+
+조화
+
+□ 택배
+□ 카카오 T 퀵
+
+※ 생화는 카카오 T 퀵 배송만 가능합니다.
+
+※ 카카오 T 퀵 배송비 지원
+
+20만 원 이상 주문 시 최대 10,000원 지원
+30만 원 이상 주문 시 최대 20,000원 지원`,
+  en: `Fresh Flowers
+
+□ Kakao T Quick
+
+Artificial Flowers
+
+□ Parcel Delivery
+□ Kakao T Quick
+
+※ Fresh flowers are available through Kakao T Quick delivery only.
+
+※ Kakao T Quick delivery support
+
+Orders over KRW 200,000: up to KRW 10,000
+Orders over KRW 300,000: up to KRW 20,000`,
+}
+
 const orderGuide = {
   ko: {
     intro: ['모든 작품은 주문 후 제작되는 핸드메이드 플라워 오브제입니다.', '주문 전 상품 상세 페이지의 Order Guide를 확인해 주세요.'],
@@ -424,9 +457,14 @@ function Books({ lang }) {
 }
 
 function Contact({ lang }) {
-  const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
+  const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop'); const [messages, setMessages] = useState(() => ({ Shop: shopInquiryTemplate[lang] }))
+  useEffect(() => setMessages((current) => {
+    const existing = current.Shop
+    if (existing === shopInquiryTemplate.ko || existing === shopInquiryTemplate.en) return { ...current, Shop: shopInquiryTemplate[lang] }
+    return current
+  }), [lang])
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
-    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><button className="button primary" type="submit">{ko ? '메시지 보내기' : 'Send Message'}</button></form>}
+    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows={type === 'Shop' ? 16 : 6} className={type === 'Shop' ? 'shop-message-template' : ''} value={messages[type] || ''} onChange={(event) => setMessages((current) => ({ ...current, [type]: event.target.value }))} placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><button className="button primary" type="submit">{ko ? '메시지 보내기' : 'Send Message'}</button></form>}
       <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
   </div>
 }
