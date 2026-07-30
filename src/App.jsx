@@ -23,6 +23,67 @@ const categoryNames = {
   'Floral Objects': ['Floral Objects', '플로럴 오브제'],
 }
 
+const orderGuide = {
+  ko: {
+    intro: ['모든 작품은 주문 후 제작되는 핸드메이드 플라워 오브제입니다.', '주문 전 상품 상세 페이지의 Order Guide를 확인해 주세요.'],
+    sections: [
+      ['01 | Design & Production', [
+        '모든 작품은 주문 후 제작되는 핸드메이드 플라워 오브제입니다.',
+        '제작 기간은 평균 7~15일 정도 소요됩니다.',
+        '주문 전 상담을 통해 원하시는 색감과 무드를 반영하여 제작합니다.',
+        '상품 이미지는 샘플 작품이며, 조화 및 화기는 수급 상황에 따라 유사한 소재로 대체될 수 있습니다. 전체적인 색감과 분위기를 유지하여 제작됩니다.',
+        '기존 디자인의 구조를 유지하는 범위 내에서 일부 꽃 소재 및 색상 변경이 가능합니다.',
+        '완성 후 출고 전 최종 확인 이미지를 전달드립니다.',
+      ]],
+      ['02 | Delivery', [
+        '대부분의 작품은 전국 택배 발송이 가능합니다.',
+        '세라믹 화기, 토분 등 파손 위험이 높은 일부 작품은 서울·경기 지역에 한하여 카카오 T 퀵(차량 배송)으로 진행됩니다.',
+        '퀵 배송비는 지역에 따라 상이하며,\n20만 원 이상 주문 시 최대 10,000원,\n30만 원 이상 주문 시 최대 20,000원까지 지원해 드립니다.',
+      ]],
+      ['03 | Order & Cancellation Policy', [
+        '모든 작품은 고객님의 주문에 맞춰 제작되는 주문 제작 상품입니다.',
+        '주문 확정 후 고객님만을 위한 소재 준비 및 제작이 시작되므로, 제작 시작 이후에는 단순 변심에 의한 주문 취소·교환·환불이 어렵습니다.',
+        '제품 이상이 있는 경우에는 수령 후 7일 이내 문의해 주시면 확인 후 안내드립니다.',
+      ]],
+      ['04 | Product Guide', [
+        '모든 작품은 플로리스트가 직접 제작하는 핸드메이드 오브제로, 형태와 배치는 작품마다 조금씩 다를 수 있습니다.',
+        '조화 특성상 미세한 프린팅 차이, 점, 접착 흔적 등이 있을 수 있으며 이는 불량이 아닙니다.',
+        '배송 과정에서 일부 소재가 분리될 수 있으나 대부분 간단히 재정리하여 사용 가능합니다.',
+        '모니터 환경에 따라 실제 색상은 다소 차이가 있을 수 있습니다.',
+      ]],
+    ],
+  },
+  en: {
+    intro: ['Every piece is a handmade floral object created after your order is placed.', 'Please review the Order Guide on the product detail page before ordering.'],
+    sections: [
+      ['01 | Design & Production', [
+        'Every piece is a handmade floral object created after your order is placed.',
+        'Production typically takes approximately 7–15 days.',
+        'Your preferred colour palette and mood can be discussed before production.',
+        'Product images show sample pieces. Artificial flowers and vessels may be replaced with similar materials depending on availability while preserving the overall palette and mood.',
+        'Selected flower materials and colours may be adjusted while maintaining the structure of the original design.',
+        'A final confirmation image will be sent before dispatch.',
+      ]],
+      ['02 | Delivery', [
+        'Most pieces can be shipped nationwide within Korea.',
+        'Selected pieces with a higher risk of damage, including ceramic vessels and terracotta pots, are delivered within Seoul and Gyeonggi via Kakao T Quick vehicle delivery.',
+        'Quick-delivery fees vary by location.\nOrders over KRW 200,000 receive support of up to KRW 10,000, and orders over KRW 300,000 receive support of up to KRW 20,000.',
+      ]],
+      ['03 | Order & Cancellation Policy', [
+        'Every piece is made to order for each customer.',
+        'Materials are prepared and production begins after confirmation, so cancellations, exchanges and refunds for a change of mind are not available once production has started.',
+        'If there is an issue with your product, please contact us within seven days of receipt.',
+      ]],
+      ['04 | Product Guide', [
+        'Each piece is handmade by a florist, so form and placement may vary slightly.',
+        'Minor printing differences, marks or traces of adhesive can occur with artificial flowers and are not considered defects.',
+        'Some materials may shift during delivery and can usually be arranged easily by hand.',
+        'Actual colours may vary slightly depending on your monitor settings.',
+      ]],
+    ],
+  },
+}
+
 const serviceCopy = {
   'Floral Styling': {
     en: 'We create floral environments that enhance the atmosphere and purpose of each space — from retail displays and events to weddings and photoshoots.',
@@ -218,11 +279,17 @@ function Shop({ lang, detail }) {
 }
 
 function ProductDetail({ product, lang }) {
-  const ko = lang === 'ko'; const media = product.media
+  const ko = lang === 'ko'; const media = product.media; const guide = orderGuide[lang]
   return <div className="page fade-in product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
+    <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
     <div className="detail-top"><div className="detail-main"><Media file={media[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 주문 문의' : 'Order via Kakao'}</a></div></div>
     <div className="detail-gallery">{media.slice(1).map((file, i) => <figure className="detail-gallery-item" key={file}><Media file={file} alt={`${product.name} detail ${i + 2}`} /></figure>)}</div>
+    <OrderGuide guide={guide} />
   </div>
+}
+
+function OrderGuide({ guide }) {
+  return <section className="product-order-guide"><span className="eyebrow">/ Order Guide</span>{guide.sections.map(([title, items]) => <article key={title}><h2>{title}</h2><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</section>
 }
 
 function ProductGuide({ lang }) {
