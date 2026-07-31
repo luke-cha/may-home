@@ -421,10 +421,43 @@ function Books({ lang }) {
   </div>
 }
 
+function OrderInquiry({ ko }) {
+  const [orderType, setOrderType] = useState('fresh')
+  const [delivery, setDelivery] = useState('quick')
+  const changeOrderType = (value) => { setOrderType(value); setDelivery(value === 'fresh' ? 'quick' : 'parcel') }
+  return <section className="order-inquiry">
+    <span className="order-inquiry-title">/ Order Inquiry</span>
+    <fieldset className="order-choice"><legend>{ko ? '주문 유형 *' : 'Order Type *'}</legend><div className="radio-row"><label><input required type="radio" name="orderType" value="fresh" checked={orderType === 'fresh'} onChange={() => changeOrderType('fresh')} />{ko ? '생화' : 'Fresh Flowers'}</label><label><input type="radio" name="orderType" value="artificial" checked={orderType === 'artificial'} onChange={() => changeOrderType('artificial')} />{ko ? '조화' : 'Artificial Flowers'}</label></div></fieldset>
+    <div className="order-notes"><p>{ko ? '※ 생화 꽃다발은 15만 원 이상부터 주문 가능합니다.' : '※ Fresh flower bouquets are available for orders over KRW 150,000.'}</p><p>{ko ? '※ 생화 및 조화 맞춤 제작(Custom Order)은 20만 원 이상부터 진행됩니다.' : '※ Custom orders for fresh and artificial flowers are available from KRW 200,000.'}</p></div>
+    <div className="order-fields">
+      <label>{ko ? '상품명 *' : 'Product *'}<input required name="product" /></label>
+      <label>{ko ? '예상 예산 *' : 'Estimated Budget *'}<input required name="budget" inputMode="numeric" /></label>
+      <label className="full">{ko ? '선호하는 색감 및 분위기' : 'Preferred Colours & Mood'}<textarea name="colourMood" rows="2" /></label>
+      <label className="full">{ko ? '요청 사항' : 'Requests'}<textarea name="requests" rows="3" /></label>
+      <label>{ko ? '주문자 성함 *' : 'Orderer Name *'}<input required name="ordererName" /></label>
+      <label>{ko ? '주문자 연락처 *' : 'Orderer Phone *'}<input required type="tel" name="ordererPhone" /></label>
+      <label>{ko ? '받는 분 성함' : 'Recipient Name'}<input name="recipientName" /></label>
+      <label>{ko ? '받는 분 연락처' : 'Recipient Phone'}<input type="tel" name="recipientPhone" /></label>
+      <label className="full">{ko ? '배송 주소 *' : 'Delivery Address *'}<textarea required name="address" rows="2" /></label>
+    </div>
+    <div className="order-notes"><p>{ko ? '※ 배송 주소를 작성해 주시면 카카오 T 퀵 예상 배송비를 안내해 드립니다.' : '※ Enter your address to receive an estimated Kakao T Quick delivery fee.'}</p><p>{ko ? '※ 방문 수령은 불가하며, 모든 주문은 배송으로만 진행됩니다.' : '※ Collection is not available; all orders are delivered.'}</p></div>
+    <div className="order-fields"><label>{ko ? '희망 수령일 *' : 'Preferred Delivery Date *'}<input required type="date" name="deliveryDate" /></label></div>
+    <fieldset className="delivery-choice"><legend>{ko ? '배송 방법' : 'Delivery Method'}</legend>
+      <div><span>{ko ? '생화 :' : 'Fresh Flowers:'}</span><label className={orderType !== 'fresh' ? 'disabled' : ''}><input required={orderType === 'fresh'} disabled={orderType !== 'fresh'} type="radio" name="delivery" value="quick" checked={orderType === 'fresh' && delivery === 'quick'} onChange={() => setDelivery('quick')} />{ko ? '카카오 T 퀵' : 'Kakao T Quick'}</label></div>
+      <div><span>{ko ? '조화 :' : 'Artificial Flowers:'}</span><label className={orderType !== 'artificial' ? 'disabled' : ''}><input required={orderType === 'artificial'} disabled={orderType !== 'artificial'} type="radio" name="delivery" value="parcel" checked={orderType === 'artificial' && delivery === 'parcel'} onChange={() => setDelivery('parcel')} />{ko ? '택배' : 'Parcel'}</label><label className={orderType !== 'artificial' ? 'disabled' : ''}><input disabled={orderType !== 'artificial'} type="radio" name="delivery" value="quick" checked={orderType === 'artificial' && delivery === 'quick'} onChange={() => setDelivery('quick')} />{ko ? '카카오 T 퀵' : 'Kakao T Quick'}</label></div>
+    </fieldset>
+    <div className="order-notes delivery-support"><p>{ko ? '※ 생화는 카카오 T 퀵 배송만 가능합니다.' : '※ Fresh flowers are delivered through Kakao T Quick only.'}</p><p>{ko ? '※ 카카오 T 퀵 배송비 지원' : '※ Kakao T Quick delivery support'}</p><p>{ko ? '20만 원 이상 주문: 최대 10,000원 지원' : 'Orders over KRW 200,000: up to KRW 10,000'}</p><p>{ko ? '30만 원 이상 주문: 최대 20,000원 지원' : 'Orders over KRW 300,000: up to KRW 20,000'}</p></div>
+  </section>
+}
+
 function Contact({ lang }) {
   const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
-    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><button className="button primary" type="submit">{ko ? '메시지 보내기' : 'Send Message'}</button></form>}
+    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
+        <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset>
+        {type === 'Shop' ? <OrderInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label></>}
+        <button className="button primary" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
+      </form>}
       <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
   </div>
 }
