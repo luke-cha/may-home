@@ -360,7 +360,7 @@ function Gallery({ lang }) {
     const rows = Math.max(...groups.map((group) => Math.ceil(group.length / rowSize)))
     return Array.from({ length: rows }, (_, i) => groups.flatMap((group) => group.slice(i * rowSize, (i + 1) * rowSize))).flat()
   }
-  const list = filter === 'all' ? alternateRows([galleryGroups.spaces, galleryGroups.works, galleryGroups.artificial]) : galleryGroups[filter]
+  const list = filter === 'all' ? alternateRows([galleryGroups.spaces, galleryGroups.works]) : galleryGroups[filter]
   useEffect(() => { setLimit(60); setSelected(null) }, [filter])
   useEffect(() => {
     if (!selected) return undefined
