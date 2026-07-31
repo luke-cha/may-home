@@ -450,6 +450,30 @@ function OrderInquiry({ ko }) {
   </section>
 }
 
+function BrandCollaborationInquiry({ ko }) {
+  const [collaborationType, setCollaborationType] = useState('content')
+  const options = [
+    ['content', ko ? '브랜드 콘텐츠 & 촬영 스타일링' : 'Brand Content & Photoshoot Styling'],
+    ['space', ko ? '공간 플라워 스타일링' : 'Spatial Floral Styling'],
+    ['event', ko ? '행사 & 이벤트 플라워 연출' : 'Event Floral Direction'],
+  ]
+  return <section className="order-inquiry brand-inquiry">
+    <span className="order-inquiry-title">/ Brand Collaboration Inquiry</span>
+    <fieldset className="order-choice square-choice"><legend>{ko ? '협업 유형 *' : 'Collaboration Type *'}</legend><div className="radio-row vertical">{options.map(([value, label]) => <label key={value}><input required={value === 'content'} type="radio" name="collaborationType" value={value} checked={collaborationType === value} onChange={() => setCollaborationType(value)} />{label}</label>)}</div></fieldset>
+    <div className="order-fields brand-fields">
+      <label className="full">{ko ? '브랜드명 *' : 'Brand Name *'}<input required name="brandName" /></label>
+      <label>{ko ? '담당자 성함 *' : 'Contact Name *'}<input required name="brandContactName" /></label>
+      <label>{ko ? '연락처 *' : 'Phone *'}<input required type="tel" name="brandPhone" /></label>
+      <label className="full">{ko ? '이메일 *' : 'Email *'}<input required type="email" name="brandEmail" /></label>
+      <label className="full">{ko ? '협업 내용' : 'Collaboration Details'}<small className="label-note">{ko ? '(프로젝트 소개 및 요청 사항)' : '(Project introduction and requirements)'}</small><textarea name="collaborationDetails" rows="4" /></label>
+      <label>{ko ? '희망 일정 *' : 'Preferred Date *'}<input required type="date" name="collaborationDate" /></label>
+      <label>{ko ? '진행 장소' : 'Location'}<input name="collaborationLocation" /></label>
+      <label>{ko ? '협업 예산' : 'Collaboration Budget'}<input name="collaborationBudget" inputMode="numeric" /></label>
+      <label className="full">{ko ? '요청 사항' : 'Additional Requests'}<textarea name="brandRequests" rows="3" /></label>
+    </div>
+  </section>
+}
+
 function WorkshopInquiry({ ko }) {
   const [workshopType, setWorkshopType] = useState('corporate')
   return <section className="order-inquiry workshop-inquiry">
@@ -472,12 +496,31 @@ function WorkshopInquiry({ ko }) {
   </section>
 }
 
+function GlobalWorkshopInquiry() {
+  return <section className="order-inquiry global-workshop-inquiry" lang="en">
+    <span className="order-inquiry-title">/ Global Workshop Inquiry</span>
+    <div className="order-fields">
+      <label className="full">Organization / Host Name *<input required name="globalOrganization" /></label>
+      <label>Contact Person *<input required name="globalContactName" /></label>
+      <label>Email *<input required type="email" name="globalEmail" /></label>
+      <label>Phone<input type="tel" name="globalPhone" /></label>
+      <label>Country & City *<input required name="globalLocation" /></label>
+      <label>Preferred Dates *<input required name="globalDates" placeholder="e.g. September 10–12, 2027" /></label>
+      <label>Expected Participants *<input required type="number" min="1" name="globalParticipants" /></label>
+      <label className="full">Venue<input name="globalVenue" /></label>
+      <label className="full">Proposed Programme / Collaboration Details *<textarea required name="globalDetails" rows="4" /></label>
+      <label>Estimated Budget<input name="globalBudget" /></label>
+      <label className="full">Additional Requests<textarea name="globalRequests" rows="3" /></label>
+    </div>
+  </section>
+}
+
 function Contact({ lang }) {
   const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
     <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
-        <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset>
-        {type === 'Shop' ? <OrderInquiry ko={ko} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label></>}
+        <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','샵'], ['Workshop','워크샵'], ['Global Workshop','Global Workshop'], ['Brand Collaboration','브랜드 협업'], ['Styling','스타일링'], ['Other','기타']].map(([item, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : item}</button>)}</div></fieldset>
+        {type === 'Shop' ? <OrderInquiry ko={ko} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label></>}
         <button className="button primary" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
       </form>}
       <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
