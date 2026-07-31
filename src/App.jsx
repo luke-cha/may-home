@@ -273,6 +273,7 @@ function Shop({ lang, detail }) {
       <aside className="shop-filter"><span className="eyebrow">{ko ? '카테고리' : 'Browse'}</span><button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{ko ? '전체' : 'All'}<span>{shopProducts.length}</span></button>{shopCategories.map((cat) => <button key={cat.name} className={category === slug(cat.name) ? 'active' : ''} onClick={() => setCategory(slug(cat.name))}>{categoryNames[cat.name]?.[ko ? 1 : 0] || cat.name}<span>{cat.products.length}</span></button>)}</aside>
       <div className="product-grid">{products.map((product) => <a href={`#shop/${slug(product.name)}`} className="product-card" key={product.name}><div className="card-media"><Media file={imagesOnly(product.media)[0]} alt={product.name} /></div><span className="card-kicker">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h3>{product.name}</h3><p>{ko ? '주문 제작 · 상담 후 안내' : 'Made to order · Price on request'}</p></a>)}</div>
     </section>
+    <section className="shop-gallery-bridge container"><div className="shop-gallery-bridge-copy"><span className="eyebrow">Artificial Flower Gallery</span><h2>{ko ? '조화 상품을 더 보고 싶으신가요?' : 'Would you like to see more artificial floral work?'}</h2><p>{ko ? '메이플레르의 다양한 조화 플라워 스타일링을 갤러리에서 만나보세요.' : 'Discover more artificial flower styling by Mayfleur in the gallery.'}</p><a className="text-link" href="#gallery/artificial">{ko ? '조화 갤러리 보기' : 'View Artificial Flower Gallery'} →</a></div><div className="shop-gallery-bridge-images">{imagesOnly(galleryGroups.artificial).slice(0, 4).map((file, i) => <a href="#gallery/artificial" key={file}><Media file={file} alt={`${ko ? '조화 갤러리' : 'Artificial flower gallery'} ${i + 1}`} /></a>)}</div></section>
     <ProductGuide lang={lang} />
     <section className="paper-panel custom-order"><div><span className="rule" /><h2>{ko ? '맞춤 플로럴 작품을 찾고 계신가요?' : 'Looking for a custom floral piece?'}</h2><p>{ko ? '공간과 행사, 원하시는 색감을 알려주세요. 메이플레르의 감각으로 맞춤 제작합니다.' : 'Tell us about your space, occasion and palette. We design bespoke arrangements to order.'}</p><a className="button primary" href="#contact">{ko ? '문의하기' : 'Custom Order Inquiry'}</a></div></section>
     <section className="fresh-collection container"><div><span className="coming-label">{ko ? '준비 중' : 'Coming Soon'}</span><h2>{ko ? '생화 컬렉션' : 'Fresh Flower Collection'}</h2><p>{ko ? '계절의 생화 어레인지먼트가 곧 준비됩니다. 가장 먼저 소식을 받아보세요.' : 'Seasonal fresh flower arrangements are arriving soon. Join us to be the first to know.'}</p></div><Media file={selectedWorks[0]} alt="Fresh flower collection" /></section>
@@ -354,13 +355,14 @@ function About({ lang }) {
 
 function Credential({ title, items }) { return <section className="credential-section"><h3>{title}</h3><ul className="credential-list">{items.map((item) => { const entry = typeof item === 'string' ? { name: item } : item; return <li key={`${entry.name}-${entry.meta || ''}`}><span>{entry.name}</span>{entry.meta && <small className={entry.status ? `status ${entry.status}` : ''}>{entry.meta}</small>}</li> })}</ul></section> }
 
-function Gallery({ lang }) {
-  const ko = lang === 'ko'; const [filter, setFilter] = useState('all'); const [limit, setLimit] = useState(60); const [selected, setSelected] = useState(null)
+function Gallery({ lang, detail }) {
+  const ko = lang === 'ko'; const initialFilter = ['works', 'spaces', 'artificial'].includes(detail) ? detail : 'all'; const [filter, setFilter] = useState(initialFilter); const [limit, setLimit] = useState(60); const [selected, setSelected] = useState(null)
   const alternateRows = (groups, rowSize = 4) => {
     const rows = Math.max(...groups.map((group) => Math.ceil(group.length / rowSize)))
     return Array.from({ length: rows }, (_, i) => groups.flatMap((group) => group.slice(i * rowSize, (i + 1) * rowSize))).flat()
   }
   const list = filter === 'all' ? alternateRows([galleryGroups.spaces, galleryGroups.works]) : galleryGroups[filter]
+  useEffect(() => { if (['works', 'spaces', 'artificial'].includes(detail)) setFilter(detail); else if (!detail) setFilter('all') }, [detail])
   useEffect(() => { setLimit(60); setSelected(null) }, [filter])
   useEffect(() => {
     if (!selected) return undefined
@@ -421,6 +423,35 @@ function Books({ lang }) {
   </div>
 }
 
+async function compressAttachment(file) {
+  if (!file.type.startsWith('image/')) throw new Error('image')
+  let bitmap
+  try { bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' }) } catch { if (file.size <= 5 * 1024 * 1024) return file; throw new Error('format') }
+  const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height))
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.round(bitmap.width * scale); canvas.height = Math.round(bitmap.height * scale)
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height)
+  bitmap.close?.()
+  const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', .78))
+  if (!blob || blob.size >= file.size) return file
+  return new File([blob], `${file.name.replace(/\.[^.]+$/, '')}.jpg`, { type: 'image/jpeg', lastModified: Date.now() })
+}
+
+function PhotoAttachment({ ko, name }) {
+  const [attachments, setAttachments] = useState([]); const [error, setError] = useState('')
+  useEffect(() => () => attachments.forEach((item) => URL.revokeObjectURL(item.url)), [attachments])
+  const choose = async (event) => {
+    const input = event.currentTarget; const selected = [...input.files].slice(0, 5); setError('')
+    try {
+      const files = await Promise.all(selected.map(compressAttachment))
+      const next = files.map((file) => ({ file, url: URL.createObjectURL(file) }))
+      setAttachments(next)
+      try { const transfer = new DataTransfer(); files.forEach((file) => transfer.items.add(file)); input.files = transfer.files } catch { /* Safari keeps the selected originals if assignment is unavailable. */ }
+    } catch { setAttachments([]); setError(ko ? 'JPG, PNG 또는 HEIC 사진을 선택해 주세요. 큰 HEIC 파일은 JPG로 변환 후 첨부해 주세요.' : 'Please select JPG, PNG or HEIC images. Convert large HEIC files to JPG before attaching.') }
+  }
+  return <fieldset className="photo-attachment"><legend>{ko ? '사진 첨부' : 'Photo Attachments'}</legend><label className="photo-upload"><span>{ko ? '+ 사진 선택' : '+ Choose Photos'}</span><input type="file" name={name} accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple onChange={choose} /></label><small>{ko ? '최대 5장 · 긴 변 1600px, 약 1MB 내외로 자동 최적화됩니다.' : 'Up to 5 images · automatically optimized to 1600px and approximately 1MB each.'}</small>{error && <p className="attachment-error">{error}</p>}{attachments.length > 0 && <div className="attachment-preview">{attachments.map(({ file, url }) => <figure key={`${file.name}-${file.lastModified}`}><img src={url} alt="" /><figcaption>{file.name}<small>{Math.max(1, Math.round(file.size / 1024))} KB</small></figcaption></figure>)}</div>}</fieldset>
+}
+
 function OrderInquiry({ ko }) {
   const [orderType, setOrderType] = useState('fresh')
   const [delivery, setDelivery] = useState('quick')
@@ -447,6 +478,7 @@ function OrderInquiry({ ko }) {
       <div><span>{ko ? '조화 :' : 'Artificial Flowers:'}</span><label className={orderType !== 'artificial' ? 'disabled' : ''}><input required={orderType === 'artificial'} disabled={orderType !== 'artificial'} type="radio" name="delivery" value="parcel" checked={orderType === 'artificial' && delivery === 'parcel'} onChange={() => setDelivery('parcel')} />{ko ? '택배' : 'Parcel'}</label><label className={orderType !== 'artificial' ? 'disabled' : ''}><input disabled={orderType !== 'artificial'} type="radio" name="delivery" value="quick" checked={orderType === 'artificial' && delivery === 'quick'} onChange={() => setDelivery('quick')} />{ko ? '카카오 T 퀵' : 'Kakao T Quick'}</label></div>
     </fieldset>
     <div className="order-notes delivery-support"><p>{ko ? '※ 생화는 카카오 T 퀵 배송만 가능합니다.' : '※ Fresh flowers are delivered through Kakao T Quick only.'}</p><p>{ko ? '※ 카카오 T 퀵 배송비 지원' : '※ Kakao T Quick delivery support'}</p><p>{ko ? '20만 원 이상 주문: 최대 10,000원 지원' : 'Orders over KRW 200,000: up to KRW 10,000'}</p><p>{ko ? '30만 원 이상 주문: 최대 20,000원 지원' : 'Orders over KRW 300,000: up to KRW 20,000'}</p></div>
+    <PhotoAttachment ko={ko} name="shopPhotos" />
   </section>
 }
 
@@ -472,6 +504,7 @@ function BrandCollaborationInquiry({ ko }) {
       <label>{ko ? '연락처 *' : 'Phone *'}<input required type="tel" name="brandPhone" /></label>
       <label className="full">{ko ? '이메일' : 'Email'}<input type="email" name="brandEmail" /></label>
     </div>
+    <PhotoAttachment ko={ko} name="brandPhotos" />
   </section>
 }
 
@@ -494,6 +527,7 @@ function WorkshopInquiry({ ko }) {
       <label>{ko ? '연락처 *' : 'Phone *'}<input required type="tel" name="contactPhone" /></label>
       <label className="full">{ko ? '이메일' : 'Email'}<input type="email" name="contactEmail" /></label>
     </div>
+    <PhotoAttachment ko={ko} name="workshopPhotos" />
   </section>
 }
 
@@ -513,15 +547,16 @@ function GlobalWorkshopInquiry() {
       <label>Workshop Budget<input name="globalBudget" /></label>
       <label className="full">Additional Requests<textarea name="globalRequests" rows="3" /></label>
     </div>
+    <PhotoAttachment ko={false} name="globalWorkshopPhotos" />
   </section>
 }
 
 function Contact({ lang }) {
   const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
-    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
+    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form encType="multipart/form-data" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
         <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','Shop','샵'], ['Workshop','Flower Workshop','플라워워크샵'], ['Brand Collaboration','Brand Collaboration','브랜드 협업'], ['Global Workshop','Global Workshop','Global Workshop'], ['Other','Other','기타']].map(([item, en, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : en}</button>)}</div></fieldset>
-        {type === 'Shop' ? <OrderInquiry ko={ko} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label></>}
+        {type === 'Shop' ? <OrderInquiry ko={ko} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><PhotoAttachment ko={ko} name="inquiryPhotos" /></>}
         <button className="button primary" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
       </form>}
       <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
@@ -538,7 +573,7 @@ function App() {
   useEffect(() => { localStorage.setItem('mayfleur-lang', lang); document.documentElement.lang = lang }, [lang])
   const content = useMemo(() => ({
     home: <Home lang={lang} />, shop: <Shop lang={lang} detail={route[1]} />, about: <About lang={lang} />,
-    gallery: <Gallery lang={lang} />, portfolio: <Portfolio lang={lang} detail={route[1]} />,
+    gallery: <Gallery lang={lang} detail={route[1]} />, portfolio: <Portfolio lang={lang} detail={route[1]} />,
     services: <Services lang={lang} />, books: <Books lang={lang} />, contact: <Contact lang={lang} />,
   }), [page, route[1], lang])
   return <><Header page={page} lang={lang} setLang={setLang} /><main>{content[page]}</main><Footer lang={lang} /><KakaoChannelButton lang={lang} /></>
