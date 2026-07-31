@@ -501,16 +501,16 @@ function GlobalWorkshopInquiry() {
   return <section className="order-inquiry global-workshop-inquiry" lang="en">
     <span className="order-inquiry-title">/ Global Workshop Inquiry</span>
     <div className="order-fields">
-      <label className="full">Organization / Host Name *<input required name="globalOrganization" /></label>
+      <label className="full">Organization / Name *<input required name="globalOrganization" /></label>
       <label>Contact Person *<input required name="globalContactName" /></label>
       <label>Email *<input required type="email" name="globalEmail" /></label>
       <label>Phone<input type="tel" name="globalPhone" /></label>
       <label>Country & City *<input required name="globalLocation" /></label>
-      <label>Preferred Dates *<input required name="globalDates" placeholder="e.g. September 10–12, 2027" /></label>
+      <label>Preferred Dates *<small className="label-note">(e.g. September 10–12, 2027)</small><input required name="globalDates" /></label>
       <label>Expected Participants *<input required type="number" min="1" name="globalParticipants" /></label>
-      <label className="full">Venue<input name="globalVenue" /></label>
-      <label className="full">Proposed Programme / Collaboration Details *<textarea required name="globalDetails" rows="4" /></label>
-      <label>Estimated Budget<input name="globalBudget" /></label>
+      <label className="full">Workshop Venue<input name="globalVenue" /></label>
+      <label className="full">Workshop Details *<small className="label-note">(Preferred program, concept, or collaboration details)</small><textarea required name="globalDetails" rows="4" /></label>
+      <label>Workshop Budget<input name="globalBudget" /></label>
       <label className="full">Additional Requests<textarea name="globalRequests" rows="3" /></label>
     </div>
   </section>
