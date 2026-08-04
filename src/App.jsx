@@ -27,6 +27,7 @@ const productEditorial = {
   '핑크 보라 센터피스': {
     title: { en: 'Pink Lavender Centerpiece', ko: '핑크 & 연보라 센터피스' },
     price: '250,000원',
+    priceRange: { ko: '250,000원–350,000원', en: 'KRW 250,000–350,000' },
     cardLines: { ko: ['프리미엄 플라워 오브제', '주문 제작 상품'], en: ['Premium Floral Object', 'Made to Order'] },
     about: {
       ko: ['메이플레르의 플라워 오브제는 프리미엄 조화 소재를 사용하여 생화의 자연스러운 움직임과 섬세한 컬러감을 담아 제작합니다.', '꽃 한 송이마다 자연스러운 방향과 균형을 고려하여 오래도록 감상할 수 있는 플라워 오브제로 완성합니다.'],
@@ -340,7 +341,7 @@ function EditorialProductDetail({ product, editorial, lang, guide }) {
   const paragraphs = (items) => items[lang].map((item) => <p key={item}>{item}</p>)
   return <div className="page fade-in product-detail editorial-product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
-    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><strong>{editorial.price}</strong><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
+    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><strong>{editorial.priceRange[lang]}</strong><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
     <section className="editorial-copy-section"><span className="eyebrow">About This Piece</span><div>{paragraphs(editorial.about)}</div></section>
     <section className="editorial-copy-section"><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>
     <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
