@@ -336,6 +336,20 @@ function ProductDetail({ product, lang }) {
   </div>
 }
 
+function ObjectSizeGuide({ lang, value }) {
+  const ko = lang === 'ko'
+  const sizes = ko ? [
+    ['Small Object', '약 30–40cm', '미니 테이블 오브제'],
+    ['Medium Object', '약 45–55cm', '메인 센터피스, 공간 포인트'],
+    ['Large Object', '약 60cm 이상', '공간 중심 플라워 오브제'],
+  ] : [
+    ['Small Object', 'Approx. 30–40cm', 'Mini table object'],
+    ['Medium Object', 'Approx. 45–55cm', 'Main centrepiece or spatial accent'],
+    ['Large Object', 'Approx. 60cm and above', 'Statement floral object for a space'],
+  ]
+  return <details className="object-size-guide"><summary><span>{value}</span><small>Size Guide <b aria-hidden="true" /></small></summary><div className="object-size-guide-panel"><h3>Object Size Guide</h3>{sizes.map(([name, size, description]) => <article className={name === value ? 'current' : ''} key={name}><strong>{name}</strong><span>{size}</span><p>{description}</p></article>)}</div></details>
+}
+
 function EditorialProductDetail({ product, editorial, lang, guide }) {
   const ko = lang === 'ko'; const heroFile = imagesOnly(product.media)[0]; const galleryMedia = product.media.filter((file) => file !== heroFile)
   const paragraphs = (items) => items[lang].map((item) => <p key={item}>{item}</p>)
@@ -347,7 +361,7 @@ function EditorialProductDetail({ product, editorial, lang, guide }) {
     <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
     <section className="editorial-copy-section"><span className="eyebrow">Front Facing Design <i>| {ko ? '정면 중심 디자인' : 'Front-focused composition'}</i></span><div>{paragraphs(editorial.facing)}</div></section>
     <section className="editorial-recommended"><span className="eyebrow">Recommended Space</span><ul>{editorial.spaces[lang].map((item) => <li key={item}>{item}</li>)}</ul></section>
-    <section className="editorial-product-details"><span className="eyebrow">Product Details</span><dl>{editorial.details.map(([term, values]) => <div key={term}><dt>{term}</dt><dd>{values[lang]}</dd></div>)}</dl></section>
+    <section className="editorial-product-details"><span className="eyebrow">Product Details</span><dl>{editorial.details.map(([term, values]) => <div key={term}><dt>{term}</dt><dd>{term === 'Collection' && product.category === 'Centerpieces' ? <ObjectSizeGuide lang={lang} value={values[lang]} /> : values[lang]}</dd></div>)}</dl></section>
     <section className="editorial-delivery-custom"><article><span className="eyebrow">Delivery</span>{paragraphs(editorial.delivery)}</article><article><span className="eyebrow">Custom Option</span>{paragraphs(editorial.custom)}</article></section>
     <OrderGuide guide={guide} />
   </div>
