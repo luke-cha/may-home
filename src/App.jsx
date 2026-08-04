@@ -27,7 +27,11 @@ const productEditorial = {
   '핑크 보라 센터피스': {
     title: { en: 'Pink Lavender Centerpiece', ko: '핑크 & 연보라 센터피스' },
     price: '250,000원',
-    priceRange: { ko: '250,000원–350,000원', en: 'KRW 250,000–350,000' },
+    priceOptions: [
+      ['W45 × H45cm', { ko: '25만원', en: 'KRW 250,000' }],
+      ['W50 × H50cm', { ko: '30만원', en: 'KRW 300,000' }],
+      ['W55 × H55cm', { ko: '35만원', en: 'KRW 350,000' }],
+    ],
     cardLines: { ko: ['프리미엄 플라워 오브제', '주문 제작 상품'], en: ['Premium Floral Object', 'Made to Order'] },
     about: {
       ko: ['메이플레르의 플라워 오브제는 프리미엄 조화 소재를 사용하여 생화의 자연스러운 움직임과 섬세한 컬러감을 담아 제작합니다.', '꽃 한 송이마다 자연스러운 방향과 균형을 고려하여 오래도록 감상할 수 있는 플라워 오브제로 완성합니다.'],
@@ -83,12 +87,12 @@ const orderGuide = {
       ['03 | Order & Cancellation Policy', [
         '모든 작품은 고객님의 주문에 맞춰 제작되는 주문 제작 상품입니다.',
         '주문 확정 후 고객님만을 위한 소재 준비 및 제작이 시작되므로, 제작 시작 이후에는 단순 변심에 의한 주문 취소·교환·환불이 어렵습니다.',
-        '제품 이상이 있는 경우에는 수령 후 7일 이내 문의해 주시면 확인 후 안내드립니다.',
+        '제품 이상이 있는 경우에는 수령 후 3일 이내 문의해 주시면 확인 후 안내드립니다.',
       ]],
       ['04 | Product Guide', [
         '모든 작품은 플로리스트가 직접 제작하는 핸드메이드 오브제로, 형태와 배치는 작품마다 조금씩 다를 수 있습니다.',
         '조화 특성상 미세한 프린팅 차이, 점, 접착 흔적 등이 있을 수 있으며 이는 불량이 아닙니다.',
-        '배송 과정에서 일부 소재가 분리될 수 있으나 대부분 간단히 재정리하여 사용 가능합니다.',
+        '배송 과정에서 일부 소재가 분리될 수 있으나, 대부분은 간단히 다시 꽂거나 고정하여 사용하실 수 있습니다.',
         '모니터 환경에 따라 실제 색상은 다소 차이가 있을 수 있습니다.',
       ]],
     ],
@@ -112,12 +116,12 @@ const orderGuide = {
       ['03 | Order & Cancellation Policy', [
         'Every piece is made to order for each customer.',
         'Materials are prepared and production begins after confirmation, so cancellations, exchanges and refunds for a change of mind are not available once production has started.',
-        'If there is an issue with your product, please contact us within seven days of receipt.',
+        'If there is an issue with your product, please contact us within three days of receipt.',
       ]],
       ['04 | Product Guide', [
         'Each piece is handmade by a florist, so form and placement may vary slightly.',
         'Minor printing differences, marks or traces of adhesive can occur with artificial flowers and are not considered defects.',
-        'Some materials may shift during delivery and can usually be arranged easily by hand.',
+        'Some materials may become detached during delivery, but most can be reinserted or secured easily.',
         'Actual colours may vary slightly depending on your monitor settings.',
       ]],
     ],
@@ -355,7 +359,7 @@ function EditorialProductDetail({ product, editorial, lang, guide }) {
   const paragraphs = (items) => items[lang].map((item) => <p key={item}>{item}</p>)
   return <div className="page fade-in product-detail editorial-product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
-    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><strong>{editorial.priceRange[lang]}</strong><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
+    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><div className="editorial-price-options"><span>{ko ? '사이즈별 주문 가격' : 'Size & Price'}</span><ul>{editorial.priceOptions.map(([size, prices]) => <li key={size}><small>{size}</small><strong>{prices[lang]}</strong></li>)}</ul></div><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
     <section className="editorial-copy-section"><span className="eyebrow">About This Piece</span><div>{paragraphs(editorial.about)}</div></section>
     <section className="editorial-copy-section"><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>
     <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
