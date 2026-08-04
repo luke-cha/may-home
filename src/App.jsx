@@ -23,6 +23,45 @@ const categoryNames = {
   'Floral Objects': ['Floral Objects', '플로럴 오브제'],
 }
 
+const productEditorial = {
+  '핑크 보라 센터피스': {
+    title: { en: 'Pink Lavender Centerpiece', ko: '핑크 & 연보라 센터피스' },
+    price: '250,000원',
+    cardLines: { ko: ['프리미엄 플라워 오브제', '주문 제작 상품'], en: ['Premium Floral Object', 'Made to Order'] },
+    about: {
+      ko: ['메이플레르의 플라워 오브제는 프리미엄 조화 소재를 사용하여 생화의 자연스러운 움직임과 섬세한 컬러감을 담아 제작합니다.', '꽃 한 송이마다 자연스러운 방향과 균형을 고려하여 오래도록 감상할 수 있는 플라워 오브제로 완성합니다.'],
+      en: ['Mayfleur floral objects are crafted with premium artificial flowers to capture the natural movement and delicate colour of fresh blooms.', 'Every stem is arranged with careful attention to direction and balance, creating a floral object designed to be enjoyed for years.'],
+    },
+    theme: {
+      ko: ['핑크와 라벤더 컬러가 부드럽게 어우러진 수채화 같은 센터피스입니다.', '은은하고 로맨틱한 컬러감과 자연스럽게 흐르는 꽃의 움직임으로 공간에 따뜻한 분위기를 더합니다.'],
+      en: ['A watercolour-like centrepiece where pink and lavender tones blend softly together.', 'Its romantic palette and naturally flowing movement bring warmth and softness to a space.'],
+    },
+    facing: {
+      ko: ['정면에서 가장 아름다운 실루엣이 보이도록 디자인한 센터피스입니다.', '정면의 풍성한 볼륨감을 중심으로 디자인하며, 뒤쪽에도 자연스러운 소재를 더해 어느 방향에서도 입체감을 느낄 수 있도록 제작합니다.', '벽면이나 테이블 한쪽 방향에 배치했을 때 가장 아름다운 형태가 돋보이는 디자인입니다.'],
+      en: ['This centrepiece is designed to present its most beautiful silhouette from the front.', 'Generous frontal volume is balanced with natural materials at the back, giving the piece dimension from every angle.', 'Its form is best appreciated against a wall or styled toward one side of a table.'],
+    },
+    spaces: {
+      ko: ['거실 테이블 장식', '다이닝 테이블 센터피스', '카페 및 쇼룸 스타일링', '웨딩 테이블 장식', '백화점 및 브랜드 공간 연출', '행사 및 공간 스타일링'],
+      en: ['Living room table styling', 'Dining table centrepiece', 'Café and showroom styling', 'Wedding table decoration', 'Department store and brand spaces', 'Events and spatial styling'],
+    },
+    details: [
+      ['Collection', { ko: 'Medium Object', en: 'Medium Object' }],
+      ['Size', { ko: '약 W45 × H45cm — 25만원\n약 W50 × H50cm — 30만원\n약 W55 × H55cm — 35만원', en: 'Approx. W45 × H45cm — KRW 250,000\nApprox. W50 × H50cm — KRW 300,000\nApprox. W55 × H55cm — KRW 350,000' }],
+      ['Material', { ko: 'Premium Artificial Flowers', en: 'Premium Artificial Flowers' }],
+      ['Design', { ko: 'Handmade Floral Arrangement\nFront Facing Design (정면 중심 디자인)', en: 'Handmade Floral Arrangement\nFront Facing Design' }],
+      ['Included', { ko: 'Flower Arrangement + Vessel', en: 'Flower Arrangement + Vessel' }],
+    ],
+    delivery: {
+      ko: ['화기의 형태와 작품 보호를 위해 일반 택배 발송이 어렵습니다.', '서울·경기 지역은 카카오 T 퀵(자동차 배송)으로 안전하게 배송됩니다.'],
+      en: ['Standard parcel shipping is unavailable due to the vessel shape and the need to protect the piece.', 'Orders within Seoul and Gyeonggi are delivered safely via Kakao T Quick vehicle delivery.'],
+    },
+    custom: {
+      ko: ['메이플레르의 디자인과 컬러 무드를 유지하는 범위 내에서 일부 화기 또는 꽃 컬러의 소폭 조정이 가능합니다.', '전체적인 디자인 변경이나 새로운 구성의 제작은 Custom Order를 통해 별도로 상담 가능합니다.'],
+      en: ['Selected vessel or flower colours can be adjusted while preserving Mayfleur’s design and colour mood.', 'Significant design changes or entirely new compositions are available through a separate Custom Order consultation.'],
+    },
+  },
+}
+
 const orderGuide = {
   ko: {
     intro: ['모든 작품은 주문 후 제작되는 핸드메이드 플라워 오브제입니다.', '주문 전 상품 상세 페이지의 Order Guide를 확인해 주세요.'],
@@ -261,6 +300,11 @@ function Home({ lang }) {
   </div>
 }
 
+function ProductCard({ product, lang }) {
+  const ko = lang === 'ko'; const editorial = productEditorial[product.name]
+  return <a href={`#shop/${slug(product.name)}`} className={`product-card${editorial ? ' editorial-product-card' : ''}`}><div className="card-media"><Media file={imagesOnly(product.media)[0]} alt={editorial?.title[lang] || product.name} /></div><span className="card-kicker">{categoryNames[product.category]?.[ko ? 1 : 0]}</span>{editorial ? <><h3>{editorial.title.en}</h3><span className="product-card-local-name">{editorial.title.ko}</span><strong className="product-card-price">{editorial.price}</strong><div className="product-card-lines">{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><span className="product-view-more">{ko ? '상품 보기' : 'View More'} →</span></> : <><h3>{product.name}</h3><p>{ko ? '주문 제작 · 상담 후 안내' : 'Made to order · Price on request'}</p></>}</a>
+}
+
 function Shop({ lang, detail }) {
   const ko = lang === 'ko'
   const current = detail ? shopProducts.find((p) => slug(p.name) === detail) : null
@@ -271,7 +315,7 @@ function Shop({ lang, detail }) {
     <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '조화 컬렉션' : 'Artificial Flower Collection'} />
     <section className="shop-layout container">
       <aside className="shop-filter"><span className="eyebrow">{ko ? '카테고리' : 'Browse'}</span><button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{ko ? '전체' : 'All'}<span>{shopProducts.length}</span></button>{shopCategories.map((cat) => <button key={cat.name} className={category === slug(cat.name) ? 'active' : ''} onClick={() => setCategory(slug(cat.name))}>{categoryNames[cat.name]?.[ko ? 1 : 0] || cat.name}<span>{cat.products.length}</span></button>)}</aside>
-      <div className="product-grid">{products.map((product) => <a href={`#shop/${slug(product.name)}`} className="product-card" key={product.name}><div className="card-media"><Media file={imagesOnly(product.media)[0]} alt={product.name} /></div><span className="card-kicker">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h3>{product.name}</h3><p>{ko ? '주문 제작 · 상담 후 안내' : 'Made to order · Price on request'}</p></a>)}</div>
+      <div className="product-grid">{products.map((product) => <ProductCard key={product.name} product={product} lang={lang} />)}</div>
     </section>
     <section className="shop-gallery-bridge container"><div className="shop-gallery-bridge-copy"><span className="eyebrow">Artificial Flower Gallery</span><h2>{ko ? <>메이플레르의 다양한 프리미엄 조화 컬렉션을 만나보세요.</> : <>Discover Mayfleur’s distinctive range of premium artificial flower collections.</>}</h2><p>{ko ? '더 많은 디자인 작품을 갤러리에서 확인하실 수 있습니다.' : 'Explore more design works in the gallery.'}</p><a className="text-link" href="#gallery/artificial">{ko ? '조화 갤러리 보기' : 'View Artificial Flower Gallery'} →</a></div><div className="shop-gallery-bridge-images">{imagesOnly(galleryGroups.artificial).slice(0, 4).map((file, i) => <a href="#gallery/artificial" key={file}><Media file={file} alt={`${ko ? '조화 갤러리' : 'Artificial flower gallery'} ${i + 1}`} /></a>)}</div></section>
     <ProductGuide lang={lang} />
@@ -281,11 +325,29 @@ function Shop({ lang, detail }) {
 }
 
 function ProductDetail({ product, lang }) {
-  const ko = lang === 'ko'; const media = product.media; const guide = orderGuide[lang]
+  const ko = lang === 'ko'; const media = product.media; const guide = orderGuide[lang]; const editorial = productEditorial[product.name]
+  if (editorial) return <EditorialProductDetail product={product} editorial={editorial} lang={lang} guide={guide} />
   return <div className="page fade-in product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
     <div className="detail-top"><div className="detail-main"><Media file={media[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 주문 문의' : 'Order via Kakao'}</a></div></div>
     <div className="detail-gallery">{media.slice(1).map((file, i) => <figure className="detail-gallery-item" key={file}><Media file={file} alt={`${product.name} detail ${i + 2}`} /></figure>)}</div>
+    <OrderGuide guide={guide} />
+  </div>
+}
+
+function EditorialProductDetail({ product, editorial, lang, guide }) {
+  const ko = lang === 'ko'; const heroFile = imagesOnly(product.media)[0]; const galleryMedia = product.media.filter((file) => file !== heroFile)
+  const paragraphs = (items) => items[lang].map((item) => <p key={item}>{item}</p>)
+  return <div className="page fade-in product-detail editorial-product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
+    <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
+    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><strong>{editorial.price}</strong><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
+    <section className="editorial-copy-section"><span className="eyebrow">About This Piece</span><div>{paragraphs(editorial.about)}</div></section>
+    <section className="editorial-copy-section"><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>
+    <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
+    <section className="editorial-copy-section"><span className="eyebrow">Front Facing Design <i>| {ko ? '정면 중심 디자인' : 'Front-focused composition'}</i></span><div>{paragraphs(editorial.facing)}</div></section>
+    <section className="editorial-recommended"><span className="eyebrow">Recommended Space</span><ul>{editorial.spaces[lang].map((item) => <li key={item}>{item}</li>)}</ul></section>
+    <section className="editorial-product-details"><span className="eyebrow">Product Details</span><dl>{editorial.details.map(([term, values]) => <div key={term}><dt>{term}</dt><dd>{values[lang]}</dd></div>)}</dl></section>
+    <section className="editorial-delivery-custom"><article><span className="eyebrow">Delivery</span>{paragraphs(editorial.delivery)}</article><article><span className="eyebrow">Custom Option</span>{paragraphs(editorial.custom)}</article></section>
     <OrderGuide guide={guide} />
   </div>
 }
