@@ -46,7 +46,7 @@ const productEditorial = {
     },
     details: [
       ['Collection', { ko: 'Medium Object', en: 'Medium Object' }],
-      ['Size', { ko: '약 W45 × H45cm — 25만원\n약 W50 × H50cm — 30만원\n약 W55 × H55cm — 35만원', en: 'Approx. W45 × H45cm — KRW 250,000\nApprox. W50 × H50cm — KRW 300,000\nApprox. W55 × H55cm — KRW 350,000' }],
+      ['Size', { ko: '약 W45 × H45cm 25만원\n약 W50 × H50cm 30만원\n약 W55 × H55cm 35만원', en: 'Approx. W45 × H45cm KRW 250,000\nApprox. W50 × H50cm KRW 300,000\nApprox. W55 × H55cm KRW 350,000' }],
       ['Material', { ko: 'Premium Artificial Flowers', en: 'Premium Artificial Flowers' }],
       ['Design', { ko: 'Handmade Floral Arrangement\nFront Facing Design (정면 중심 디자인)', en: 'Handmade Floral Arrangement\nFront Facing Design' }],
       ['Included', { ko: 'Flower Arrangement + Vessel', en: 'Flower Arrangement + Vessel' }],
@@ -340,7 +340,7 @@ function EditorialProductDetail({ product, editorial, lang, guide }) {
   const paragraphs = (items) => items[lang].map((item) => <p key={item}>{item}</p>)
   return <div className="page fade-in product-detail editorial-product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
-    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><strong>{editorial.price}</strong><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
+    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><strong>{editorial.price}</strong><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
     <section className="editorial-copy-section"><span className="eyebrow">About This Piece</span><div>{paragraphs(editorial.about)}</div></section>
     <section className="editorial-copy-section"><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>
     <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
