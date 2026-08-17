@@ -350,6 +350,57 @@ function ProductGuide({ lang }) {
 
 function About({ lang }) {
   const ko = lang === 'ko'
+  const story = ko ? `꽃을 만나기 전, 저는 늘 무언가를 찾고 있었습니다.
+
+그것이 무엇인지 정확히 알 수는 없었지만
+삶을 살아있게 하는 무언가,
+마음에 설렘을 더하는 무언가를 기다리고 있었습니다.
+
+그러던 어느 날, 꽃을 만났습니다.
+
+무채색이었던 삶은 꽃을 만나
+다채로운 색과 설렘으로 물들었고,
+매일이 새로운 날처럼 느껴졌습니다.
+
+계절마다 조용히 피고 지는 꽃을 바라보며
+알게 되었습니다.
+
+꼭 필요하지 않아도 아름다운 것,
+아무런 쓸모가 없어 보여도
+삶에 분명한 의미를 더해주는 것들이 있다는 것을.
+
+꽃은 제게 그런 존재였습니다.
+
+계절의 아름다움을 발견하고,
+잠시 머물다 사라지는 순간을 마음에 담는 일.
+
+그 시간은 제게 마음의 숲이 되어주었습니다.
+
+이제는 제가 꽃을 통해 발견한 그 아름다움을
+다른 사람의 일상에도 전하고 싶습니다.
+
+계절마다 피어나는 꽃처럼
+누군가의 마음에 조용히 머무는 아름다움을 전하는 것.
+
+그것이 메이플레르가 꽃을 만드는 이유입니다.` : `Before I encountered flowers, I was always searching for something.
+
+I could not say exactly what it was, but I was waiting for something that would make life feel alive and bring a sense of wonder to my heart.
+
+Then one day, I found flowers.
+
+A life once without colour became filled with many shades and quiet excitement. Every day began to feel new.
+
+Watching flowers gently bloom and fade with each season, I came to understand that some things can be beautiful without being necessary, and can give clear meaning to life even when they seem to serve no practical purpose.
+
+Flowers became that kind of presence for me.
+
+Discovering the beauty of the seasons and holding close the moments that briefly stay before disappearing became a forest for my heart.
+
+Now I want to share with others the beauty I discovered through flowers.
+
+Like flowers returning each season, I hope to offer a beauty that rests quietly in someone’s heart.
+
+That is why Mayfleur creates flowers.`
   const profileCredentials = [
     { title: 'Education & Qualifications', items: [
       { name: 'L’École Artistique de Catherine Muller', meta: 'Paris' },
@@ -384,9 +435,9 @@ function About({ lang }) {
       { name: 'SK Happiness Discovery', meta: ko ? '칼럼' : 'Column' },
     ] },
   ]
-  return <div className="page fade-in about-page"><section className="about-banner container"><Media file={storyPhotos[1]} alt="Mayfleur story" eager /></section><PageHead eyebrow={`— ${ko ? '소개' : 'About'}`} title="Our Story" sub={ko ? '메이플레르는 꽃과 그 꽃을 빚어내는 계절에 대한 순수한 애정에서 시작되었습니다. 자연의 색, 고요한 구성, 그리고 꽃이 일상에 따뜻함을 더해야 한다는 믿음이 우리의 철학입니다.' : 'Mayfleur began with a simple devotion to flowers and the seasons that shape them. Our philosophy is rooted in natural colour, quiet composition, and the belief that flowers should bring warmth to everyday life.'} />
+  return <div className="page fade-in about-page"><section className="about-banner container"><Media file={storyPhotos[1]} alt="Mayfleur story" eager /></section><PageHead eyebrow={`— ${ko ? '소개' : 'About'}`} title="OUR STORY" sub={story} />
     <section className="about-story-photos container"><Media file={storyPhotos[0]} alt="Mayfleur studio" /><Media file={storyPhotos[3]} alt="Flowers in the studio" /></section>
-    <section className="philosophy"><span className="rule" /><span className="eyebrow">{ko ? '브랜드 철학' : 'Brand Philosophy'}</span><p>{ko ? '자연에서 길어 올린, 시간을 초월한 플로럴 디자인 — 일상의 공간에 따뜻함과 아름다움을 더합니다.' : 'Timeless floral design, drawn from nature — created to bring warmth and beauty to everyday spaces.'}</p></section>
+    <section className="philosophy"><span className="rule" /><span className="eyebrow">{ko ? '브랜드 철학' : 'Brand Philosophy'}</span><p>{ko ? '계절의 아름다움을 담은 꽃 — 무용하지만 아름다운 것들로 삶에 의미를 더합니다.' : 'Flowers that hold the beauty of the seasons — adding meaning to life through things without utility, yet full of beauty.'}</p></section>
     <section className="profile container"><div className="profile-image"><Media file={profilePhoto} alt="Yeajin Kim" /></div><div className="profile-copy"><span className="eyebrow">Profile</span><h2>{ko ? '김예진' : 'Yeajin Kim'}</h2><p className="profile-role">Floral Artist, Author & Educator</p><p>Founder of Mayfleur · Based in Korea</p><div className="credentials">{profileCredentials.map((section) => <Credential key={section.title} {...section} />)}</div></div></section>
   </div>
 }
