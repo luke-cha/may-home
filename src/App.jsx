@@ -152,6 +152,7 @@ const hero = imagesOnly(under('01 Home/01 Hero/'))
 const selectedWorks = numericMediaSort(under('01 Home/02 Selected Works/'))
 const storyPhotos = imagesOnly(under('03 About/Our Story/'))
 const profilePhoto = imagesOnly(under('03 About/Profile/'))[0]
+const freshFlowerMedia = numericMediaSort(under('02 Shop/07 Fresh Flower Collection/'))
 const galleryGroups = {
   works: numericMediaSort(under('04 Gallery/Floral Works/')),
   spaces: numericMediaSort(under('04 Gallery/Space Styling/')),
@@ -267,14 +268,45 @@ function ProductCard({ product, lang }) {
   return <a href={`#shop/${slug(product.name)}`} className={`product-card${editorial ? ' editorial-product-card' : ''}`}><div className="card-media"><Media file={imagesOnly(product.media)[0]} alt={editorial?.title[lang] || product.name} /></div><span className="card-kicker">{categoryNames[product.category]?.[ko ? 1 : 0]}</span>{editorial ? <><h3>{editorial.title.en}</h3><span className="product-card-local-name">{editorial.title.ko}</span><strong className="product-card-price">{editorial.price}</strong><div className="product-card-lines">{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><span className="product-view-more">{ko ? '상품 보기' : 'View More'} →</span></> : <><h3>{product.name}</h3><p>{ko ? '주문 제작 · 상담 후 안내' : 'Made to order · Price on request'}</p></>}</a>
 }
 
+function ShopCollectionNav({ lang, active }) {
+  const ko = lang === 'ko'
+  return <nav className="shop-collection-nav container" aria-label={ko ? '샵 컬렉션' : 'Shop collections'}><a className={active === 'artificial' ? 'active' : ''} href="#shop"><span>01</span><div><strong>{ko ? '조화 컬렉션' : 'Artificial Flower Collection'}</strong><small>{ko ? '오래도록 머무는 플라워 오브제' : 'Floral objects made to last'}</small></div></a><a className={active === 'fresh' ? 'active' : ''} href="#shop/fresh"><span>02</span><div><strong>{ko ? '생화 컬렉션' : 'Fresh Flower Collection'}</strong><small>{ko ? '계절의 아름다움을 담은 예약제 컬렉션' : 'A seasonal collection made by reservation'}</small></div></a></nav>
+}
+
+function FreshSection({ title, children }) {
+  return <article className="fresh-guide-section"><h2>{title}</h2><div>{children}</div></article>
+}
+
+function FreshFlowerCollection({ lang }) {
+  const ko = lang === 'ko'
+  return <div className="page fade-in shop-page fresh-flower-page">
+    <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title="Premium Fresh Flower Collection" sub={ko ? '메이플레르의 프리미엄 생화 컬렉션' : 'Mayfleur Premium Fresh Flower Collection'} />
+    <ShopCollectionNav lang={lang} active="fresh" />
+    <section className="fresh-flower-intro container"><p>{ko ? <>메이플레르의 생화 컬렉션은 계절과 꽃의 아름다움을 담아<br />주문에 맞춰 하나씩 제작하는 프리미엄 플라워 컬렉션입니다.</> : <>Mayfleur’s fresh flower collection captures the beauty of flowers and the seasons,<br />with every piece individually created to order.</>}</p><div><strong>{ko ? '100% 예약제' : '100% By Reservation'}</strong><strong>{ko ? '최소 주문 금액 20만원부터' : 'Minimum Order KRW 200,000'}</strong></div></section>
+    {freshFlowerMedia.length > 0 && <section className="fresh-flower-gallery container">{freshFlowerMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${ko ? '프리미엄 생화 컬렉션' : 'Premium fresh flower collection'} ${i + 1}`} /></figure>)}</section>}
+    <section className="fresh-flower-guide container">
+      <FreshSection title="Order">{ko ? <><p>모든 생화 상품은 주문 제작으로 진행됩니다.</p><p>일반 주문은 <strong>최소 7일 전</strong>,<br />특정 꽃을 원하시는 경우 꽃의 수급을 위해 <strong>최소 2주 전</strong> 문의해 주세요.</p><p>원하시는 상품, 색감과 분위기, 예산 등을 상담한 후<br />입금이 확인되면 꽃 사입 및 제작이 진행됩니다.</p></> : <><p>All fresh flower products are made to order.</p><p>Please enquire <strong>at least 7 days in advance</strong> for general orders, or <strong>at least 2 weeks in advance</strong> when requesting specific flowers.</p><p>Flowers are sourced and production begins after discussing the product, palette, mood and budget, and confirming payment.</p></>}</FreshSection>
+      <FreshSection title="Flowers">{ko ? <><p>생화는 계절과 꽃 시장의 상황에 따라<br />사용 가능한 꽃의 종류와 수급량이 달라질 수 있습니다.</p><p>사계절 만나볼 수 있는 꽃이 있는 반면,<br />특정 계절에만 잠시 만날 수 있는 꽃도 있습니다.<br />또한 같은 계절이라도 매주 시장에 들어오는 꽃이 달라질 수 있어<br />요청하신 이미지와 동일한 꽃과 구성으로 제작하기는 어렵습니다.</p><p>원하시는 이미지가 있는 경우 참고하여<br />색감과 전체적인 분위기를 최대한 가깝게 표현해 드립니다.</p></> : <><p>Flower varieties and quantities vary with the season and market availability.</p><p>Some flowers are available year-round, while others appear only briefly in a particular season. Market arrivals also change weekly, so an exact reproduction of a reference image may not be possible.</p><p>Reference images are welcome, and we will interpret their palette and overall mood as closely as possible.</p></>}</FreshSection>
+      <FreshSection title="Design">{ko ? <><p>원하시는 분위기와 예산을 바탕으로<br />그에 어울리는 꽃을 선별하여 제작합니다.</p><p>같은 금액이라도 사용하는 꽃의 종류에 따라<br />전체적인 크기와 볼륨, 분위기가 달라질 수 있습니다.</p><p>비교적 합리적인 가격대의 꽃을 중심으로 구성할 경우<br />보다 풍성한 스타일로 제작할 수 있으며,<br />고가의 꽃을 사용할 경우 크기는 다소 작아질 수 있지만<br />보다 섬세하고 고급스러운 분위기를 연출할 수 있습니다.</p><p>원하시는 스타일과 예산에 맞춰<br />가장 적절한 꽃과 구성을 제안해 드립니다.</p></> : <><p>Flowers are selected to suit your preferred mood and budget.</p><p>Even at the same price, scale, volume and atmosphere vary according to the flowers used.</p><p>More accessible varieties can create a fuller design, while premium flowers may produce a smaller yet more delicate and luxurious arrangement.</p><p>We will recommend the most suitable flowers and composition for your style and budget.</p></>}</FreshSection>
+      <FreshSection title="Products">{ko ? <><p>기본 주문 가능한 상품은 다음과 같습니다.</p><p className="fresh-product-list"><strong>달항아리</strong><strong>센터피스</strong><strong>꽃다발</strong><strong>플라워 박스</strong><strong>화병 꽂이</strong></p><p>위 상품 외에도 공간이나 용도에 맞춘 별도 제작이 가능합니다.</p><p>원하시는 형태가 있으신 경우 상담을 통해 문의해 주세요.</p></> : <><p>Standard products available to order:</p><p className="fresh-product-list"><strong>Moon Jar</strong><strong>Centerpiece</strong><strong>Bouquet</strong><strong>Flower Box</strong><strong>Vase Arrangement</strong></p><p>Bespoke pieces for a particular space or purpose are also available through consultation.</p></>}</FreshSection>
+      <FreshSection title="Delivery">{ko ? <><p>생화 상품은 안전한 배송을 위해 <strong>직접 픽업은 운영하지 않으며</strong>,<br /><strong>카카오퀵 차량 배송으로만</strong> 진행됩니다.</p><p>배송비는 배송 거리에 따라 별도로 책정됩니다.</p><p>정확한 배송 시간 지정은 어려우며<br /><strong>오전 또는 오후 중 선택</strong> 가능합니다.</p></> : <><p>For safe delivery, collection is unavailable and all fresh flower products are delivered <strong>only by Kakao Quick vehicle service</strong>.</p><p>Delivery fees are calculated separately according to distance.</p><p>An exact delivery time cannot be guaranteed; please choose either <strong>morning or afternoon</strong>.</p></>}</FreshSection>
+      <FreshSection title="Cancellation">{ko ? <><p>생화는 주문이 확정되면 꽃을 사입하여 제작하기 때문에<br /><strong>선입금 확인 후 제작이 진행됩니다.</strong></p><p>주문 확정 후에는 꽃의 사입 및 제작이 진행되는 관계로<br />취소 및 환불이 어려울 수 있으니 신중한 주문을 부탁드립니다.</p><p>특히 <strong>수령일 기준 7일 전부터는 취소 및 환불이 어렵습니다.</strong></p></> : <><p>As flowers are sourced after confirmation, production begins <strong>only after advance payment is received</strong>.</p><p>Cancellation and refunds may not be possible once sourcing and production have begun.</p><p>In particular, <strong>cancellation and refunds are unavailable within 7 days of the delivery date.</strong></p></>}</FreshSection>
+      <FreshSection title="Please Note">{ko ? <><p>생화는 자연에서 자라는 꽃의 특성상<br />사진과 실제 상품 사이에 차이가 있을 수 있습니다.</p><p>꽃의 개화 상태와 시장 상황에 따라<br />꽃의 종류, 색감, 크기, 형태 등이 달라질 수 있으며<br />메이플레르는 이를 고려하여 가장 아름다운 상태의 꽃을 선별합니다.</p><p>특정 꽃이나 이미지를 그대로 재현하기보다는<br />원하시는 <strong>색감과 분위기를 중심으로 가장 가까운 느낌의 디자인</strong>을 제안해 드립니다.</p><p>계절과 시장에서 만날 수 있는 가장 아름다운 꽃으로<br />메이플레르만의 플라워 디자인을 완성합니다.</p></> : <><p>As fresh flowers grow in nature, the finished product may differ from photographs.</p><p>Variety, colour, scale and form vary with bloom stage and market conditions. Mayfleur selects flowers in their most beautiful condition.</p><p>Rather than reproducing a specific flower or image exactly, we propose a design that most closely reflects your requested <strong>palette and atmosphere</strong>.</p><p>Mayfleur completes each design with the most beautiful flowers available from the season and market.</p></>}</FreshSection>
+    </section>
+    <section className="fresh-flower-cta paper-panel"><div><span className="rule" /><h2>{ko ? '생화 컬렉션 주문 문의' : 'Fresh Flower Order Inquiry'}</h2><p>{ko ? '원하시는 상품과 색감, 분위기, 예산, 수령일을 알려주세요.' : 'Tell us your preferred product, palette, mood, budget and delivery date.'}</p><a className="button primary" href="#contact">{ko ? '문의하기' : 'Make an Inquiry'}</a></div></section>
+  </div>
+}
+
 function Shop({ lang, detail }) {
   const ko = lang === 'ko'
   const current = detail ? shopProducts.find((p) => slug(p.name) === detail) : null
   const [category, setCategory] = useState('all')
+  if (detail === 'fresh') return <FreshFlowerCollection lang={lang} />
   if (current) return <ProductDetail product={current} lang={lang} />
   const products = category === 'all' ? shopProducts : shopProducts.filter((p) => slug(p.category) === category)
   return <div className="page fade-in shop-page">
     <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '조화 컬렉션' : 'Artificial Flower Collection'} />
+    <ShopCollectionNav lang={lang} active="artificial" />
     <section className="shop-layout container">
       <aside className="shop-filter"><span className="eyebrow">{ko ? '카테고리' : 'Browse'}</span><button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{ko ? '전체' : 'All'}<span>{shopProducts.length}</span></button>{shopCategories.map((cat) => <button key={cat.name} className={category === slug(cat.name) ? 'active' : ''} onClick={() => setCategory(slug(cat.name))}>{categoryNames[cat.name]?.[ko ? 1 : 0] || cat.name}<span>{cat.products.length}</span></button>)}</aside>
       <div className="product-grid">{products.map((product) => <ProductCard key={product.name} product={product} lang={lang} />)}</div>
@@ -282,7 +314,6 @@ function Shop({ lang, detail }) {
     <section className="shop-gallery-bridge container"><div className="shop-gallery-bridge-copy"><span className="eyebrow">Artificial Flower Gallery</span><h2>{ko ? <>메이플레르의 다양한 프리미엄 조화 컬렉션을 만나보세요.</> : <>Discover Mayfleur’s distinctive range of premium artificial flower collections.</>}</h2><p>{ko ? '더 많은 디자인 작품을 갤러리에서 확인하실 수 있습니다.' : 'Explore more design works in the gallery.'}</p><a className="text-link" href="#gallery/artificial">{ko ? '조화 갤러리 보기' : 'View Artificial Flower Gallery'} →</a></div><div className="shop-gallery-bridge-images">{imagesOnly(galleryGroups.artificial).slice(0, 4).map((file, i) => <a href="#gallery/artificial" key={file}><Media file={file} alt={`${ko ? '조화 갤러리' : 'Artificial flower gallery'} ${i + 1}`} /></a>)}</div></section>
     <ProductGuide lang={lang} />
     <section className="paper-panel custom-order"><div><span className="rule" /><h2>{ko ? '맞춤 플로럴 작품을 찾고 계신가요?' : 'Looking for a custom floral piece?'}</h2><p>{ko ? '공간과 행사, 원하시는 색감을 알려주세요. 메이플레르의 감각으로 맞춤 제작합니다.' : 'Tell us about your space, occasion and palette. We design bespoke arrangements to order.'}</p><a className="button primary" href="#contact">{ko ? '문의하기' : 'Custom Order Inquiry'}</a></div></section>
-    <section className="fresh-collection container"><div><span className="coming-label">{ko ? '준비 중' : 'Coming Soon'}</span><h2>{ko ? '생화 컬렉션' : 'Fresh Flower Collection'}</h2><p>{ko ? '계절의 생화 어레인지먼트가 곧 준비됩니다. 가장 먼저 소식을 받아보세요.' : 'Seasonal fresh flower arrangements are arriving soon. Join us to be the first to know.'}</p></div><Media file={selectedWorks[0]} alt="Fresh flower collection" /></section>
   </div>
 }
 
