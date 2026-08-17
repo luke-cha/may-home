@@ -280,9 +280,9 @@ function FreshSection({ title, children }) {
 function FreshFlowerCollection({ lang }) {
   const ko = lang === 'ko'
   return <div className="page fade-in shop-page fresh-flower-page">
-    <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title="Premium Fresh Flower Collection" sub={ko ? '메이플레르의 프리미엄 생화 컬렉션' : 'Mayfleur Premium Fresh Flower Collection'} />
+    <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '메이플레르 플라워 컬렉션' : 'Mayfleur Flower Collections'} />
     <ShopCollectionNav lang={lang} active="fresh" />
-    <section className="fresh-flower-intro container"><p>{ko ? <>메이플레르의 생화 컬렉션은 계절과 꽃의 아름다움을 담아<br />주문에 맞춰 하나씩 제작하는 프리미엄 플라워 컬렉션입니다.</> : <>Mayfleur’s fresh flower collection captures the beauty of flowers and the seasons,<br />with every piece individually created to order.</>}</p><div><strong>{ko ? '100% 예약제' : '100% By Reservation'}</strong><strong>{ko ? '최소 주문 금액 20만원부터' : 'Minimum Order KRW 200,000'}</strong></div></section>
+    <section className="fresh-flower-intro container"><p>{ko ? <>메이플레르의 생화 컬렉션은 계절과 꽃의 아름다움을 담아<br />주문에 맞춰 하나씩 제작하는 프리미엄 플라워 컬렉션입니다.</> : <>Mayfleur’s fresh flower collection captures the beauty of flowers and the seasons,<br />with every piece individually created to order.</>}</p><div><strong>{ko ? '100% 예약제' : '100% By Reservation'}</strong><strong className="fresh-minimum">{ko ? <>최소 주문 금액 <b>20만원부터</b></> : <>Minimum Order <b>KRW 200,000</b></>}</strong></div></section>
     {freshFlowerMedia.length > 0 && <section className="fresh-flower-gallery container">{freshFlowerMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${ko ? '프리미엄 생화 컬렉션' : 'Premium fresh flower collection'} ${i + 1}`} /></figure>)}</section>}
     <section className="fresh-flower-guide container">
       <FreshSection title="Order">{ko ? <><p>모든 생화 상품은 주문 제작으로 진행됩니다.</p><p>일반 주문은 <strong>최소 7일 전</strong>,<br />특정 꽃을 원하시는 경우 꽃의 수급을 위해 <strong>최소 2주 전</strong> 문의해 주세요.</p><p>원하시는 상품, 색감과 분위기, 예산 등을 상담한 후<br />입금이 확인되면 꽃 사입 및 제작이 진행됩니다.</p></> : <><p>All fresh flower products are made to order.</p><p>Please enquire <strong>at least 7 days in advance</strong> for general orders, or <strong>at least 2 weeks in advance</strong> when requesting specific flowers.</p><p>Flowers are sourced and production begins after discussing the product, palette, mood and budget, and confirming payment.</p></>}</FreshSection>
@@ -305,7 +305,7 @@ function Shop({ lang, detail }) {
   if (current) return <ProductDetail product={current} lang={lang} />
   const products = category === 'all' ? shopProducts : shopProducts.filter((p) => slug(p.category) === category)
   return <div className="page fade-in shop-page">
-    <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '조화 컬렉션' : 'Artificial Flower Collection'} />
+    <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '메이플레르 플라워 컬렉션' : 'Mayfleur Flower Collections'} />
     <ShopCollectionNav lang={lang} active="artificial" />
     <section className="shop-layout container">
       <aside className="shop-filter"><span className="eyebrow">{ko ? '카테고리' : 'Browse'}</span><button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{ko ? '전체' : 'All'}<span>{shopProducts.length}</span></button>{shopCategories.map((cat) => <button key={cat.name} className={category === slug(cat.name) ? 'active' : ''} onClick={() => setCategory(slug(cat.name))}>{categoryNames[cat.name]?.[ko ? 1 : 0] || cat.name}<span>{cat.products.length}</span></button>)}</aside>
