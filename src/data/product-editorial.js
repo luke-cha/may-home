@@ -250,9 +250,9 @@ export const productEditorial = {
   }),
 
   '블루 하늘 화병': vase({
-    title: t('블루 & 하늘 화병', 'Sky Blue Vase'), price: '200,000원', priceOptions: prices(['W45 × H50cm', '20만원', 'KRW 200,000']),
+    title: t('블루 & 하늘 화병', 'Sky Blue Vase'), price: '200,000원', priceOptions: prices(['W45~50 × H50cm', '20만원', 'KRW 200,000']),
     theme: t(['블루 아네모네를 포인트로 하늘빛과 연보라, 화이트 컬러가 자연스럽게 어우러진 플라워 오브제입니다.', '맑은 하늘과 투명한 공기를 닮은 컬러감이 공간에 청량하고 편안한 분위기를 더하며, 계절에 관계없이 오래도록 감상할 수 있는 디자인입니다.', '은은한 블루 포인트가 공간에 자연스럽게 생기를 더해 거실, 다이닝 공간, 쇼룸 등 다양한 공간과 조화롭게 어우러집니다.'], ['Blue anemones accent sky, lavender and white in this floral object.', 'A clear, airy palette brings freshness and calm throughout the seasons.', 'Subtle blues add life to living rooms, dining spaces and showrooms.']),
-    details: vaseDetails(t('약 W45 × H50cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W45 × H50cm\n(Size may vary by design.)')),
+    details: vaseDetails(t('약 W45~50 × H50cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W45–50 × H50cm\n(Size may vary by design.)')),
   }),
   '빈티지 대형 화병': vase({
     title: t('빈티지 가을 대형 화병', 'Autumn Blush Vase'), price: '350,000원', priceOptions: prices(['W50~55 × H60cm', '35만원', 'KRW 350,000']),
