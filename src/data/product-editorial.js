@@ -271,9 +271,9 @@ export const productEditorial = {
     details: vaseDetails(t('약 W40~45 × H45cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W40–45 × H45cm\n(Size may vary by design.)')),
   }),
   '피치 화이트 화병': vase({
-    title: t('피치 & 화이트 화병', 'Peach White Vase'), price: '200,000원', priceOptions: prices(['W45 × H50cm', '20만원', 'KRW 200,000']),
+    title: t('피치 & 화이트 화병', 'Peach White Vase'), price: '200,000원', priceOptions: prices(['W45~50 × H50cm', '20만원', 'KRW 200,000']),
     theme: t(['피치와 화이트 컬러가 부드럽게 어우러진 플라워 오브제입니다.', '은은한 피치 컬러와 깨끗한 화이트 플라워의 조화가 공간에 따뜻하고 우아한 분위기를 더하며, 어느 계절과 공간에도 자연스럽게 어울리는 디자인입니다.', '부드러운 색감과 섬세한 꽃의 형태가 마치 한 폭의 그림처럼 공간에 편안한 아름다움을 더합니다.'], ['A floral object where peach and white blend softly.', 'Subtle peach and clean white bring warmth and elegance to every season and space.', 'Gentle colour and delicate forms add the calm beauty of a painting.']),
-    details: vaseDetails(t('약 W45 × H50cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W45 × H50cm\n(Size may vary by design.)')),
+    details: vaseDetails(t('약 W45~50 × H50cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W45–50 × H50cm\n(Size may vary by design.)')),
   }),
   '핑크 대형 화병': vase({
     title: t('핑크 가든 대형 화병', 'Pink Garden Vase'), price: '300,000원', priceOptions: prices(['W50 × H55~60cm', '30만원', 'KRW 300,000']),
