@@ -541,11 +541,11 @@ function Services({ lang }) {
 
 function Books({ lang }) {
   const ko = lang === 'ko'; const books = [
-    { title: ko ? '메이플레르 플라워 클래스' : 'Mayfleur Flower Class', year: '2020', file: bookFiles.find((x) => x.toLowerCase().endsWith('.jpg')) },
-    { title: ko ? '꽃은 나에게 마음의 숲이 되어주었다' : 'Flowers Became My Forest', year: '2024', file: bookFiles.find((x) => x.toLowerCase().endsWith('.png')) },
+    { title: ko ? '메이플레르 플라워 클래스' : 'Mayfleur Flower Class', year: '2020', file: bookFiles.find((x) => x.toLowerCase().endsWith('.jpg')), url: 'https://search.shopping.naver.com/book/search?bookTabType=ALL&pageIndex=1&pageSize=40&query=%EB%A9%94%EC%9D%B4%ED%94%8C%EB%A0%88%EB%A5%B4%20%ED%94%8C%EB%9D%BC%EC%9B%8C%ED%81%B4%EB%9E%98%EC%8A%A4&sort=REL' },
+    { title: ko ? '꽃은 나에게 마음의 숲이 되어주었다' : 'Flowers Became My Forest', year: '2024', file: bookFiles.find((x) => x.toLowerCase().endsWith('.png')), url: 'https://search.shopping.naver.com/book/catalog/50892865622?cat_id=50011280&frm=PBOKPRO&query=%EA%BD%83%EC%9D%80+%EB%82%98%EC%97%90%EA%B2%8C+%EB%A7%88%EC%9D%8C%EC%9D%98+%EC%88%B2%EC%9D%B4+%EB%90%98%EC%96%B4%EC%A3%BC%EC%97%88%EB%8B%A4&NaPm=ct%3Dmsy6o9aw%7Cci%3Dff94b8f6b94dc3ca993cea0fbfa2b77bbc909680%7Ctr%3Dboknx%7Csn%3D95694%7Chk%3D695071de1bd0df598e546586c6dc20c0393b8893' },
   ]
   return <div className="page fade-in books-page"><PageHead title={ko ? '도서' : 'Books'} />
-    <section className="books container">{books.map((book) => <article key={book.year}><div className="book-cover"><Media file={book.file} alt={`${book.title} cover`} /></div><div><span className="eyebrow">Published · {book.year}</span><h2>{book.title}</h2><a className="text-link" href="#contact">{ko ? '구매 문의' : 'Where to buy'} →</a></div></article>)}</section>
+    <section className="books container">{books.map((book) => <article key={book.year}><div className="book-cover"><Media file={book.file} alt={`${book.title} cover`} /></div><div><span className="eyebrow">Published · {book.year}</span><h2>{book.title}</h2><a className="text-link" href={book.url} target="_blank" rel="noreferrer">{ko ? '구매하기' : 'Buy This Book'} →</a></div></article>)}</section>
   </div>
 }
 
