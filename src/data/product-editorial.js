@@ -276,11 +276,11 @@ export const productEditorial = {
     details: vaseDetails(t('약 W45~50 × H50cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W45–50 × H50cm\n(Size may vary by design.)')),
   }),
   '핑크 대형 화병': vase({
-    title: t('핑크 가든 대형 화병', 'Pink Garden Vase'), price: '300,000원', priceOptions: prices(['W50 × H55~60cm', '30만원', 'KRW 300,000']),
+    title: t('핑크 가든 대형 화병', 'Pink Garden Vase'), price: '250,000원', priceOptions: prices(['W45~50 × H55~60cm', '25만원', 'KRW 250,000']),
     theme: t(['핑크 컬러의 다양한 꽃들이 조화롭게 어우러진 대형 플라워 오브제입니다.', '부드러운 핑크 톤을 중심으로 풍성한 꽃의 볼륨감과 자연스러운 형태를 살려, 마치 봄의 정원을 공간에 담아낸 듯한 따뜻하고 우아한 분위기를 표현합니다.', '웨딩 공간부터 브랜드 공간까지 특별한 순간과 공간에 화사한 아름다움을 더하는 디자인으로, 공간의 중심이 되는 플라워 오브제입니다.'], ['A large floral object where many shades of pink blend harmoniously.', 'Soft pink, generous volume and natural form bring a warm spring garden indoors.', 'From weddings to brand spaces, it creates a luminous focal point.']),
     featureTitle: t('Design'), feature: t(['다양한 높이와 소재의 질감을 조화롭게 구성하여 어느 방향에서 보아도 풍성한 입체감을 느낄 수 있도록 디자인했습니다.', '대형 화병의 안정감 있는 비율과 자연스럽게 흐르는 꽃의 실루엣이 어우러져 넓은 공간의 중심이 되는 플라워 오브제입니다.'], ['Varied heights and textures create generous dimension from every angle.', 'A stable large vase and flowing silhouette make this a focal object for spacious interiors.']),
     spaces: t(['거실 포인트 스타일링', '호텔 및 로비 공간', '쇼룸 및 브랜드 공간', '카페 및 레스토랑', '백화점 및 상업 공간 연출', '포토존 및 행사 공간 스타일링'], ['Living room statement styling', 'Hotels and lobbies', 'Showrooms and brand spaces', 'Cafés and restaurants', 'Commercial spaces', 'Photo zones and events']),
-    details: vaseDetails(t('약 W50 × H55~60cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W50 × H55–60cm\n(Size may vary by design.)'), 'Large Object', []),
+    details: vaseDetails(t('약 W45~50 × H55~60cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W45–50 × H55–60cm\n(Size may vary by design.)'), 'Large Object', []),
     delivery: t(['본 상품은 대형 화병 완성품으로 제작됩니다.', '파손 위험이 있어 전국 택배 발송은 불가하며, 서울·경기 지역 카카오T 퀵 또는 차량 배송으로만 진행됩니다.'], ['This item is completed as a large vase arrangement.', 'Due to breakage risk, it is available only by Kakao T Quick or vehicle delivery within Seoul and Gyeonggi.']), custom: OBJECT_CUSTOM,
   }),
 
