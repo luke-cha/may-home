@@ -266,7 +266,7 @@ export const productEditorial = {
     custom: OBJECT_CUSTOM,
   }),
   '핑크 피치 연보라 화병': vase({
-    title: t('작약 & 로즈 화병', 'Peony Bloom Vase'), price: '200,000원', priceOptions: prices(['W40~45 × H45cm', '20만원', 'KRW 200,000']),
+    title: t('작약 & 로즈 화병', 'Peony Bloom Vase'), price: '150,000원', priceOptions: prices(['W40~45 × H45cm', '15만원', 'KRW 150,000']),
     theme: t(['고급 핑크 작약을 메인으로 피치, 화이트, 연보라, 하늘빛 컬러가 조화롭게 어우러진 플라워 오브제입니다.', '풍성한 작약의 아름다운 볼륨감과 부드러운 파스텔 컬러가 어우러져 마치 봄날의 정원을 공간에 담아낸 듯한 사랑스러운 분위기를 표현합니다.', '따뜻하면서도 은은한 컬러 밸런스로 어느 공간에나 자연스럽게 어울리며, 사계절 내내 봄의 생기를 느낄 수 있는 디자인입니다.'], ['Premium pink peonies combine with peach, white, lavender and sky tones.', 'Generous peonies and soft pastels bring the charm of a spring garden indoors.', 'Its warm, subtle balance suits any space and carries spring energy through every season.']),
     details: vaseDetails(t('약 W40~45 × H45cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W40–45 × H45cm\n(Size may vary by design.)')),
   }),

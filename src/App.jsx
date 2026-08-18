@@ -130,7 +130,7 @@ const projectCopy = {
 const mediaUrl = (file) => `${import.meta.env.BASE_URL}${file.split('/').map(encodeURIComponent).join('/')}`
 const label = (value) => value.normalize('NFC')
 const slug = (value) => label(value).toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-').replace(/^-|-$/g, '')
-const under = (prefix) => manifest.files.filter((file) => file.startsWith(prefix))
+const under = (prefix) => manifest.files.filter((file) => file.normalize('NFC').startsWith(prefix.normalize('NFC')))
 const imagesOnly = (files) => files.filter((file) => !/\.(mp4|mov)$/i.test(file))
 const directFolders = (prefix, depth) => [...new Set(under(prefix).map((file) => file.split('/')[depth]).filter(Boolean))]
 const cleanFolderName = (value) => label(value).replace(/^(?:\d+(?:\.\d+)?|new)\s+/i, '').trim()
@@ -152,7 +152,7 @@ const hero = imagesOnly(under('01 Home/01 Hero/'))
 const selectedWorks = numericMediaSort(under('01 Home/02 Selected Works/'))
 const storyPhotos = imagesOnly(under('03 About/Our Story/'))
 const profilePhoto = imagesOnly(under('03 About/Profile/'))[0]
-const freshFlowerMedia = numericMediaSort(under('02 Shop/07 Fresh Flower Collection/'))
+const freshFlowerMedia = numericMediaSort(under('02 Shop/생화 샘플/').filter((file) => !file.normalize('NFC').includes('/시즌 상품/')))
 const galleryGroups = {
   works: numericMediaSort(under('04 Gallery/Floral Works/')),
   spaces: numericMediaSort(under('04 Gallery/Space Styling/')),
@@ -279,12 +279,12 @@ function FreshSection({ title, children }) {
 }
 
 function FreshFlowerCollection({ lang }) {
-  const ko = lang === 'ko'
+  const ko = lang === 'ko'; const [showAllMedia, setShowAllMedia] = useState(false)
   return <div className="page fade-in shop-page fresh-flower-page">
     <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '메이플레르 플라워 컬렉션' : 'Mayfleur Flower Collections'} />
     <ShopCollectionNav lang={lang} active="fresh" />
     <section className="fresh-flower-intro container"><p>{ko ? <>메이플레르의 생화 컬렉션은 계절과 꽃의 아름다움을 담아<br />주문에 맞춰 하나씩 제작하는 프리미엄 플라워 컬렉션입니다.</> : <>Mayfleur’s fresh flower collection captures the beauty of flowers and the seasons,<br />with every piece individually created to order.</>}</p><div className="fresh-order-minimums"><div className="fresh-order-main"><strong>{ko ? '100% 예약제' : '100% By Reservation'}</strong><strong className="fresh-minimum">{ko ? <>기본 주문 금액 <b>20만원부터</b></> : <>Standard Orders from <b>KRW 200,000</b></>}</strong></div><span>{ko ? <>꽃다발은 <b>15만원부터</b> 주문 가능합니다.</> : <>Bouquets are available from <b>KRW 150,000</b>.</>}</span></div></section>
-    {freshFlowerMedia.length > 0 && <section className="fresh-flower-gallery container">{freshFlowerMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${ko ? '프리미엄 생화 컬렉션' : 'Premium fresh flower collection'} ${i + 1}`} /></figure>)}</section>}
+    {freshFlowerMedia.length > 0 && <section className={`fresh-flower-gallery container ${showAllMedia ? 'expanded' : 'collapsed'}`}>{freshFlowerMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${ko ? '프리미엄 생화 컬렉션' : 'Premium fresh flower collection'} ${i + 1}`} /></figure>)}{freshFlowerMedia.length > 15 && <button className="fresh-gallery-more" type="button" onClick={() => setShowAllMedia((value) => !value)}>{showAllMedia ? (ko ? '접기' : 'Show Less') : (ko ? '더보기' : 'View More')} <span>{showAllMedia ? '↑' : '↓'}</span></button>}</section>}
     <section className="fresh-flower-guide container">
       <FreshSection title="Order">{ko ? <><p>모든 생화 상품은 주문 제작으로 진행됩니다.</p><p>일반 주문은 <strong>최소 7일 전</strong>,<br />특정 꽃을 원하시는 경우 꽃의 수급을 위해 <strong>최소 2주 전</strong> 문의해 주세요.</p><p>원하시는 상품, 색감과 분위기, 예산 등을 상담한 후<br />입금이 확인되면 꽃 사입 및 제작이 진행됩니다.</p></> : <><p>All fresh flower products are made to order.</p><p>Please enquire <strong>at least 7 days in advance</strong> for general orders, or <strong>at least 2 weeks in advance</strong> when requesting specific flowers.</p><p>Flowers are sourced and production begins after discussing the product, palette, mood and budget, and confirming payment.</p></>}</FreshSection>
       <FreshSection title="Flowers">{ko ? <><p>생화는 계절과 꽃 시장의 상황에 따라<br />사용 가능한 꽃의 종류와 수급량이 달라질 수 있습니다.</p><p>사계절 만나볼 수 있는 꽃이 있는 반면,<br />특정 계절에만 잠시 만날 수 있는 꽃도 있습니다.<br />또한 같은 계절이라도 매주 시장에 들어오는 꽃이 달라질 수 있어<br />요청하신 이미지와 동일한 꽃과 구성으로 제작하기는 어렵습니다.</p><p>원하시는 이미지가 있는 경우 참고하여<br />색감과 전체적인 분위기를 최대한 가깝게 표현해 드립니다.</p></> : <><p>Flower varieties and quantities vary with the season and market availability.</p><p>Some flowers are available year-round, while others appear only briefly in a particular season. Market arrivals also change weekly, so an exact reproduction of a reference image may not be possible.</p><p>Reference images are welcome, and we will interpret their palette and overall mood as closely as possible.</p></>}</FreshSection>
