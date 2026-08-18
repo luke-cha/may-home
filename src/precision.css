@@ -122,7 +122,7 @@ img,video{height:auto}
 .about-page .page-head{padding-top:clamp(36px,4vw,52px);padding-bottom:clamp(20px,2.4vw,28px);text-align:center}
 .about-page .page-head h1{font-size:clamp(28px,3.4vw,42px);margin-bottom:38px}
 .about-page .page-head p{font-size:clamp(13px,1.04vw,15px);line-height:1.85;max-width:720px;margin-inline:auto;white-space:pre-line;word-break:keep-all;overflow-wrap:normal}
-.about-story-photos{gap:clamp(14px,2vw,24px);padding-bottom:clamp(48px,6vw,80px)}
+.about-story-photos{width:min(1040px,calc(100% - clamp(40px,10vw,88px)));gap:clamp(14px,2vw,24px);padding-bottom:clamp(48px,6vw,80px)}
 .philosophy .eyebrow{font-size:12px;letter-spacing:.28em;margin-bottom:20px}.philosophy p{font-family:var(--serif);font-size:clamp(16px,1.6vw,20px);font-style:normal;line-height:1.6;letter-spacing:-.01em}
 .profile{padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(64px,9vw,120px)}
 .profile-role{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.24em}.profile-copy h2{font-size:clamp(22px,2.3vw,28px);line-height:1.1}
