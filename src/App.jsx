@@ -160,6 +160,7 @@ const galleryGroups = {
 }
 const bookFiles = imagesOnly(under('07 Books/'))
 
+const hiddenShopProducts = new Set(['빈티지 대형 화병'])
 const shopCategories = directFolders('02 Shop/', 1)
   .filter((name) => categoryNames[cleanFolderName(name)])
   .map((name) => ({
@@ -168,7 +169,7 @@ const shopCategories = directFolders('02 Shop/', 1)
     products: directFolders(`02 Shop/${name}/`, 2).map((product) => ({
       raw: product, name: cleanFolderName(product), category: cleanFolderName(name),
       media: numericMediaSort(under(`02 Shop/${name}/${product}/`)),
-    })).filter((product) => product.media.length),
+    })).filter((product) => product.media.length && !hiddenShopProducts.has(product.name)),
   }))
 
 const shopProducts = shopCategories.flatMap((category) => category.products)
