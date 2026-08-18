@@ -146,11 +146,11 @@ export const productEditorial = {
     details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 25만원\n약 W50 × H50cm 30만원\n약 W55 × H55cm 35만원', 'Approx. W45 × H45cm KRW 250,000\nApprox. W50 × H50cm KRW 300,000\nApprox. W55 × H55cm KRW 350,000') }),
   }),
   '하늘 블루 센터피스': centerpiece({
-    title: t('하늘 블루 가든 센터피스', 'Sky Blue Garden Centerpiece'), price: '490,000원',
-    priceOptions: prices(['W60 × H70cm', '49만원', 'KRW 490,000'], ['W70 × H80cm', '59만원', 'KRW 590,000']),
+    title: t('하늘 블루 가든 센터피스', 'Sky Blue Garden Centerpiece'), price: '500,000원',
+    priceOptions: prices(['W60 × H70cm', '50만원', 'KRW 500,000'], ['W70 × H80cm', '60만원', 'KRW 600,000']),
     theme: t(['하늘빛의 부드러운 색감에 은은한 블루 포인트를 더한 가든 스타일 대형 센터피스입니다.', '맑은 하늘 아래 펼쳐진 정원을 닮은 컬러감으로, 신비로우면서도 화사한 분위기를 담았습니다.'], ['A large garden-style centrepiece in soft sky tones with subtle blue accents.', 'Its palette recalls a garden beneath a clear sky, creating a luminous and dreamlike mood.']),
     spaces: t(['거실 및 넓은 공간의 메인 장식', '다이닝 테이블 센터피스', '호텔 및 브랜드 공간 연출', '카페 및 쇼룸 스타일링', '백화점 디스플레이', '웨딩 및 행사 공간 장식', '플라워 디렉팅 및 포토존 연출'], ['Statement styling for living and large spaces', 'Dining table centrepiece', 'Hotels and brand spaces', 'Cafés and showrooms', 'Department store displays', 'Wedding and event spaces', 'Floral directing and photo zones']),
-    details: details({ collection: 'Large Object', size: t('약 W60 × H70cm 49만원\n약 W70 × H80cm 59만원', 'Approx. W60 × H70cm KRW 490,000\nApprox. W70 × H80cm KRW 590,000') }),
+    details: details({ collection: 'Large Object', size: t('약 W60 × H70cm 50만원\n약 W70 × H80cm 60만원', 'Approx. W60 × H70cm KRW 500,000\nApprox. W70 × H80cm KRW 600,000') }),
   }),
   '연보라 하늘 센터피스': centerpiece({
     title: t('연보라 & 하늘 센터피스', 'Lavender Sky Centerpiece'), price: '250,000원',
