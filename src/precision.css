@@ -150,7 +150,7 @@ img,video{height:auto}
 .project-card>span{font-family:var(--body);font-size:12px;line-height:1.55;letter-spacing:.06em;color:var(--accent)}
 .project-detail .back{font-family:var(--body);font-size:13px;letter-spacing:.04em;color:rgba(42,37,33,.66)}
 .project-feature h1{font-size:clamp(26px,3vw,38px);line-height:1.04}.project-feature p{font-family:var(--body);font-size:16px;line-height:1.75}
-@keyframes projectFade{from{opacity:0}to{opacity:1}}.project-detail.fade-in,.gallery-page.fade-in{animation:projectFade .45s ease both}
+@keyframes projectFade{from{opacity:0}to{opacity:1}}.project-detail.fade-in,.gallery-page.fade-in,.fresh-flower-page.fade-in{animation:projectFade .45s ease both}
 .gallery-media-button{display:block;width:100%;padding:0;border:0;background:transparent;cursor:zoom-in;overflow:hidden}.gallery-media-button img,.gallery-media-button video{transition:transform .3s ease}.gallery-media-button:hover img,.gallery-media-button:hover video{transform:scale(1.018)}
 .project-gallery-button{display:block;width:100%;padding:0;border:0;background:transparent;cursor:zoom-in;overflow:hidden}
 .project-gallery-button img{transition:transform .3s ease}.project-gallery-button:hover img{transform:scale(1.025)}

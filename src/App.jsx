@@ -201,6 +201,18 @@ function Media({ file, alt = '', eager = false, className = '' }) {
   return <img className={className} src={mediaUrl(file)} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />
 }
 
+function MediaLightbox({ selected, onClose, total, label, lang }) {
+  const ko = lang === 'ko'
+  useEffect(() => {
+    const close = (event) => { if (event.key === 'Escape') onClose() }
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', close)
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener('keydown', close) }
+  }, [onClose])
+  return <div className="project-lightbox gallery-lightbox" role="dialog" aria-modal="true" aria-label={`${label} ${selected.index}`} onClick={onClose}><div className="project-lightbox-content" onClick={(event) => event.stopPropagation()}><button type="button" className="project-lightbox-close" onClick={onClose} aria-label={ko ? '닫기' : 'Close'}>×</button><Media file={selected.file} alt={`${label} ${selected.index}`} eager /><small>{label} · {selected.index} / {total}</small></div></div>
+}
+
 function Header({ page, lang, setLang }) {
   const [open, setOpen] = useState(false)
   useEffect(() => setOpen(false), [page])
@@ -279,12 +291,12 @@ function FreshSection({ title, children }) {
 }
 
 function FreshFlowerCollection({ lang }) {
-  const ko = lang === 'ko'; const [showAllMedia, setShowAllMedia] = useState(false)
+  const ko = lang === 'ko'; const [showAllMedia, setShowAllMedia] = useState(false); const [selectedMedia, setSelectedMedia] = useState(null)
   return <div className="page fade-in shop-page fresh-flower-page">
     <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '메이플레르 플라워 컬렉션' : 'Mayfleur Flower Collections'} />
     <ShopCollectionNav lang={lang} active="fresh" />
     <section className="fresh-flower-intro container"><p>{ko ? <>메이플레르의 생화 컬렉션은 계절과 꽃의 아름다움을 담아<br />주문에 맞춰 하나씩 제작하는 프리미엄 플라워 컬렉션입니다.</> : <>Mayfleur’s fresh flower collection captures the beauty of flowers and the seasons,<br />with every piece individually created to order.</>}</p><div className="fresh-order-minimums"><div className="fresh-order-main"><strong>{ko ? '100% 예약제' : '100% By Reservation'}</strong><strong className="fresh-minimum">{ko ? <>기본 주문 금액 <b>20만원부터</b></> : <>Standard Orders from <b>KRW 200,000</b></>}</strong></div><span>{ko ? <>꽃다발은 <b>15만원부터</b> 주문 가능합니다.</> : <>Bouquets are available from <b>KRW 150,000</b>.</>}</span><a className="fresh-inquiry-small" href="#contact">{ko ? '문의하기' : 'Make an Inquiry'} →</a></div></section>
-    {freshFlowerMedia.length > 0 && <section className={`fresh-flower-gallery container ${showAllMedia ? 'expanded' : 'collapsed'}`}>{freshFlowerMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${ko ? '프리미엄 생화 컬렉션' : 'Premium fresh flower collection'} ${i + 1}`} /></figure>)}{freshFlowerMedia.length > 20 && <button className="fresh-gallery-more" type="button" onClick={() => setShowAllMedia((value) => !value)}>{showAllMedia ? (ko ? '접기' : 'Show Less') : (ko ? '더보기' : 'View More')} <span>{showAllMedia ? '↑' : '↓'}</span></button>}</section>}
+    {freshFlowerMedia.length > 0 && <section className={`fresh-flower-gallery container ${showAllMedia ? 'expanded' : 'collapsed'}`}>{freshFlowerMedia.map((file, i) => <figure key={file}><button type="button" className="gallery-media-button" onClick={() => setSelectedMedia({ file, index: i + 1 })} aria-label={`${ko ? '생화 컬렉션 사진 크게 보기' : 'View fresh flower collection image larger'} ${i + 1}`}><Media file={file} alt={`${ko ? '프리미엄 생화 컬렉션' : 'Premium fresh flower collection'} ${i + 1}`} /></button></figure>)}{freshFlowerMedia.length > 20 && <button className="fresh-gallery-more" type="button" onClick={() => setShowAllMedia((value) => !value)}>{showAllMedia ? (ko ? '접기' : 'Show Less') : (ko ? '더보기' : 'View More')} <span>{showAllMedia ? '↑' : '↓'}</span></button>}</section>}
     <section className="fresh-flower-guide container">
       <FreshSection title="Order">{ko ? <><p>모든 생화 상품은 주문 제작으로 진행됩니다.</p><p>일반 주문은 <strong>최소 7일 전</strong>,<br />특정 꽃을 원하시는 경우 꽃의 수급을 위해 <strong>최소 2주 전</strong> 문의해 주세요.</p><p>원하시는 상품, 색감과 분위기, 예산 등을 상담한 후<br />입금이 확인되면 꽃 사입 및 제작이 진행됩니다.</p></> : <><p>All fresh flower products are made to order.</p><p>Please enquire <strong>at least 7 days in advance</strong> for general orders, or <strong>at least 2 weeks in advance</strong> when requesting specific flowers.</p><p>Flowers are sourced and production begins after discussing the product, palette, mood and budget, and confirming payment.</p></>}</FreshSection>
       <FreshSection title="Flowers">{ko ? <><p>생화는 계절과 꽃 시장의 상황에 따라<br />사용 가능한 꽃의 종류와 수급량이 달라질 수 있습니다.</p><p>사계절 만나볼 수 있는 꽃이 있는 반면,<br />특정 계절에만 잠시 만날 수 있는 꽃도 있습니다.<br />또한 같은 계절이라도 매주 시장에 들어오는 꽃이 달라질 수 있어<br />요청하신 이미지와 동일한 꽃과 구성으로 제작하기는 어렵습니다.</p><p>원하시는 이미지가 있는 경우 참고하여<br />색감과 전체적인 분위기를 최대한 가깝게 표현해 드립니다.</p></> : <><p>Flower varieties and quantities vary with the season and market availability.</p><p>Some flowers are available year-round, while others appear only briefly in a particular season. Market arrivals also change weekly, so an exact reproduction of a reference image may not be possible.</p><p>Reference images are welcome, and we will interpret their palette and overall mood as closely as possible.</p></>}</FreshSection>
@@ -295,6 +307,7 @@ function FreshFlowerCollection({ lang }) {
       <FreshSection title="Please Note">{ko ? <><p>생화는 자연에서 자라는 꽃의 특성상<br />사진과 실제 상품 사이에 차이가 있을 수 있습니다.</p><p>꽃의 개화 상태와 시장 상황에 따라<br />꽃의 종류, 색감, 크기, 형태 등이 달라질 수 있으며<br />메이플레르는 이를 고려하여 가장 아름다운 상태의 꽃을 선별합니다.</p><p>특정 꽃이나 이미지를 그대로 재현하기보다는<br />원하시는 <strong>색감과 분위기를 중심으로 가장 가까운 느낌의 디자인</strong>을 제안해 드립니다.</p><p>계절과 시장에서 만날 수 있는 가장 아름다운 꽃으로<br />메이플레르만의 플라워 디자인을 완성합니다.</p></> : <><p>As fresh flowers grow in nature, the finished product may differ from photographs.</p><p>Variety, colour, scale and form vary with bloom stage and market conditions. Mayfleur selects flowers in their most beautiful condition.</p><p>Rather than reproducing a specific flower or image exactly, we propose a design that most closely reflects your requested <strong>palette and atmosphere</strong>.</p><p>Mayfleur completes each design with the most beautiful flowers available from the season and market.</p></>}</FreshSection>
     </section>
     <section className="fresh-flower-cta paper-panel"><div><span className="rule" /><h2>{ko ? '생화 컬렉션 주문 문의' : 'Fresh Flower Order Inquiry'}</h2><p>{ko ? '원하시는 상품과 색감, 분위기, 예산, 수령일을 알려주세요.' : 'Tell us your preferred product, palette, mood, budget and delivery date.'}</p><a className="button primary" href="#contact">{ko ? '문의하기' : 'Make an Inquiry'}</a></div></section>
+    {selectedMedia && <MediaLightbox selected={selectedMedia} onClose={() => setSelectedMedia(null)} total={freshFlowerMedia.length} label={ko ? '생화 컬렉션' : 'Fresh Flower Collection'} lang={lang} />}
   </div>
 }
 
