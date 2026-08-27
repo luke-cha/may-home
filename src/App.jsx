@@ -31,7 +31,7 @@ const orderGuide = {
     sections: [
       ['01 | Design & Production', [
         '모든 작품은 주문 후 제작되는 핸드메이드 플라워 오브제입니다.',
-        '제작 기간은 평균 7~15일 정도 소요됩니다.',
+        '제작 기간은 평균 7–15일이며, 주문 상황에 따라 달라질 수 있습니다.',
         '주문 전 상담을 통해 원하시는 색감과 무드를 반영하여 제작합니다.',
         '상품 이미지는 샘플 작품이며, 조화 및 화기는 수급 상황에 따라 유사한 소재로 대체될 수 있습니다. 전체적인 색감과 분위기를 유지하여 제작됩니다.',
         '기존 디자인의 구조를 유지하는 범위 내에서 일부 꽃 소재 및 색상 변경이 가능합니다.',
@@ -60,7 +60,7 @@ const orderGuide = {
     sections: [
       ['01 | Design & Production', [
         'Every piece is a handmade floral object created after your order is placed.',
-        'Production typically takes approximately 7–15 days.',
+        'Production typically takes approximately 7–15 days and may vary depending on current order volume.',
         'Your preferred colour palette and mood can be discussed before production.',
         'Product images show sample pieces. Artificial flowers and vessels may be replaced with similar materials depending on availability while preserving the overall palette and mood.',
         'Selected flower materials and colours may be adjusted while maintaining the structure of the original design.',
@@ -384,7 +384,7 @@ function ProductDetail({ product, lang }) {
   if (editorial) return <EditorialProductDetail product={product} editorial={editorial} lang={lang} guide={guide} />
   return <div className="page fade-in product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
-    <div className="detail-top"><div className="detail-main"><Media file={media[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 주문 문의' : 'Order via Kakao'}</a></div></div>
+    <div className="detail-top"><div className="detail-main"><Media file={media[0]} alt={product.name} eager /></div><div className="detail-copy"><span className="eyebrow">{categoryNames[product.category]?.[ko ? 1 : 0]}</span><h1>{product.name}</h1><p className="detail-price">{ko ? '가격 및 제작 상담' : 'Price & production on request'}</p><p>{ko ? '프리미엄 조화를 사용하여 꽃의 자연스러운 형태와 색감, 결을 섬세하게 담아냅니다. 모든 작품은 주문 후 플로리스트가 직접 제작합니다.' : 'Made with premium artificial flowers to preserve natural form, colour and texture. Every piece is designed and handcrafted to order.'}</p><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일 (주문 상황에 따라 달라질 수 있습니다.)' : 'Approximately 7–15 days (may vary depending on order volume)'}</dd></div><div><dt>{ko ? '구성' : 'Design'}</dt><dd>{ko ? '색상 및 일부 소재 상담 가능' : 'Colour and selected materials customisable'}</dd></div></dl><a className="button primary" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 주문 문의' : 'Order via Kakao'}</a></div></div>
     <div className="detail-gallery">{media.slice(1).map((file, i) => <figure className="detail-gallery-item" key={file}><Media file={file} alt={`${product.name} detail ${i + 2}`} /></figure>)}</div>
     <OrderGuide guide={guide} />
   </div>
@@ -410,7 +410,7 @@ function EditorialProductDetail({ product, editorial, lang, guide }) {
   const paragraphs = (items) => (items?.[lang] || items?.ko || []).map((item) => <p key={item}>{item}</p>)
   return <div className="page fade-in product-detail editorial-product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
-    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><div className="editorial-price-options"><span>{ko ? '사이즈별 주문 가격' : 'Size & Price'}</span><ul>{editorial.priceOptions.map(([size, prices]) => <li className={selectedSize === size ? 'selected' : ''} key={size}><button type="button" onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size}><small>{size}</small><strong>{prices[lang]}</strong></button></li>)}</ul></div><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href={inquiryHref}>{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
+    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><div className="editorial-price-options"><span>{ko ? '사이즈별 주문 가격' : 'Size & Price'}</span><ul>{editorial.priceOptions.map(([size, prices]) => <li className={selectedSize === size ? 'selected' : ''} key={size}><button type="button" onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size}><small>{size}</small><strong>{prices[lang]}</strong></button></li>)}</ul></div><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일 (주문 상황에 따라 달라질 수 있습니다.)' : 'Approximately 7–15 days (may vary depending on order volume)'}</dd></div></dl><a className="button primary" href={inquiryHref}>{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
     {editorial.about && <section className="editorial-copy-section"><span className="eyebrow">About This Piece</span><div>{paragraphs(editorial.about)}</div></section>}
     {editorial.theme && <section className="editorial-copy-section"><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>}
     <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
@@ -429,12 +429,12 @@ function OrderGuide({ guide }) {
 function ProductGuide({ lang }) {
   const ko = lang === 'ko'
   const items = ko ? [
-    ['주문 제작', '모든 작품은 주문 후 제작되는 핸드메이드 오브제이며 평균 제작 기간은 7–15일입니다.'],
+    ['주문 제작', '모든 작품은 주문 후 제작되는 핸드메이드 오브제이며, 제작 기간은 평균 7–15일입니다. 주문 상황에 따라 달라질 수 있습니다.'],
     ['디자인 안내', '전체적인 색감과 무드를 유지하는 범위에서 소재가 대체될 수 있으며 일부 색상 변경은 사전 협의가 가능합니다.'],
     ['배송', '조화 상품은 전국 택배가 가능하며, 일부 센터피스(세라믹·도자기)는 서울·경기 지역에 한해 차량 배송으로 진행합니다.'],
     ['교환 및 환불', '주문 제작 특성상 제작 시작 이후 단순 변심에 의한 교환·환불은 어렵습니다.'],
   ] : [
-    ['Made to order', 'Every piece is handcrafted after confirmation. Production typically takes 7–15 days.'],
+    ['Made to order', 'Every piece is handcrafted after confirmation. Production typically takes 7–15 days and may vary depending on current order volume.'],
     ['Design notes', 'Materials may be substituted while retaining the overall palette and mood. Selected colour changes can be discussed.'],
     ['Delivery', 'Bouquets, vase arrangements and wreaths ship nationwide. Centerpieces and baskets require vehicle delivery.'],
     ['Returns', 'As each piece is made to order, cancellations and returns are unavailable once production begins.'],
