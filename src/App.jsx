@@ -313,7 +313,7 @@ function FreshFlowerCollection({ lang }) {
 
 function ShopQuickDeliveryGuide({ lang }) {
   const ko = lang === 'ko'
-  return <section className="shop-quick-delivery container"><span className="eyebrow">Artificial Flower Collection</span><h2>Delivery</h2><div className="shop-quick-delivery-intro">{ko ? <><p>상품은 카카오퀵 차량 배송으로 진행되며, 직접 픽업은 어렵습니다.</p><p>배송비는 배송 지역에 따라 별도로 책정됩니다.</p><p>원하시는 도착 시간을 기준으로 배송을 예약하며, 기사 배차 및 교통 상황에 따라 실제 도착 시간은 다소 앞당겨지거나 지연될 수 있습니다.</p></> : <><p>Products are delivered by Kakao Quick vehicle service, and direct collection is unavailable.</p><p>Delivery fees are calculated separately according to the delivery area.</p><p>We schedule delivery based on your preferred arrival time, but the actual arrival may be slightly earlier or delayed depending on driver availability and traffic conditions.</p></>}</div><QuickDeliveryFeeGuide ko={ko} /></section>
+  return <section className="shop-quick-delivery container"><span className="eyebrow">Artificial Flower Collection</span><h2>Delivery</h2><div className="shop-quick-delivery-intro">{ko ? <><p>상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 안전하게 배송되며, 방문 수령은 운영하지 않습니다.</p><p>배송비는 배송 지역에 따라 별도로 책정됩니다.</p><p>원하시는 도착 시간을 기준으로 배송을 예약하며, 기사 배차 및 교통 상황에 따라 실제 도착 시간은 다소 앞당겨지거나 지연될 수 있습니다.</p></> : <><p>Products are delivered safely by parcel or Kakao T Quick depending on their type and size. Direct collection is unavailable.</p><p>Delivery fees are calculated separately according to the delivery area.</p><p>We schedule delivery based on your preferred arrival time, but the actual arrival may be slightly earlier or delayed depending on driver availability and traffic conditions.</p></>}</div><QuickDeliveryFeeGuide ko={ko} /></section>
 }
 
 function Shop({ lang, detail }) {
@@ -363,11 +363,12 @@ function ObjectSizeGuide({ lang, value }) {
 }
 
 function EditorialProductDetail({ product, editorial, lang, guide }) {
-  const ko = lang === 'ko'; const heroFile = imagesOnly(product.media)[0]; const galleryMedia = product.media.filter((file) => file !== heroFile)
+  const ko = lang === 'ko'; const heroFile = imagesOnly(product.media)[0]; const galleryMedia = product.media.filter((file) => file !== heroFile); const [selectedSize, setSelectedSize] = useState(editorial.priceOptions[0][0])
+  const inquiryHref = `#contact/artificial/${encodeURIComponent(editorial.title[lang])}/${encodeURIComponent(selectedSize)}`
   const paragraphs = (items) => (items?.[lang] || items?.ko || []).map((item) => <p key={item}>{item}</p>)
   return <div className="page fade-in product-detail editorial-product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
-    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><div className="editorial-price-options"><span>{ko ? '사이즈별 주문 가격' : 'Size & Price'}</span><ul>{editorial.priceOptions.map(([size, prices]) => <li key={size}><small>{size}</small><strong>{prices[lang]}</strong></li>)}</ul></div><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href="#contact">{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
+    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><div className="editorial-price-options"><span>{ko ? '사이즈별 주문 가격' : 'Size & Price'}</span><ul>{editorial.priceOptions.map(([size, prices]) => <li className={selectedSize === size ? 'selected' : ''} key={size}><button type="button" onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size}><small>{size}</small><strong>{prices[lang]}</strong></button></li>)}</ul></div><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일' : 'Approximately 7–15 days'}</dd></div></dl><a className="button primary" href={inquiryHref}>{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
     {editorial.about && <section className="editorial-copy-section"><span className="eyebrow">About This Piece</span><div>{paragraphs(editorial.about)}</div></section>}
     {editorial.theme && <section className="editorial-copy-section"><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>}
     <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
@@ -605,16 +606,17 @@ function QuickDeliveryFeeGuide({ ko }) {
   return <div className="contact-delivery-fee-panel"><div className="fresh-delivery-fees"><h3>{ko ? '배송비' : 'Delivery Fee'}</h3><dl>{quickDeliveryFees.map(([price, areasKo, areasEn]) => <div key={price}><dt>{ko ? price : `KRW ${price.replace('원', '')}`}</dt><dd>{ko ? areasKo : areasEn}</dd></div>)}</dl><p>{ko ? '표기되지 않은 지역은 배송지 확인 후 안내드립니다.' : 'For areas not listed, the fee will be confirmed after checking the delivery address.'}</p></div><div className="fresh-delivery-benefit"><h3>{ko ? '배송비 지원' : 'Delivery Benefit'}</h3><p><strong>{ko ? '20만원 이상 주문 시 배송비 최대 15,000원 지원' : 'Orders over KRW 200,000 receive up to KRW 15,000 in delivery support.'}</strong></p><p><strong>{ko ? '30만원 이상 주문 시 배송비 최대 20,000원 지원' : 'Orders over KRW 300,000 receive up to KRW 20,000 in delivery support.'}</strong></p><small>{ko ? '배송비 지원은 주문 금액 및 배송비를 기준으로 적용되며, 지원 금액을 초과하는 배송비는 고객 부담입니다.' : 'Support is applied according to the order total and delivery fee. Any amount exceeding the supported fee is payable by the customer.'}</small></div></div>
 }
 
-function OrderInquiry({ ko }) {
-  const [orderType, setOrderType] = useState('fresh')
-  const [delivery, setDelivery] = useState('quick')
+function OrderInquiry({ ko, initialOrderType = 'fresh', initialProduct = '' }) {
+  const [orderType, setOrderType] = useState(initialOrderType)
+  const [delivery, setDelivery] = useState(initialOrderType === 'fresh' ? 'quick' : 'parcel')
+  const [productName, setProductName] = useState(initialProduct)
   const changeOrderType = (value) => { setOrderType(value); setDelivery(value === 'fresh' ? 'quick' : 'parcel') }
   return <section className="order-inquiry">
     <span className="order-inquiry-title">/ Order Inquiry</span>
     <fieldset className="order-choice"><legend>{ko ? '주문 유형 *' : 'Order Type *'}</legend><div className="radio-row"><label><input required type="radio" name="orderType" value="fresh" checked={orderType === 'fresh'} onChange={() => changeOrderType('fresh')} />{ko ? '생화' : 'Fresh Flowers'}</label><label><input type="radio" name="orderType" value="artificial" checked={orderType === 'artificial'} onChange={() => changeOrderType('artificial')} />{ko ? '조화' : 'Artificial Flowers'}</label></div></fieldset>
     <div className="order-notes"><p>{ko ? '※ 생화 꽃다발은 15만 원 이상부터 주문 가능합니다.' : '※ Fresh flower bouquets are available for orders over KRW 150,000.'}</p><p>{ko ? '※ 생화 및 조화 맞춤 제작(Custom Order)은 20만 원 이상부터 진행됩니다.' : '※ Custom orders for fresh and artificial flowers are available from KRW 200,000.'}</p></div>
     <div className="order-fields">
-      <label>{ko ? '상품명 *' : 'Product *'}<input required name="product" /></label>
+      <label>{ko ? '문의 상품 *' : 'Product Inquiry *'}<input required name="product" value={productName} onChange={(event) => setProductName(event.target.value)} /></label>
       <label>{ko ? '예상 예산 *' : 'Estimated Budget *'}<input required name="budget" inputMode="numeric" /></label>
       <label className="full">{ko ? '선호하는 색감 및 분위기' : 'Preferred Colours & Mood'}<textarea name="colourMood" rows="2" /></label>
       <label className="full">{ko ? '요청 사항' : 'Requests'}<textarea name="requests" rows="3" /></label>
@@ -624,14 +626,14 @@ function OrderInquiry({ ko }) {
       <label>{ko ? '받는 분 연락처' : 'Recipient Phone'}<input type="tel" name="recipientPhone" /></label>
       <label className="full">{ko ? '배송 주소 *' : 'Delivery Address *'}<textarea required name="address" rows="2" /></label>
     </div>
-    <div className="order-notes"><p>{ko ? '※ 배송 주소를 작성해 주시면 카카오 T 퀵 예상 배송비를 안내해 드립니다.' : '※ Enter your address to receive an estimated Kakao T Quick delivery fee.'}</p><p>{ko ? '※ 방문 수령은 불가하며, 모든 주문은 배송으로만 진행됩니다.' : '※ Collection is not available; all orders are delivered.'}</p></div>
+    <div className="order-notes"><p>{ko ? '※ 배송 주소를 작성해 주시면 카카오 T 퀵 예상 배송비를 안내해 드립니다.' : '※ Enter your address to receive an estimated Kakao T Quick delivery fee.'}</p></div>
     <div className="order-fields"><label>{ko ? '희망 수령일 *' : 'Preferred Delivery Date *'}<input required type="date" name="deliveryDate" /></label></div>
     <fieldset className="delivery-choice"><legend>{ko ? '배송 방법' : 'Delivery Method'}</legend>
       <div><span>{ko ? '생화 :' : 'Fresh Flowers:'}</span><label className={orderType !== 'fresh' ? 'disabled' : ''}><input required={orderType === 'fresh'} disabled={orderType !== 'fresh'} type="radio" name="delivery" value="quick" checked={orderType === 'fresh' && delivery === 'quick'} onChange={() => setDelivery('quick')} />{ko ? '카카오 T 퀵' : 'Kakao T Quick'}</label></div>
       <div><span>{ko ? '조화 :' : 'Artificial Flowers:'}</span><label className={orderType !== 'artificial' ? 'disabled' : ''}><input required={orderType === 'artificial'} disabled={orderType !== 'artificial'} type="radio" name="delivery" value="parcel" checked={orderType === 'artificial' && delivery === 'parcel'} onChange={() => setDelivery('parcel')} />{ko ? '택배' : 'Parcel'}</label><label className={orderType !== 'artificial' ? 'disabled' : ''}><input disabled={orderType !== 'artificial'} type="radio" name="delivery" value="quick" checked={orderType === 'artificial' && delivery === 'quick'} onChange={() => setDelivery('quick')} />{ko ? '카카오 T 퀵' : 'Kakao T Quick'}</label></div>
     </fieldset>
-    <div className="order-notes delivery-support"><p>{ko ? '※ 생화는 카카오 T 퀵 배송만 가능합니다.' : '※ Fresh flowers are delivered through Kakao T Quick only.'}</p><p>{ko ? '※ 20만 원 이상 주문: 배송비 최대 15,000원 지원' : '※ Orders over KRW 200,000: delivery support up to KRW 15,000'}</p><p>{ko ? '※ 30만 원 이상 주문: 배송비 최대 20,000원 지원' : '※ Orders over KRW 300,000: delivery support up to KRW 20,000'}</p></div>
-    <details className="contact-delivery-fees" open><summary>/ DELIVERY <b aria-hidden="true" /></summary><div className="contact-quick-delivery-intro">{ko ? <><p>상품은 카카오퀵 차량 배송으로 진행되며, 직접 픽업은 어렵습니다.</p><p>배송비는 배송 지역에 따라 별도로 책정됩니다.</p><p>원하시는 도착 시간을 기준으로 배송을 예약하며, 기사 배차 및 교통 상황에 따라 실제 도착 시간은 다소 앞당겨지거나 지연될 수 있습니다.</p></> : <><p>Products are delivered by Kakao Quick vehicle service, and direct collection is unavailable.</p><p>Delivery fees are calculated separately according to the delivery area.</p><p>We schedule delivery based on your preferred arrival time, but the actual arrival may be slightly earlier or delayed depending on driver availability and traffic conditions.</p></>}</div><QuickDeliveryFeeGuide ko={ko} /></details>
+    <div className="order-notes delivery-support"><p>{ko ? '※ 생화는 카카오 T 퀵 차량 배송만 가능합니다.' : '※ Fresh flowers are delivered by Kakao T Quick vehicle service only.'}</p><p>{ko ? '※ 조화는 상품의 크기 및 형태에 따라 배송 방법이 달라질 수 있습니다.' : '※ Delivery methods for artificial flowers may vary depending on product size and form.'}</p><p>{ko ? '※ 방문 수령은 운영하지 않습니다.' : '※ Direct collection is unavailable.'}</p><p>{ko ? '※ 20만 원 이상 주문: 배송비 최대 15,000원 지원' : '※ Orders over KRW 200,000: delivery support up to KRW 15,000'}</p><p>{ko ? '※ 30만 원 이상 주문: 배송비 최대 20,000원 지원' : '※ Orders over KRW 300,000: delivery support up to KRW 20,000'}</p></div>
+    <details className="contact-delivery-fees" open><summary>/ DELIVERY <b aria-hidden="true" /></summary><div className="contact-quick-delivery-intro">{ko ? <><p>상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 안전하게 배송되며, 방문 수령은 운영하지 않습니다.</p><p>배송비는 배송 지역에 따라 별도로 책정됩니다.</p><p>원하시는 도착 시간을 기준으로 배송을 예약하며, 기사 배차 및 교통 상황에 따라 실제 도착 시간은 다소 앞당겨지거나 지연될 수 있습니다.</p></> : <><p>Products are delivered safely by parcel or Kakao T Quick depending on their type and size. Direct collection is unavailable.</p><p>Delivery fees are calculated separately according to the delivery area.</p><p>We schedule delivery based on your preferred arrival time, but the actual arrival may be slightly earlier or delayed depending on driver availability and traffic conditions.</p></>}</div><QuickDeliveryFeeGuide ko={ko} /></details>
     <PhotoAttachment ko={ko} name="shopPhotos" />
   </section>
 }
@@ -705,12 +707,14 @@ function GlobalWorkshopInquiry() {
   </section>
 }
 
-function Contact({ lang }) {
+function Contact({ lang, detail = [] }) {
   const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
+  const initialOrderType = detail[0] === 'artificial' ? 'artificial' : 'fresh'
+  const initialProduct = detail.slice(1).join(' ')
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
     <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form encType="multipart/form-data" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
         <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','Shop','샵'], ['Workshop','Flower Workshop','플라워워크샵'], ['Brand Collaboration','Brand Collaboration & Floral Styling','브랜드 협업 & 플라워 스타일링'], ['Global Workshop','Global Workshop','Global Workshop'], ['Other','Other','기타']].map(([item, en, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : en}</button>)}</div></fieldset>
-        {type === 'Shop' ? <OrderInquiry ko={ko} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><PhotoAttachment ko={ko} name="inquiryPhotos" /></>}
+        {type === 'Shop' ? <OrderInquiry ko={ko} initialOrderType={initialOrderType} initialProduct={initialProduct} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><PhotoAttachment ko={ko} name="inquiryPhotos" /></>}
         <button className="button primary" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
       </form>}
       <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
@@ -722,14 +726,14 @@ function KakaoChannelButton({ lang }) {
 }
 
 function App() {
-  const route = useRoute(); const page = NAV.some(([id]) => id === route[0]) ? route[0] : 'home'
+  const route = useRoute(); const routeKey = route.join('/'); const page = NAV.some(([id]) => id === route[0]) ? route[0] : 'home'
   const [lang, setLang] = useState(() => localStorage.getItem('mayfleur-lang') || (navigator.language.startsWith('ko') ? 'ko' : 'en'))
   useEffect(() => { localStorage.setItem('mayfleur-lang', lang); document.documentElement.lang = lang }, [lang])
   const content = useMemo(() => ({
     home: <Home lang={lang} />, shop: <Shop lang={lang} detail={route[1]} />, about: <About lang={lang} />,
     gallery: <Gallery lang={lang} detail={route[1]} />, portfolio: <Portfolio lang={lang} detail={route[1]} />,
-    services: <Services lang={lang} />, books: <Books lang={lang} />, contact: <Contact lang={lang} />,
-  }), [page, route[1], lang])
+    services: <Services lang={lang} />, books: <Books lang={lang} />, contact: <Contact lang={lang} detail={route.slice(1)} />,
+  }), [page, routeKey, lang])
   return <><Header page={page} lang={lang} setLang={setLang} /><main>{content[page]}</main><Footer lang={lang} /><KakaoChannelButton lang={lang} /></>
 }
 
