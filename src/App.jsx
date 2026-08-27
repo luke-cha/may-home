@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import manifest from './data/content-manifest.json'
 import mayfleurLogo from './assets/mayfleur-logo.png'
 import { productEditorial } from './data/product-editorial.js'
@@ -825,15 +825,52 @@ function GlobalWorkshopInquiry() {
   </section>
 }
 
+const kakaoInquiryFields = {
+  Shop: [['orderType', '주문 유형', 'Order type'], ['product', '문의 상품', 'Product'], ['budget', '예상 예산', 'Estimated budget'], ['colourMood', '색감 및 분위기', 'Colours & mood'], ['requests', '요청 사항', 'Requests'], ['ordererName', '주문자 성함', 'Orderer name'], ['ordererPhone', '주문자 연락처', 'Orderer phone'], ['recipientName', '받는 분 성함', 'Recipient name'], ['recipientPhone', '받는 분 연락처', 'Recipient phone'], ['address', '배송 주소', 'Delivery address'], ['deliveryDate', '희망 수령일', 'Preferred delivery date'], ['delivery', '배송 방법', 'Delivery method']],
+  Workshop: [['workshopType', '워크샵 유형', 'Workshop type'], ['preferredProgramme', '희망 프로그램 또는 작품', 'Preferred programme or piece'], ['participants', '참여 인원', 'Participants'], ['workshopDate', '희망 날짜 및 시간', 'Preferred date & time'], ['location', '진행 장소', 'Location'], ['workshopBudget', '예상 예산', 'Estimated budget'], ['workshopRequests', '요청 사항', 'Requests'], ['contactName', '담당자 성함', 'Contact name'], ['contactPhone', '연락처', 'Phone'], ['contactEmail', '이메일', 'Email']],
+  'Brand Collaboration': [['collaborationType', '협업 유형', 'Collaboration type'], ['brandName', '브랜드명 / 업체명', 'Brand / company'], ['collaborationDetails', '프로젝트 내용', 'Project details'], ['collaborationDate', '희망 일정', 'Preferred date'], ['collaborationLocation', '진행 장소', 'Location'], ['collaborationBudget', '예상 예산', 'Estimated budget'], ['brandRequests', '요청 사항', 'Requests'], ['brandContactName', '담당자 성함', 'Contact name'], ['brandPhone', '연락처', 'Phone'], ['brandEmail', '이메일', 'Email']],
+  'Global Workshop': [['globalOrganization', 'Organization / Name', 'Organization / Name'], ['globalContactName', 'Contact Person', 'Contact Person'], ['globalEmail', 'Email', 'Email'], ['globalPhone', 'Phone', 'Phone'], ['globalLocation', 'Country & City', 'Country & City'], ['globalDates', 'Preferred Dates', 'Preferred Dates'], ['globalParticipants', 'Expected Participants', 'Expected Participants'], ['globalVenue', 'Workshop Venue', 'Workshop Venue'], ['globalDetails', 'Workshop Details', 'Workshop Details'], ['globalBudget', 'Workshop Budget', 'Workshop Budget'], ['globalRequests', 'Additional Requests', 'Additional Requests']],
+  Other: [['name', '이름', 'Name'], ['email', '이메일', 'Email'], ['message', '문의 내용', 'Message']],
+}
+const kakaoTypeNames = {
+  Shop: ['샵 주문', 'Shop Order'], Workshop: ['플라워 워크샵', 'Flower Workshop'], 'Brand Collaboration': ['브랜드 협업 & 플라워 스타일링', 'Brand Collaboration & Floral Styling'], 'Global Workshop': ['Global Workshop', 'Global Workshop'], Other: ['기타', 'Other'],
+}
+const kakaoValueNames = { fresh: ['생화', 'Fresh Flowers'], artificial: ['조화', 'Artificial Flowers'], quick: ['카카오 T 퀵', 'Kakao T Quick'], parcel: ['택배', 'Parcel'], corporate: ['기업 / 브랜드 워크샵', 'Corporate / Brand Workshop'], 'small-group': ['소규모 그룹 워크샵', 'Small Group Workshop'], wedding: ['웨딩 & 개인 촬영', 'Wedding & Personal Photoshoot'], content: ['브랜드 콘텐츠 & 촬영', 'Brand Content & Photoshoot'], space: ['공간 & 매장 스타일링', 'Space & Retail Styling'], event: ['행사 & 이벤트 연출', 'Event & Occasion Styling'] }
+
+function KakaoInquiryBridge({ formRef, type, ko }) {
+  const [copied, setCopied] = useState(false)
+  useEffect(() => setCopied(false), [type])
+  const copyInquiry = async () => {
+    const form = formRef.current; if (!form) return
+    const data = new FormData(form); const langIndex = ko ? 0 : 1; const empty = ko ? '미입력' : 'Not entered'
+    const lines = kakaoInquiryFields[type].map(([name, labelKo, labelEn]) => {
+      const raw = String(data.get(name) || '').trim(); const translated = kakaoValueNames[raw]?.[langIndex] || raw
+      return `${ko ? labelKo : labelEn}: ${translated || empty}`
+    })
+    const photoCount = [...form.querySelectorAll('input[type="file"]')].reduce((sum, input) => sum + (input.files?.length || 0), 0)
+    if (photoCount) lines.push(`${ko ? '참고 사진' : 'Reference photos'}: ${photoCount}${ko ? '장 (채팅창에 별도 첨부)' : ' (attach separately in chat)'}`)
+    const title = kakaoTypeNames[type][langIndex]
+    const text = `[MAYFLEUR · ${title} ${ko ? '문의' : 'Inquiry'}]\n\n${lines.join('\n')}\n\n${ko ? '위 내용으로 문의드립니다.' : 'I would like to inquire with the details above.'}`
+    try {
+      await navigator.clipboard.writeText(text)
+    } catch {
+      const area = document.createElement('textarea'); area.value = text; area.style.position = 'fixed'; area.style.opacity = '0'; document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove()
+    }
+    setCopied(true)
+  }
+  return <section className="kakao-inquiry-bridge"><div><span className="eyebrow">Kakao Inquiry</span><h3>{ko ? `${kakaoTypeNames[type][0]} 문의를 카카오톡으로 보내기` : `Send Your ${kakaoTypeNames[type][1]} Inquiry via Kakao`}</h3><p>{ko ? '작성한 문의 내용이 카카오톡용 형식으로 정리됩니다. 내용을 복사한 뒤 카카오채널을 열어 채팅창에 붙여넣어 주세요.' : 'Your form details will be organized for KakaoTalk. Copy them, open our Kakao Channel, and paste them into the chat.'}</p><small>{ko ? '사진은 카카오톡 채팅창에서 별도로 첨부해 주세요.' : 'Please attach photos separately in the KakaoTalk chat.'}</small></div><div className="kakao-inquiry-actions"><button className={`button${copied ? ' copied' : ''}`} type="button" onClick={copyInquiry}>{copied ? (ko ? '복사 완료 ✓' : 'Copied ✓') : (ko ? '문의 내용 복사' : 'Copy Inquiry')}</button><a className="button kakao-open-button" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 열기' : 'Open Kakao Channel'} →</a></div></section>
+}
+
 function Contact({ lang, detail = [] }) {
-  const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop')
+  const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop'); const formRef = useRef(null)
   const initialOrderType = detail[0] === 'artificial' ? 'artificial' : 'fresh'
   const initialProduct = detail.slice(1).join(' ')
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
-    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form encType="multipart/form-data" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
+    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form ref={formRef} encType="multipart/form-data" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
         <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','Shop','샵'], ['Workshop','Flower Workshop','플라워워크샵'], ['Brand Collaboration','Brand Collaboration & Floral Styling','브랜드 협업 & 플라워 스타일링'], ['Global Workshop','Global Workshop','Global Workshop'], ['Other','Other','기타']].map(([item, en, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : en}</button>)}</div></fieldset>
         {type === 'Shop' ? <OrderInquiry ko={ko} initialOrderType={initialOrderType} initialProduct={initialProduct} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><PhotoAttachment ko={ko} name="inquiryPhotos" /></>}
-        <button className="button primary" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
+        <KakaoInquiryBridge formRef={formRef} type={type} ko={ko} />
+        <button className="button primary contact-submit" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
       </form>}
       <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
   </div>
