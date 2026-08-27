@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import manifest from './data/content-manifest.json'
 import mayfleurLogo from './assets/mayfleur-logo.png'
 import { productEditorial } from './data/product-editorial.js'
-import { ORDER_NUMBER_STRUCTURE, ORDER_STATUS_DEFINITIONS } from './data/order-tracking.js'
+import { ORDER_NUMBER_STRUCTURE } from './data/order-tracking.js'
 
 const KAKAO_CHANNEL_URL = 'https://pf.kakao.com/_tnxmxixb'
 
@@ -287,34 +287,34 @@ const orderProcess = {
   ko: [
     ['주문 문의', '원하시는 상품과 희망 예산, 색감 및 분위기, 희망 수령일, 배송지 등을 남겨주세요.'],
     ['주문 확인', '문의 내용을 확인한 후 상품 구성과 제작 가능 여부를 안내드립니다.'],
-    ['최종 금액 안내', '상품 금액과 배송비 및 배송비 지원을 확인하여 최종 결제 금액을 안내드립니다.'],
-    ['결제 완료', '최종 금액 확인 후 결제가 진행됩니다.'],
+    ['최종 금액 안내', '상품 금액과 배송비 및 배송비 지원 여부를 확인하여 최종 결제 금액을 안내드립니다.'],
+    ['결제', '최종 구성과 금액 확인 후 결제가 진행됩니다.'],
     ['제작', '결제가 완료되면 상품 제작이 시작됩니다.'],
-    ['배송', '제작 완료 후 상품이 안전하게 배송됩니다.'],
+    ['배송', '제작 완료 후 상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 안전하게 배송됩니다.'],
   ],
   en: [
     ['Order Inquiry', 'Tell us your preferred product, budget, palette and mood, delivery date and address.'],
     ['Order Review', 'We review your inquiry and confirm the proposed composition and production availability.'],
     ['Final Quote', 'We confirm the product price, delivery fee and applicable delivery support, then provide the final total.'],
-    ['Payment', 'Payment is completed after you approve the final amount.'],
+    ['Payment', 'Payment proceeds after the final composition and amount are confirmed.'],
     ['Production', 'Production begins once payment has been completed.'],
-    ['Delivery', 'Your finished piece is delivered safely.'],
+    ['Delivery', 'Your finished product is delivered safely by parcel or Kakao T Quick according to its type and size.'],
   ],
 }
 function OrderProcess({ lang }) {
-  const ko = lang === 'ko'; const steps = orderProcess[lang]; const statuses = ORDER_STATUS_DEFINITIONS
+  const ko = lang === 'ko'; const steps = orderProcess[lang]
   const notes = ko ? [
-    '메이플레르의 모든 주문은 상담 후 최종 금액이 확정됩니다.',
+    '모든 주문은 상담 후 상품 구성과 최종 금액이 확정됩니다.',
     '배송비는 배송 지역 및 상품에 따라 달라질 수 있으며, 주문 금액에 따라 배송비 지원이 적용됩니다.',
-    '현재는 방문 수령을 운영하지 않으며, 상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 배송됩니다.',
+    '현재 방문 수령은 운영하지 않습니다.',
     '생화는 카카오 T 퀵 차량 배송만 가능합니다.',
   ] : [
-    'Every Mayfleur order receives a final quote after consultation.',
+    'All orders receive their final composition and price after consultation.',
     'Delivery fees vary by area and product, and delivery support may apply according to the order total.',
-    'Direct collection is unavailable. Products are delivered by parcel or Kakao T Quick according to type and size.',
+    'Direct collection is currently unavailable.',
     'Fresh flowers are delivered by Kakao T Quick vehicle service only.',
   ]
-  return <section className="order-process container" data-order-number-format={ORDER_NUMBER_STRUCTURE.format}><div className="order-process-head"><span className="eyebrow">Order Process</span><h2>{ko ? '문의부터 배송까지' : 'From Inquiry to Delivery'}</h2></div><ol className="order-process-steps">{steps.map(([title, description], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></li>)}</ol><div className="order-status"><span>Order Status</span><ol>{statuses.map((status) => <li data-order-status={status.id} key={status.id}>{status[lang]}</li>)}</ol></div><ul className="order-process-notes">{notes.map((note) => <li key={note}>{note}</li>)}</ul></section>
+  return <section className="order-process container" data-order-number-format={ORDER_NUMBER_STRUCTURE.format}><div className="order-process-head"><span className="eyebrow">Order Process</span></div><ol className="order-process-steps">{steps.map(([title, description], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></li>)}</ol><div className="order-process-notes-wrap"><span>Order Notes</span><ul className="order-process-notes">{notes.map((note) => <li key={note}>{note}</li>)}</ul></div></section>
 }
 
 function ShopCollectionNav({ lang, active }) {
@@ -602,29 +602,42 @@ function Books({ lang }) {
   </div>
 }
 
+function PolicyParagraph({ text }) {
+  const link = text.includes('배송·취소·환불 안내') ? ['배송·취소·환불 안내', '#shipping-policy'] : text.includes('개인정보처리방침') ? ['개인정보처리방침', '#privacy'] : null
+  if (!link) return <p>{text}</p>
+  const [label, href] = link; const [before, after] = text.split(label)
+  return <p>{before}<a className="policy-inline-link" href={href}>{label}</a>{after}</p>
+}
+
 function PolicyPage({ lang, type }) {
   const ko = lang === 'ko'
   const policies = ko ? {
     terms: {
-      title: '이용약관',
-      intro: [
-        'MAYFLEUR(이하 "메이플레르")는 생화 및 조화 상품, 주문 제작 상품, 외부 플라워 클래스 및 플라워 스타일링 서비스를 제공합니다.',
-        '상품 주문은 문의 및 상담을 통해 상품 구성, 제작 가능 여부, 일정 및 최종 금액을 확인한 후 결제가 완료되면 확정됩니다.',
-        '생화 및 주문 제작 상품은 계절과 시장 상황, 소재 수급에 따라 상품의 종류와 구성에 차이가 있을 수 있습니다.',
-        '상품의 가격, 배송비, 제작 기간 및 주문 조건은 상품별 안내 또는 상담을 통해 확인할 수 있습니다.',
-        '이용자는 주문 시 정확한 주문자 정보, 연락처, 배송지 및 수령일을 제공해야 하며, 잘못된 정보로 인해 발생하는 문제에 대해서는 이용자에게 책임이 있을 수 있습니다.',
-        '본 약관에 명시되지 않은 사항은 관련 법령 및 일반적인 거래 관행에 따릅니다.',
-      ],
-      sections: [], effective: '2026년 9월 1일',
+      title: '이용약관', intro: [], sections: [
+        { title: '제1조 목적', paragraphs: ['본 약관은 MAYFLEUR(이하 “사이트”)가 제공하는 상품 및 서비스의 이용과 주문, 배송 등에 관한 기본적인 사항을 정하는 것을 목적으로 합니다.'] },
+        { title: '제2조 서비스의 내용', paragraphs: ['MAYFLEUR는 생화 및 조화 상품의 주문 제작과 플라워 스타일링 등의 서비스를 제공합니다.', '상품은 디자인, 소재, 계절 및 제작 방식에 따라 실제 이미지와 일부 차이가 있을 수 있으며, 주문 제작 상품의 특성상 상담을 통해 세부 내용과 금액을 확정합니다.'] },
+        { title: '제3조 주문 및 상담', paragraphs: ['상품 주문은 홈페이지의 CONTACT 또는 카카오채널 등을 통한 상담을 통해 진행됩니다.', '주문 시 상품, 예산, 색감 및 분위기, 요청사항, 수령일, 배송지 등의 정보를 확인한 후 제작 가능 여부와 최종 금액을 안내드립니다.', '상담 내용 및 제작 일정이 확정되고 결제가 완료된 경우 주문이 최종 확정됩니다.'] },
+        { title: '제4조 상품 제작', paragraphs: ['MAYFLEUR의 상품은 주문에 따라 제작되는 상품으로, 주문 확정 후에는 제작 상황에 따라 변경이나 취소가 제한될 수 있습니다.', '생화 상품은 계절 및 시장 상황에 따라 사용 가능한 꽃의 종류와 소재가 달라질 수 있으며, 요청하신 꽃이 확보되지 않을 경우 유사한 분위기와 색감의 소재로 변경될 수 있습니다.', '조화 상품 또한 소재의 재고 및 수급 상황에 따라 일부 소재가 변경될 수 있습니다.'] },
+        { title: '제5조 결제', paragraphs: ['상품의 최종 금액은 상담을 통해 확정되며, 안내된 결제 방법에 따라 결제가 진행됩니다.', '주문 제작 상품은 결제 확인 후 제작이 시작됩니다.'] },
+        { title: '제6조 배송', paragraphs: ['상품은 주문 시 안내된 배송 방법에 따라 배송됩니다.', '생화 상품은 카카오 T 퀵 차량 배송으로 진행되며, 조화 상품은 상품의 크기와 특성에 따라 택배 또는 카카오 T 퀵으로 배송될 수 있습니다.', '배송비는 배송 지역 및 방법에 따라 별도로 책정되며, 배송비 지원이 적용되는 경우 주문 금액 및 배송비 기준에 따라 안내드립니다.', '배송 시간은 기사 배차 및 교통 상황 등에 따라 실제 도착 시간이 다소 변동될 수 있습니다.'] },
+        { title: '제7조 주문 취소 및 환불', paragraphs: ['주문 취소 및 환불은 상품의 제작 진행 여부와 상품의 특성에 따라 적용됩니다.', '주문 제작이 시작된 이후에는 상품의 특성상 단순 변심에 의한 취소 및 환불이 제한될 수 있습니다.', '상품에 문제가 있는 경우에는 상품 수령 후 확인할 수 있도록 가능한 빠른 시일 내에 MAYFLEUR로 문의해 주시기 바랍니다.', '자세한 내용은 별도의 배송·취소·환불 안내를 따릅니다.'] },
+        { title: '제8조 저작권', paragraphs: ['사이트에 게시된 상품 이미지, 사진, 디자인, 문구 및 콘텐츠의 저작권은 MAYFLEUR 또는 해당 권리자에게 있으며, 사전 동의 없이 무단으로 복제, 수정, 배포하거나 상업적으로 이용할 수 없습니다.'] },
+        { title: '제9조 개인정보', paragraphs: ['MAYFLEUR는 상품 상담 및 주문, 제작, 배송을 위해 필요한 최소한의 개인정보를 수집하며, 개인정보의 처리에 관한 자세한 사항은 별도의 개인정보처리방침을 따릅니다.'] },
+        { title: '제10조 약관의 변경', paragraphs: ['본 약관은 관련 법령 및 MAYFLEUR의 운영에 따라 변경될 수 있으며, 변경된 내용은 사이트를 통해 안내합니다.'] },
+      ], effective: '2026년 9월 1일',
     },
     privacy: {
       title: '개인정보처리방침',
-      intro: ['MAYFLEUR(이하 "메이플레르")는 이용자의 개인정보를 소중하게 보호하며 관련 법령에 따라 안전하게 관리합니다.'],
+      intro: ['MAYFLEUR(이하 “사이트”)는 고객의 개인정보를 소중하게 보호하며, 관련 법령에 따라 개인정보를 안전하게 처리합니다.'],
       sections: [
-        { title: '수집하는 개인정보', paragraphs: ['상품 문의 및 주문을 위해 다음과 같은 정보를 수집할 수 있습니다.'], bullets: ['주문자 성함', '주문자 연락처', '배송 주소', '희망 수령일', '받는 분 성함 및 연락처', '주문 및 문의 내용', '참고 이미지'] },
-        { title: '이용 목적', paragraphs: ['수집한 개인정보는 다음의 목적으로 이용합니다.'], bullets: ['상품 문의 및 상담', '주문 확인 및 제작', '배송 및 배송 관련 연락', '결제 및 주문 관련 안내', '고객 문의 처리'] },
-        { title: '보유 및 이용기간', paragraphs: ['개인정보는 수집 및 이용 목적이 달성된 후 지체 없이 파기합니다.', '다만 관련 법령에 따라 보관이 필요한 경우에는 해당 기간 동안 보관합니다.'] },
-        { title: '제3자 제공', paragraphs: ['원칙적으로 이용자의 개인정보를 외부에 제공하지 않습니다.', '다만 상품 배송을 위해 배송에 필요한 최소한의 정보를 배송업체에 제공할 수 있으며, 법령에 따라 제공이 필요한 경우에는 예외로 합니다.', '이용자는 본인의 개인정보에 대한 열람, 정정 및 삭제 등을 요청할 수 있습니다.'] },
+        { title: '1. 개인정보의 수집 및 이용 목적', paragraphs: ['MAYFLEUR는 다음의 목적을 위해 필요한 개인정보를 수집합니다.'], bullets: ['상품 및 주문 상담', '주문 제작 및 상품 준비', '배송 및 배송 관련 안내', '고객 문의 및 요청사항 확인', '주문 및 결제 관련 안내', '고객 문의에 대한 응대'] },
+        { title: '2. 수집하는 개인정보의 항목', paragraphs: ['MAYFLEUR는 주문 및 상담 과정에서 다음과 같은 개인정보를 수집할 수 있습니다.'], groups: [{ title: '필수항목', bullets: ['주문자 성함', '주문자 연락처', '받는 분 성함', '받는 분 연락처', '배송 주소', '희망 수령일'] }, { title: '선택항목', bullets: ['상품 요청사항', '선호하는 색감 및 분위기', '상품 제작에 필요한 참고 이미지'] }], after: ['서비스 이용 과정에서 접속기록, IP주소, 쿠키 등이 자동으로 생성·수집될 수 있습니다.'] },
+        { title: '3. 개인정보의 보유 및 이용기간', paragraphs: ['MAYFLEUR는 개인정보의 수집 및 이용 목적이 달성된 후에는 원칙적으로 해당 개인정보를 지체 없이 파기합니다.', '다만 관련 법령에 따라 일정 기간 보관이 필요한 경우에는 해당 기간 동안 안전하게 보관합니다.'] },
+        { title: '4. 개인정보의 제3자 제공', paragraphs: ['MAYFLEUR는 고객의 개인정보를 원칙적으로 외부에 제공하지 않습니다.', '다만 상품 배송 등 서비스 제공을 위해 필요한 경우 고객에게 안내한 범위 내에서 개인정보가 제공될 수 있으며, 법령에 따라 필요한 경우에는 예외로 합니다.'] },
+        { title: '5. 개인정보 처리의 위탁', paragraphs: ['MAYFLEUR는 원활한 서비스 제공을 위해 개인정보 처리업무를 외부 업체에 위탁할 수 있습니다.', '위탁업체 및 위탁업무의 내용이 변경되는 경우 본 개인정보처리방침을 통해 안내합니다.'] },
+        { title: '6. 정보주체의 권리', paragraphs: ['고객은 언제든지 본인의 개인정보에 대한 열람, 정정, 삭제 및 처리정지를 요청할 수 있습니다.', '개인정보와 관련한 문의 및 요청은 MAYFLEUR의 고객 문의 채널을 통해 접수할 수 있습니다.'] },
+        { title: '7. 개인정보의 안전성 확보', paragraphs: ['MAYFLEUR는 고객의 개인정보를 안전하게 보호하기 위해 개인정보에 대한 접근을 제한하고, 관련 법령에서 정하는 안전성 확보 조치를 준수합니다.'] },
+        { title: '8. 개인정보처리방침의 변경', paragraphs: ['본 개인정보처리방침의 내용이 변경되는 경우 변경사항을 사이트를 통해 안내합니다.'] },
       ], effective: '2026년 9월 1일',
     },
     shipping: {
@@ -666,7 +679,7 @@ function PolicyPage({ lang, type }) {
     },
   }
   const policy = policies[type]
-  return <div className="page fade-in policy-page"><PageHead eyebrow="— Policy" title={policy.title} /><section className="policy-content container"><div className="policy-intro">{policy.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>{policy.sections.map((section) => <article key={section.title}><h2>{section.title}</h2>{section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}</article>)}{policy.effective && <p className="policy-effective"><strong>{ko ? '시행일' : 'Effective Date'}:</strong> {policy.effective}</p>}</section></div>
+  return <div className="page fade-in policy-page"><PageHead eyebrow="— Policy" title={policy.title} /><section className="policy-content container"><div className="policy-intro">{policy.intro.map((paragraph) => <PolicyParagraph text={paragraph} key={paragraph} />)}</div>{policy.sections.map((section) => <article key={section.title}><h2>{section.title}</h2>{section.paragraphs?.map((paragraph) => <PolicyParagraph text={paragraph} key={paragraph} />)}{section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}{section.groups?.map((group) => <div className="policy-list-group" key={group.title}><h3>{group.title}</h3><ul>{group.bullets.map((item) => <li key={item}>{item}</li>)}</ul></div>)}{section.after?.map((paragraph) => <PolicyParagraph text={paragraph} key={paragraph} />)}</article>)}{policy.effective && <p className="policy-effective"><strong>{ko ? `시행일 : ${policy.effective}` : `Effective Date: ${policy.effective}`}</strong></p>}</section></div>
 }
 
 async function compressAttachment(file) {
