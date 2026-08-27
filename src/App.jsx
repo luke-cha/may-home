@@ -287,17 +287,17 @@ const orderProcess = {
   ko: [
     ['주문 문의', '원하시는 상품과 희망 예산, 색감 및 분위기, 희망 수령일, 배송지 등을 남겨주세요.'],
     ['주문 확인', '문의 내용을 확인한 후 상품 구성과 제작 가능 여부를 안내드립니다.'],
-    ['최종 금액 안내', '상품 금액과 배송비 및 배송비 지원 여부를 확인하여 최종 결제 금액을 안내드립니다.'],
-    ['결제', '최종 구성과 금액 확인 후 결제가 진행됩니다.'],
-    ['제작', '결제가 완료되면 상품 제작이 시작됩니다.'],
+    ['최종 금액 안내', '상품 금액과 배송비 및 배송비 지원 여부를 확인하여 최종 금액과 입금 방법을 안내드립니다.'],
+    ['계좌이체', '최종 구성과 금액 확인 후 계좌이체로 결제가 진행됩니다.'],
+    ['제작', '입금이 확인되면 상품 제작이 시작됩니다.'],
     ['배송', '제작 완료 후 상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 안전하게 배송됩니다.'],
   ],
   en: [
     ['Order Inquiry', 'Tell us your preferred product, budget, palette and mood, delivery date and address.'],
     ['Order Review', 'We review your inquiry and confirm the proposed composition and production availability.'],
-    ['Final Quote', 'We confirm the product price, delivery fee and applicable delivery support, then provide the final total.'],
-    ['Payment', 'Payment proceeds after the final composition and amount are confirmed.'],
-    ['Production', 'Production begins once payment has been completed.'],
+    ['Final Quote', 'We confirm the product price, delivery fee and applicable delivery support, then provide the final amount and bank transfer details.'],
+    ['Bank Transfer', 'Payment is made by bank transfer after the final composition and amount are confirmed.'],
+    ['Production', 'Production begins once the transfer has been confirmed.'],
     ['Delivery', 'Your finished product is delivered safely by parcel or Kakao T Quick according to its type and size.'],
   ],
 }
@@ -305,16 +305,20 @@ function OrderProcess({ lang }) {
   const ko = lang === 'ko'; const steps = orderProcess[lang]
   const notes = ko ? [
     '모든 주문은 상담 후 상품 구성과 최종 금액이 확정됩니다.',
+    '현재 결제는 계좌이체로만 진행됩니다.',
+    '현금영수증은 계좌이체 후 요청해주시면 발급해드립니다.',
     '배송비는 배송 지역 및 상품에 따라 달라질 수 있으며, 주문 금액에 따라 배송비 지원이 적용됩니다.',
     '현재 방문 수령은 운영하지 않습니다.',
     '생화는 카카오 T 퀵 차량 배송만 가능합니다.',
   ] : [
     'All orders receive their final composition and price after consultation.',
+    'Payment is currently available by bank transfer only.',
+    'A cash receipt can be issued upon request after the bank transfer.',
     'Delivery fees vary by area and product, and delivery support may apply according to the order total.',
     'Direct collection is currently unavailable.',
     'Fresh flowers are delivered by Kakao T Quick vehicle service only.',
   ]
-  return <section className="order-process container" data-order-number-format={ORDER_NUMBER_STRUCTURE.format}><div className="order-process-head"><span className="eyebrow">Order Process</span></div><ol className="order-process-steps">{steps.map(([title, description], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></li>)}</ol><div className="order-process-notes-wrap"><span>Order Notes</span><ul className="order-process-notes">{notes.map((note) => <li key={note}>{note}</li>)}</ul></div></section>
+  return <section className="order-process container" data-order-number-format={ORDER_NUMBER_STRUCTURE.format}><div className="order-process-head"><span className="eyebrow">Order Process</span><h2>{ko ? '문의부터 배송까지' : 'From Inquiry to Delivery'}</h2></div><ol className="order-process-steps">{steps.map(([title, description], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></li>)}</ol><div className="order-process-notes-wrap"><span>Order Notes</span><ul className="order-process-notes">{notes.map((note) => <li key={note}>{note}</li>)}</ul></div></section>
 }
 
 function ShopCollectionNav({ lang, active }) {
@@ -869,10 +873,9 @@ function Contact({ lang, detail = [] }) {
     <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form ref={formRef} encType="multipart/form-data" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
         <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','Shop','샵'], ['Workshop','Flower Workshop','플라워워크샵'], ['Brand Collaboration','Brand Collaboration & Floral Styling','브랜드 협업 & 플라워 스타일링'], ['Global Workshop','Global Workshop','Global Workshop'], ['Other','Other','기타']].map(([item, en, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : en}</button>)}</div></fieldset>
         {type === 'Shop' ? <OrderInquiry ko={ko} initialOrderType={initialOrderType} initialProduct={initialProduct} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><PhotoAttachment ko={ko} name="inquiryPhotos" /></>}
-        <KakaoInquiryBridge formRef={formRef} type={type} ko={ko} />
         <button className="button primary contact-submit" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
       </form>}
-      <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
+      <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><KakaoInquiryBridge formRef={formRef} type={type} ko={ko} /><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
   </div>
 }
 
