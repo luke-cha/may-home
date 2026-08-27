@@ -243,6 +243,7 @@ function Footer({ lang }) {
       <div><span className="eyebrow">{lang === 'ko' ? '둘러보기' : 'Explore'}</span><nav>{NAV.map(([id, text]) => <a key={id} href={`#${id}`}>{text}</a>)}</nav></div>
       <div><span className="eyebrow">{lang === 'ko' ? '연결' : 'Connect'}</span><nav><a href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{lang === 'ko' ? '카카오채널' : 'Kakao Channel'}</a><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">{lang === 'ko' ? '인스타그램' : 'Instagram'}</a><a href="mailto:mayfleurstudio@gmail.com">{lang === 'ko' ? '이메일' : 'Email'}</a></nav></div>
     </div>
+    <div className="footer-legal"><nav className="footer-policy-links"><a href="#terms">{lang === 'ko' ? '이용약관' : 'Terms of Use'}</a><span>·</span><a href="#privacy">{lang === 'ko' ? '개인정보처리방침' : 'Privacy Policy'}</a><span>·</span><a href="#shipping-policy">{lang === 'ko' ? '배송·취소·환불 안내' : 'Delivery, Cancellation & Refunds'}</a></nav><div className="footer-business"><p>{lang === 'ko' ? '대표자: 김예진 · 사업자등록번호: 724-31-00186' : 'Representative: Yeajin Kim · Business Registration No. 724-31-00186'}</p><p>{lang === 'ko' ? '이메일:' : 'Email:'} <a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></p></div></div>
     <div className="copyright"><span>© 2026 MAYFLEUR. All rights reserved.</span><span>Seoul · Korea</span></div>
   </footer>
 }
@@ -601,6 +602,73 @@ function Books({ lang }) {
   </div>
 }
 
+function PolicyPage({ lang, type }) {
+  const ko = lang === 'ko'
+  const policies = ko ? {
+    terms: {
+      title: '이용약관',
+      intro: [
+        'MAYFLEUR(이하 "메이플레르")는 생화 및 조화 상품, 주문 제작 상품, 외부 플라워 클래스 및 플라워 스타일링 서비스를 제공합니다.',
+        '상품 주문은 문의 및 상담을 통해 상품 구성, 제작 가능 여부, 일정 및 최종 금액을 확인한 후 결제가 완료되면 확정됩니다.',
+        '생화 및 주문 제작 상품은 계절과 시장 상황, 소재 수급에 따라 상품의 종류와 구성에 차이가 있을 수 있습니다.',
+        '상품의 가격, 배송비, 제작 기간 및 주문 조건은 상품별 안내 또는 상담을 통해 확인할 수 있습니다.',
+        '이용자는 주문 시 정확한 주문자 정보, 연락처, 배송지 및 수령일을 제공해야 하며, 잘못된 정보로 인해 발생하는 문제에 대해서는 이용자에게 책임이 있을 수 있습니다.',
+        '본 약관에 명시되지 않은 사항은 관련 법령 및 일반적인 거래 관행에 따릅니다.',
+      ],
+      sections: [], effective: '2026년 9월 1일',
+    },
+    privacy: {
+      title: '개인정보처리방침',
+      intro: ['MAYFLEUR(이하 "메이플레르")는 이용자의 개인정보를 소중하게 보호하며 관련 법령에 따라 안전하게 관리합니다.'],
+      sections: [
+        { title: '수집하는 개인정보', paragraphs: ['상품 문의 및 주문을 위해 다음과 같은 정보를 수집할 수 있습니다.'], bullets: ['주문자 성함', '주문자 연락처', '배송 주소', '희망 수령일', '받는 분 성함 및 연락처', '주문 및 문의 내용', '참고 이미지'] },
+        { title: '이용 목적', paragraphs: ['수집한 개인정보는 다음의 목적으로 이용합니다.'], bullets: ['상품 문의 및 상담', '주문 확인 및 제작', '배송 및 배송 관련 연락', '결제 및 주문 관련 안내', '고객 문의 처리'] },
+        { title: '보유 및 이용기간', paragraphs: ['개인정보는 수집 및 이용 목적이 달성된 후 지체 없이 파기합니다.', '다만 관련 법령에 따라 보관이 필요한 경우에는 해당 기간 동안 보관합니다.'] },
+        { title: '제3자 제공', paragraphs: ['원칙적으로 이용자의 개인정보를 외부에 제공하지 않습니다.', '다만 상품 배송을 위해 배송에 필요한 최소한의 정보를 배송업체에 제공할 수 있으며, 법령에 따라 제공이 필요한 경우에는 예외로 합니다.', '이용자는 본인의 개인정보에 대한 열람, 정정 및 삭제 등을 요청할 수 있습니다.'] },
+      ], effective: '2026년 9월 1일',
+    },
+    shipping: {
+      title: '배송·취소·환불 안내', intro: [], sections: [
+        { title: '배송', paragraphs: ['생화는 카카오 T 퀵 차량 배송만 가능합니다.', '조화는 상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 배송됩니다.', '방문 수령은 운영하지 않습니다.', '배송비는 배송 지역 및 상품에 따라 별도로 책정되며, 주문 금액에 따라 배송비 지원이 적용됩니다.'] },
+        { title: '제작', paragraphs: ['생화는 일반 주문의 경우 최소 7일 전, 특정 꽃을 원하시는 경우 최소 2주 전 문의해 주세요.', '조화는 상품에 따라 약 7–15일의 제작 기간이 소요됩니다.'] },
+        { title: '취소 및 환불', paragraphs: ['생화는 주문 확정 후 꽃을 사입하여 제작하기 때문에 제작 준비가 시작된 이후에는 취소 및 환불이 어려울 수 있습니다.', '특히 수령일 기준 7일 전부터는 취소 및 환불이 어렵습니다.', '조화 주문 제작 및 개별 수정 상품 역시 제작이 시작된 이후에는 단순 변심에 의한 취소 및 환불이 어려울 수 있습니다.'] },
+        { title: '상품의 특성', paragraphs: ['생화는 자연 소재의 특성상 꽃의 색상, 크기, 형태 및 개화 상태에 차이가 있을 수 있습니다.', '계절과 시장 상황에 따라 요청하신 꽃과 동일한 종류 및 구성으로 제작하기 어려울 수 있으며, 가능한 범위 내에서 요청하신 색감과 분위기를 반영하여 제작합니다.'] },
+        { title: '상품 이상', paragraphs: ['상품 수령 후 상품의 하자, 오배송 또는 배송 과정에서 발생한 명백한 문제가 있는 경우 가능한 빠른 시일 내에 메이플레르로 문의해 주세요.', '상품 상태 확인을 위해 사진을 요청드릴 수 있습니다.', '문의는 홈페이지 CONTACT 또는 메이플레르 카카오채널을 이용해 주세요.'] },
+      ],
+    },
+  } : {
+    terms: {
+      title: 'Terms of Use', intro: [
+        'MAYFLEUR (“Mayfleur”) provides fresh and artificial flower products, made-to-order pieces, external flower classes and floral styling services.',
+        'An order is confirmed after consultation establishes the composition, production availability, schedule and final price, and payment has been completed.',
+        'Fresh flowers and made-to-order products may vary in variety and composition according to the season, market conditions and material availability.',
+        'Product prices, delivery fees, production periods and order conditions are provided on each product page or during consultation.',
+        'Customers must provide accurate order information, contact details, delivery address and delivery date. The customer may be responsible for issues caused by incorrect information.',
+        'Matters not specified in these terms are governed by applicable law and standard commercial practice.',
+      ], sections: [], effective: 'September 1, 2026',
+    },
+    privacy: {
+      title: 'Privacy Policy', intro: ['MAYFLEUR (“Mayfleur”) values the privacy of its customers and manages personal information safely in accordance with applicable law.'], sections: [
+        { title: 'Information We Collect', paragraphs: ['We may collect the following information for product inquiries and orders.'], bullets: ['Orderer name', 'Orderer contact details', 'Delivery address', 'Preferred delivery date', 'Recipient name and contact details', 'Order and inquiry details', 'Reference images'] },
+        { title: 'Purpose of Use', paragraphs: ['Collected information is used for the following purposes.'], bullets: ['Product inquiries and consultation', 'Order confirmation and production', 'Delivery and delivery-related contact', 'Payment and order guidance', 'Customer inquiry handling'] },
+        { title: 'Retention Period', paragraphs: ['Personal information is deleted without delay once its purpose has been fulfilled.', 'Where retention is required by law, information is retained for the applicable statutory period.'] },
+        { title: 'Third-Party Provision', paragraphs: ['We do not provide personal information to external parties as a general rule.', 'The minimum information required for delivery may be shared with a delivery provider. Disclosure required by law is an exception.', 'Customers may request access to, correction of or deletion of their personal information.'] },
+      ], effective: 'September 1, 2026',
+    },
+    shipping: {
+      title: 'Delivery, Cancellation & Refunds', intro: [], sections: [
+        { title: 'Delivery', paragraphs: ['Fresh flowers are delivered only by Kakao T Quick vehicle service.', 'Artificial flowers are delivered by parcel or Kakao T Quick according to product type and size.', 'Direct collection is unavailable.', 'Delivery fees are calculated separately according to the delivery area and product. Delivery support may apply according to the order total.'] },
+        { title: 'Production', paragraphs: ['Please inquire at least 7 days in advance for general fresh flower orders, or at least 2 weeks in advance when requesting specific flowers.', 'Artificial flower products generally require approximately 7–15 days for production.'] },
+        { title: 'Cancellation & Refunds', paragraphs: ['Fresh flowers are sourced after order confirmation, so cancellation and refunds may not be possible once preparation has begun.', 'In particular, cancellation and refunds are unavailable within 7 days of the delivery date.', 'Made-to-order or individually modified artificial flower products cannot generally be cancelled or refunded for a change of mind once production has begun.'] },
+        { title: 'Product Characteristics', paragraphs: ['Fresh flowers naturally vary in colour, size, form and stage of bloom.', 'Seasonal and market conditions may prevent an exact reproduction of requested flowers or compositions. We reflect the requested palette and atmosphere as closely as possible.'] },
+        { title: 'Product Issues', paragraphs: ['Please contact Mayfleur as soon as possible if a product has a defect, is delivered incorrectly or has an evident delivery-related issue.', 'Photographs may be requested to confirm the product condition.', 'Please use the website CONTACT page or Mayfleur Kakao Channel for assistance.'] },
+      ],
+    },
+  }
+  const policy = policies[type]
+  return <div className="page fade-in policy-page"><PageHead eyebrow="— Policy" title={policy.title} /><section className="policy-content container"><div className="policy-intro">{policy.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>{policy.sections.map((section) => <article key={section.title}><h2>{section.title}</h2>{section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}</article>)}{policy.effective && <p className="policy-effective"><strong>{ko ? '시행일' : 'Effective Date'}:</strong> {policy.effective}</p>}</section></div>
+}
+
 async function compressAttachment(file) {
   if (!file.type.startsWith('image/')) throw new Error('image')
   let bitmap
@@ -763,13 +831,14 @@ function KakaoChannelButton({ lang }) {
 }
 
 function App() {
-  const route = useRoute(); const routeKey = route.join('/'); const page = NAV.some(([id]) => id === route[0]) ? route[0] : 'home'
+  const route = useRoute(); const routeKey = route.join('/'); const policyPages = ['terms', 'privacy', 'shipping-policy']; const page = NAV.some(([id]) => id === route[0]) || policyPages.includes(route[0]) ? route[0] : 'home'
   const [lang, setLang] = useState(() => localStorage.getItem('mayfleur-lang') || (navigator.language.startsWith('ko') ? 'ko' : 'en'))
   useEffect(() => { localStorage.setItem('mayfleur-lang', lang); document.documentElement.lang = lang }, [lang])
   const content = useMemo(() => ({
     home: <Home lang={lang} />, shop: <Shop lang={lang} detail={route[1]} />, about: <About lang={lang} />,
     gallery: <Gallery lang={lang} detail={route[1]} />, portfolio: <Portfolio lang={lang} detail={route[1]} />,
     services: <Services lang={lang} />, books: <Books lang={lang} />, contact: <Contact lang={lang} detail={route.slice(1)} />,
+    terms: <PolicyPage lang={lang} type="terms" />, privacy: <PolicyPage lang={lang} type="privacy" />, 'shipping-policy': <PolicyPage lang={lang} type="shipping" />,
   }), [page, routeKey, lang])
   return <><Header page={page} lang={lang} setLang={setLang} /><main>{content[page]}</main><Footer lang={lang} /><KakaoChannelButton lang={lang} /></>
 }
