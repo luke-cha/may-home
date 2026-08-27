@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import manifest from './data/content-manifest.json'
 import mayfleurLogo from './assets/mayfleur-logo.png'
 import { productEditorial } from './data/product-editorial.js'
+import { ORDER_NUMBER_STRUCTURE, ORDER_STATUS_DEFINITIONS } from './data/order-tracking.js'
 
 const KAKAO_CHANNEL_URL = 'https://pf.kakao.com/_tnxmxixb'
 
@@ -281,6 +282,40 @@ function ProductCard({ product, lang }) {
   return <a href={`#shop/${slug(product.name)}`} className={`product-card${editorial ? ' editorial-product-card' : ''}`}><div className="card-media"><Media file={imagesOnly(product.media)[0]} alt={editorial?.title[lang] || product.name} /></div><span className="card-kicker">{categoryNames[product.category]?.[ko ? 1 : 0]}</span>{editorial ? <><h3>{editorial.title.en}</h3><span className="product-card-local-name">{editorial.title.ko}</span><strong className="product-card-price">{editorial.price}</strong><div className="product-card-lines">{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><span className="product-view-more">{ko ? '상품 보기' : 'View More'} →</span></> : <><h3>{product.name}</h3><p>{ko ? '주문 제작 · 상담 후 안내' : 'Made to order · Price on request'}</p></>}</a>
 }
 
+const orderProcess = {
+  ko: [
+    ['주문 문의', '원하시는 상품과 희망 예산, 색감 및 분위기, 희망 수령일, 배송지 등을 남겨주세요.'],
+    ['주문 확인', '문의 내용을 확인한 후 상품 구성과 제작 가능 여부를 안내드립니다.'],
+    ['최종 금액 안내', '상품 금액과 배송비 및 배송비 지원을 확인하여 최종 결제 금액을 안내드립니다.'],
+    ['결제 완료', '최종 금액 확인 후 결제가 진행됩니다.'],
+    ['제작', '결제가 완료되면 상품 제작이 시작됩니다.'],
+    ['배송', '제작 완료 후 상품이 안전하게 배송됩니다.'],
+  ],
+  en: [
+    ['Order Inquiry', 'Tell us your preferred product, budget, palette and mood, delivery date and address.'],
+    ['Order Review', 'We review your inquiry and confirm the proposed composition and production availability.'],
+    ['Final Quote', 'We confirm the product price, delivery fee and applicable delivery support, then provide the final total.'],
+    ['Payment', 'Payment is completed after you approve the final amount.'],
+    ['Production', 'Production begins once payment has been completed.'],
+    ['Delivery', 'Your finished piece is delivered safely.'],
+  ],
+}
+function OrderProcess({ lang }) {
+  const ko = lang === 'ko'; const steps = orderProcess[lang]; const statuses = ORDER_STATUS_DEFINITIONS
+  const notes = ko ? [
+    '메이플레르의 모든 주문은 상담 후 최종 금액이 확정됩니다.',
+    '배송비는 배송 지역 및 상품에 따라 달라질 수 있으며, 주문 금액에 따라 배송비 지원이 적용됩니다.',
+    '현재는 방문 수령을 운영하지 않으며, 상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 배송됩니다.',
+    '생화는 카카오 T 퀵 차량 배송만 가능합니다.',
+  ] : [
+    'Every Mayfleur order receives a final quote after consultation.',
+    'Delivery fees vary by area and product, and delivery support may apply according to the order total.',
+    'Direct collection is unavailable. Products are delivered by parcel or Kakao T Quick according to type and size.',
+    'Fresh flowers are delivered by Kakao T Quick vehicle service only.',
+  ]
+  return <section className="order-process container" data-order-number-format={ORDER_NUMBER_STRUCTURE.format}><div className="order-process-head"><span className="eyebrow">Order Process</span><h2>{ko ? '문의부터 배송까지' : 'From Inquiry to Delivery'}</h2></div><ol className="order-process-steps">{steps.map(([title, description], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></li>)}</ol><div className="order-status"><span>Order Status</span><ol>{statuses.map((status) => <li data-order-status={status.id} key={status.id}>{status[lang]}</li>)}</ol></div><ul className="order-process-notes">{notes.map((note) => <li key={note}>{note}</li>)}</ul></section>
+}
+
 function ShopCollectionNav({ lang, active }) {
   const ko = lang === 'ko'
   return <nav className="shop-collection-nav container" aria-label={ko ? '샵 컬렉션' : 'Shop collections'}><a className={active === 'artificial' ? 'active' : ''} href="#shop"><span>01</span><div><strong>{ko ? '조화 컬렉션' : 'Artificial Flower Collection'}</strong><small>{ko ? '오래도록 머무는 플라워 오브제' : 'Floral objects made to last'}</small></div></a><a className={active === 'fresh' ? 'active' : ''} href="#shop/fresh"><span>02</span><div><strong>{ko ? '생화 컬렉션' : 'Fresh Flower Collection'}</strong><small>{ko ? '계절의 아름다움을 담은 예약제 컬렉션' : 'A seasonal collection made by reservation'}</small></div></a></nav>
@@ -296,6 +331,7 @@ function FreshFlowerCollection({ lang }) {
     <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '메이플레르 플라워 컬렉션' : 'Mayfleur Flower Collections'} />
     <ShopCollectionNav lang={lang} active="fresh" />
     <section className="fresh-flower-intro container"><p>{ko ? <>메이플레르의 생화 컬렉션은 계절과 꽃의 아름다움을 담아<br />주문에 맞춰 하나씩 제작하는 프리미엄 플라워 컬렉션입니다.</> : <>Mayfleur’s fresh flower collection captures the beauty of flowers and the seasons,<br />with every piece individually created to order.</>}</p><div className="fresh-order-minimums"><div className="fresh-order-main"><strong>{ko ? '100% 예약제' : '100% By Reservation'}</strong><strong className="fresh-minimum">{ko ? <>기본 주문 금액 <b>20만원부터</b></> : <>Standard Orders from <b>KRW 200,000</b></>}</strong></div><span>{ko ? <>꽃다발은 <b>15만원부터</b> 주문 가능합니다.</> : <>Bouquets are available from <b>KRW 150,000</b>.</>}</span><a className="fresh-inquiry-small" href="#contact">{ko ? '문의하기' : 'Make an Inquiry'} →</a></div></section>
+    <OrderProcess lang={lang} />
     {freshFlowerMedia.length > 0 && <section className={`fresh-flower-gallery container ${showAllMedia ? 'expanded' : 'collapsed'}`}>{freshFlowerMedia.map((file, i) => <figure key={file}><button type="button" className="gallery-media-button" onClick={() => setSelectedMedia({ file, index: i + 1 })} aria-label={`${ko ? '생화 컬렉션 사진 크게 보기' : 'View fresh flower collection image larger'} ${i + 1}`}><Media file={file} alt={`${ko ? '프리미엄 생화 컬렉션' : 'Premium fresh flower collection'} ${i + 1}`} /></button></figure>)}{freshFlowerMedia.length > 20 && <button className="fresh-gallery-more" type="button" onClick={() => setShowAllMedia((value) => !value)}>{showAllMedia ? (ko ? '접기' : 'Show Less') : (ko ? '더보기' : 'View More')} <span>{showAllMedia ? '↑' : '↓'}</span></button>}</section>}
     <section className="fresh-flower-guide container">
       <FreshSection title="Order">{ko ? <><p>모든 생화 상품은 주문 제작으로 진행됩니다.</p><p>일반 주문은 <strong>최소 7일 전</strong>,<br />특정 꽃을 원하시는 경우 꽃의 수급을 위해 <strong>최소 2주 전</strong> 문의해 주세요.</p><p>원하시는 상품, 색감과 분위기, 예산 등을 상담한 후<br />입금이 확인되면 꽃 사입 및 제작이 진행됩니다.</p></> : <><p>All fresh flower products are made to order.</p><p>Please enquire <strong>at least 7 days in advance</strong> for general orders, or <strong>at least 2 weeks in advance</strong> when requesting specific flowers.</p><p>Flowers are sourced and production begins after discussing the product, palette, mood and budget, and confirming payment.</p></>}</FreshSection>
@@ -326,6 +362,7 @@ function Shop({ lang, detail }) {
   return <div className="page fade-in shop-page">
     <PageHead eyebrow={`— ${ko ? '샵' : 'Shop'}`} title={ko ? '메이플레르 플라워 컬렉션' : 'Mayfleur Flower Collections'} />
     <ShopCollectionNav lang={lang} active="artificial" />
+    <OrderProcess lang={lang} />
     <section className="shop-layout container">
       <aside className="shop-filter"><span className="eyebrow">{ko ? '카테고리' : 'Browse'}</span><button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{ko ? '전체' : 'All'}<span>{shopProducts.length}</span></button>{shopCategories.map((cat) => <button key={cat.name} className={category === slug(cat.name) ? 'active' : ''} onClick={() => setCategory(slug(cat.name))}>{categoryNames[cat.name]?.[ko ? 1 : 0] || cat.name}<span>{cat.products.length}</span></button>)}</aside>
       <div className="product-grid">{products.map((product) => <ProductCard key={product.name} product={product} lang={lang} />)}</div>
