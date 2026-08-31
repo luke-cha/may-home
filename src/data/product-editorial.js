@@ -250,8 +250,8 @@ export const productEditorial = {
     details: bouquetDetails(t('약 W20~22 × H50~55cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W20–22 × H50–55cm\n(Size may vary by design.)')),
   }),
   '민들레 홑씨 내추럴 부케': bouquet({
-    title: t('민들레 홑씨 내추럴 부케', 'Natural Dandelion Bouquet'), price: '200,000원',
-    priceOptions: prices(['Standard', '20만원', 'KRW 200,000']),
+    title: t('민들레 홑씨 내추럴 부케', 'Natural Dandelion Bouquet'), price: '190,000원',
+    priceOptions: prices(['Standard', '19만원', 'KRW 190,000']),
     theme: t(['상세 설명은 추후 추가될 예정입니다.'], ['A detailed description will be added soon.']),
     feature: t(['상세 디자인 설명은 추후 추가될 예정입니다.'], ['Detailed design notes will be added soon.']),
     details: bouquetDetails(t('상세 사이즈 추후 안내', 'Detailed size to be announced')),
