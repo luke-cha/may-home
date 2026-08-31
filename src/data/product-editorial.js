@@ -224,8 +224,8 @@ export const productEditorial = {
   '민들레 홑씨 부케': bouquet({
     title: t('민들레 홑씨 부케', 'Dandelion Wishes'), price: '100,000원',
     priceOptions: prices(['Standard', '10만원', 'KRW 100,000']),
-    theme: t(['상세 설명은 추후 추가될 예정입니다.'], ['A detailed description will be added soon.']),
-    feature: t(['상세 디자인 설명은 추후 추가될 예정입니다.'], ['Detailed design notes will be added soon.']),
+    theme: t(['바람을 따라 흩날리는 민들레 홑씨가 거리를 수놓듯 가볍게 날아가는 모습에서 영감을 받아 제작한 부케입니다.', '민들레 홑씨의 심플하고 가벼운 형태에 고급스러운 스네이크 알리움을 더해 섬세한 라인과 리듬을 표현했습니다. 자연스럽게 뻗어 나가는 선이 어우러져 민들레 홑씨가 바람을 타고 흩날리는 순간을 독특한 형태로 형상화했습니다.', '몽글몽글한 질감과 여백, 유려한 라인이 만들어내는 신비롭고 몽환적인 분위기의 부케로, 특별한 날 오래도록 기억에 남는 의미 있는 꽃을 전합니다.'], ['Inspired by dandelion seeds drifting lightly on the wind as if decorating the street, this bouquet captures a fleeting, airborne moment.', 'The simple, weightless form of dandelion seeds is paired with refined snake allium to express delicate lines and rhythm. Naturally extending stems come together in a distinctive interpretation of seeds scattering on the breeze.', 'Soft clustered textures, negative space and fluid lines create a mysterious, dreamlike bouquet—a meaningful floral piece designed to remain memorable long after a special day.']),
+    feature: t(['꽃의 자연스러운 방향과 움직임을 살려 가볍고 유려한 실루엣으로 디자인했습니다.', '정돈된 형태보다 자연스럽게 뻗어 나가는 라인과 여백을 강조하여, 어느 각도에서도 섬세한 흐름이 느껴지는 부케로 완성합니다.'], ['Natural direction and movement create a light, fluid silhouette.', 'Organic extending lines and negative space are emphasized over a formal shape, giving the bouquet a delicate sense of movement from every angle.']),
     details: bouquetDetails(t('상세 사이즈 추후 안내', 'Detailed size to be announced')),
   }),
   '화이트 내추럴 부케': bouquet({
