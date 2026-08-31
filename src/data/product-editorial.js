@@ -145,6 +145,12 @@ export const productEditorial = {
     theme: t(['핑크와 라벤더 컬러가 부드럽게 어우러진 수채화 같은 센터피스입니다.', '은은하고 로맨틱한 컬러감과 자연스럽게 흐르는 꽃의 움직임으로 공간에 따뜻한 분위기를 더합니다.'], ['A watercolour-like centrepiece where pink and lavender tones blend softly together.', 'Its romantic palette and naturally flowing movement bring warmth and softness to a space.']),
     details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 25만원\n약 W50 × H50cm 30만원\n약 W55 × H55cm 35만원', 'Approx. W45 × H45cm KRW 250,000\nApprox. W50 × H50cm KRW 300,000\nApprox. W55 × H55cm KRW 350,000') }),
   }),
+  '핑크 화이트 심플 센터피스': centerpiece({
+    title: t('봄의 여백 센터피스', 'Blush Moment'), price: '190,000원',
+    priceOptions: prices(['Small Object', '19만원', 'KRW 190,000']),
+    theme: t(['상세 설명은 추후 추가될 예정입니다.'], ['A detailed description will be added soon.']),
+    details: details({ collection: 'Small Object', size: t('상세 사이즈 추후 안내', 'Detailed size to be announced') }),
+  }),
   '하늘 블루 센터피스': centerpiece({
     title: t('하늘 블루 가든 센터피스', 'Sky Blue Garden Centerpiece'), price: '500,000원',
     priceOptions: prices(['W60 × H70cm', '50만원', 'KRW 500,000'], ['W70 × H80cm', '60만원', 'KRW 600,000']),
@@ -215,6 +221,13 @@ export const productEditorial = {
     feature: t(['작약과 로즈의 풍성한 볼륨을 중심으로 자연스럽게 흐르는 실루엣으로 디자인했습니다.', '부드러운 컬러의 조화와 꽃의 방향을 살려, 가든에서 갓 가져온 듯한 내추럴하면서도 우아한 부케 형태를 완성합니다.'], ['A naturally flowing silhouette centres on the generous volume of peonies and roses.', 'Soft colours and organic direction create an elegant bouquet freshly gathered from a garden.']),
     details: bouquetDetails(t('약 W35 × H35cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W35 × H35cm\n(Size may vary by design.)')),
   }),
+  '민들레 홑씨 부케': bouquet({
+    title: t('민들레 홑씨 부케', 'Dandelion Wishes'), price: '100,000원',
+    priceOptions: prices(['Standard', '10만원', 'KRW 100,000']),
+    theme: t(['상세 설명은 추후 추가될 예정입니다.'], ['A detailed description will be added soon.']),
+    feature: t(['상세 디자인 설명은 추후 추가될 예정입니다.'], ['Detailed design notes will be added soon.']),
+    details: bouquetDetails(t('상세 사이즈 추후 안내', 'Detailed size to be announced')),
+  }),
   '화이트 내추럴 부케': bouquet({
     title: t('화이트 내추럴 카라 · 튤립 · 스위트피 부케', 'White Natural Bouquet'), price: '150,000원', priceOptions: prices(['W25~30 × H35~40cm', '15만원', 'KRW 150,000']),
     about: t(['메이플레르의 웨딩 부케는 프리미엄 조화 소재를 사용하여 생화의 자연스러운 형태와 섬세한 컬러감을 담아 제작합니다.', '꽃 한 송이마다 자연스러운 방향과 균형을 고려하여, 특별한 순간 이후에도 오래도록 감상할 수 있는 플라워 오브제로 완성합니다.'], ['Mayfleur wedding bouquets use premium artificial flowers to capture the natural form and delicate colour of fresh blooms.', 'Every stem is balanced with care, creating a floral object that can be enjoyed long after the special moment.']),
@@ -235,6 +248,13 @@ export const productEditorial = {
     theme: t(['호접란을 중심으로 라넌큘러스, 튤립, 줄맨드라미가 자연스럽게 어우러진 케스케이드 웨딩 부케입니다.', '우아하게 흐르는 호접란의 실루엣에 풍성한 라넌큘러스와 튤립의 부드러운 형태, 줄맨드라미의 섬세한 텍스처가 더해져 자연스럽고 깊이 있는 아름다움을 표현합니다.', '클래식한 우아함과 내추럴한 가든 무드가 조화를 이루는 디자인으로, 특별한 순간을 더욱 아름답게 완성합니다.'], ['A cascading wedding bouquet of orchids, ranunculus, tulips and textured celosia.', 'Flowing orchids, generous blooms and delicate texture create natural depth.', 'Classic elegance and a garden mood come together for a memorable moment.']),
     feature: t(['꽃마다 가진 자연스러운 방향과 움직임을 살려 아래로 부드럽게 이어지는 케스케이드 실루엣으로 디자인했습니다.', '정돈된 형태보다는 정원에서 막 가져온 듯 자연스럽게 흐르는 라인을 살렸으며, 걸을 때마다 아름답게 움직이는 우아한 실루엣이 돋보이는 작품입니다.'], ['Natural direction and movement form a softly descending cascade.', 'Garden-like flowing lines create an elegant silhouette that moves beautifully as you walk.']),
     details: bouquetDetails(t('약 W20~22 × H50~55cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W20–22 × H50–55cm\n(Size may vary by design.)')),
+  }),
+  '민들레 홑씨 내추럴 부케': bouquet({
+    title: t('민들레 홑씨 내추럴 부케', 'Natural Dandelion Bouquet'), price: '200,000원',
+    priceOptions: prices(['Standard', '20만원', 'KRW 200,000']),
+    theme: t(['상세 설명은 추후 추가될 예정입니다.'], ['A detailed description will be added soon.']),
+    feature: t(['상세 디자인 설명은 추후 추가될 예정입니다.'], ['Detailed design notes will be added soon.']),
+    details: bouquetDetails(t('상세 사이즈 추후 안내', 'Detailed size to be announced')),
   }),
   '호접 부케': bouquet({
     title: t('호접란 티어드롭 부케', 'Teardrop Orchid Bouquet'), price: '130,000원', priceOptions: prices(['Standard', '13만원', 'KRW 130,000']),
@@ -307,7 +327,7 @@ export const productEditorial = {
     custom: t(['메이플레르의 디자인과 컬러 무드를 유지하는 범위 내에서 일부 꽃 컬러 또는 소재의 소폭 조정이 가능합니다.', '전체적인 디자인 변경이나 새로운 구성의 제작은 Custom Order를 통해 별도로 상담 가능합니다.'], ['Selected flower colours or materials can be adjusted while preserving Mayfleur’s design mood.', 'Significant changes or new compositions are available through Custom Order consultation.']),
   }),
   '캔들라브라': base({
-    title: t('연보라 캔들라브라', 'Lavender Candelabra'), price: '250,000원', priceOptions: prices(['W40~45 × H40~45cm', '25만원', 'KRW 250,000']),
+    title: t('연보라 캔들라브라', 'Lavender Candelabra'), price: '300,000원', priceOptions: prices(['W40~45 × H40~45cm', '30만원', 'KRW 300,000']),
     about: t(['메이플레르의 캔들라브라는 프리미엄 조화 소재를 사용하여 생화의 자연스러운 형태와 섬세한 컬러감을 담아 제작합니다.', '꽃 한 송이마다 자연스러운 방향과 균형을 고려하여, 꽃과 빛이 조화롭게 어우러지는 플라워 오브제로 완성합니다.', '낮에는 공간을 아름답게 장식하는 오브제로, 저녁에는 캔들의 은은한 빛과 함께 더욱 깊은 분위기를 연출합니다.'], ['Mayfleur candelabras use premium artificial flowers to capture natural form and delicate colour.', 'Every stem is balanced to create harmony between flowers and light.', 'By day it decorates the space; by evening candlelight creates a deeper atmosphere.']),
     theme: t(['연보라와 라벤더, 화이트 톤의 꽃들이 은은하게 어우러진 캔들라브라입니다.', '부드럽게 번지는 보랏빛 컬러와 자연스럽게 흐르는 꽃의 형태가 마치 모네의 수련을 떠올리게 하는 몽환적인 분위기를 담아냅니다.', '꽃과 빛이 함께 어우러질 때 더욱 아름다운 실루엣을 완성하며, 공간에 차분하면서도 신비로운 분위기를 더하는 플라워 오브제입니다.'], ['A candelabra where pale violet, lavender and white flowers blend softly.', 'Flowing purple tones evoke the dreamlike mood of Monet’s water lilies.', 'Flowers and candlelight create a beautiful silhouette with calm mystery.']),
     featureTitle: t('Front Facing Design | 정면 중심 디자인', 'Front Facing Design'), feature: t(['정면에서 가장 아름다운 실루엣이 돋보이도록 디자인한 캔들라브라입니다.', '메인 플라워와 풍성한 볼륨감은 정면을 중심으로 구성하며, 뒤쪽에도 자연스러운 소재를 함께 배치하여 어느 방향에서도 입체감을 느낄 수 있도록 제작합니다.', '콘솔, 다이닝 테이블, 벽면을 배경으로 한 공간에서 가장 아름다운 형태가 돋보이는 디자인입니다.', '사방에서 동일한 볼륨감으로 감상하는 All Around Design을 원하시는 경우 별도 상담을 통해 제작 가능하며, 디자인 구성 및 사용 소재에 따라 추가 비용이 발생할 수 있습니다.'], ['Designed to reveal its most beautiful silhouette from the front.', 'Main flowers and volume focus forward, with natural materials at the back for dimension.', 'It is most beautiful on a console or dining table against a wall.', 'An All Around Design is available through consultation and may incur an additional fee.']),
