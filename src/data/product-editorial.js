@@ -252,7 +252,7 @@ export const productEditorial = {
   '민들레 홑씨 내추럴 부케': bouquet({
     title: t('민들레 홑씨 내추럴 부케', 'Natural Dandelion Bouquet'), price: '190,000원',
     priceOptions: prices(['Standard', '19만원', 'KRW 190,000']),
-    theme: t(['상세 설명은 추후 추가될 예정입니다.'], ['A detailed description will be added soon.']),
+    theme: t(['바람을 따라 흩날리는 민들레 홑씨가 거리를 수놓듯 가볍게 날아가는 모습에서 영감을 받아 제작한 부케입니다.', '민들레 홑씨의 심플하고 가벼운 형태에 고급스러운 스네이크 알리움을 더해 섬세한 라인과 리듬을 표현했습니다. 여기에 카라, 클레마티스, 줄맨드라미를 더해 자연스럽게 뻗어 나가는 선과 유려한 흐름을 살렸습니다. 서로 다른 형태와 질감의 소재가 조화를 이루며 민들레 홑씨가 바람을 타고 흩날리는 순간을 독특한 형태로 형상화했습니다.', '몽글몽글한 질감과 여백, 자유롭게 흐르는 라인이 만들어내는 신비롭고 몽환적인 분위기. 자연스러운 실루엣과 감각적인 소재의 조합으로 완성한 트렌디하고 유니크한 내추럴 부케입니다.', '특별한 날, 흔하지 않은 아름다움과 의미를 담아 오래도록 기억에 남는 꽃을 전합니다.'], ['Inspired by dandelion seeds drifting lightly on the wind as if decorating the street, this bouquet captures a fleeting, airborne moment.', 'The simple, weightless form of dandelion seeds is paired with refined snake allium to express delicate lines and rhythm. Calla lilies, clematis and textured celosia add naturally extending stems and a fluid sense of movement. Their contrasting forms and textures come together in a distinctive interpretation of dandelion seeds scattering on the breeze.', 'Soft clustered textures, negative space and freely flowing lines create a mysterious, dreamlike mood. A natural silhouette and expressive mix of materials complete this trendy, distinctive natural bouquet.', 'For a special day, it conveys an uncommon beauty and meaning designed to remain memorable for years to come.']),
     feature: t(['상세 디자인 설명은 추후 추가될 예정입니다.'], ['Detailed design notes will be added soon.']),
     details: bouquetDetails(t('상세 사이즈 추후 안내', 'Detailed size to be announced')),
   }),
