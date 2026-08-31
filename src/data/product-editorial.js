@@ -224,7 +224,7 @@ export const productEditorial = {
     details: bouquetDetails(t('약 W25~30 × H35~40cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W25–30 × H35–40cm\n(Size may vary by design.)')),
   }),
   '화이트 핑크 내추럴 부케': bouquet({
-    title: t('화이트 & 핑크 내추럴 부케', 'Soft Garden Bouquet'), price: '190,000원', priceOptions: prices(['W30~33 × H40~45cm', '19만원', 'KRW 190,000']),
+    title: t('화이트 & 핑크 내추럴 부케', 'Soft Garden Bouquet'), price: '200,000원', priceOptions: prices(['W30~33 × H40~45cm', '20만원', 'KRW 200,000']),
     theme: t(['순백의 카라와 튤립, 자연스럽게 흐르는 스위트피 라인에 부드러운 핑크 컬러를 더한 내추럴 가든 부케입니다.', '화이트 플라워의 깨끗하고 우아한 분위기에 핑크 튤립, 네리네, 핑크 스위트피의 사랑스러운 색감이 어우러져 은은하면서도 로맨틱한 무드를 표현합니다.', '차분한 화이트와 따뜻한 핑크의 조화가 봄날의 정원처럼 부드럽고 우아한 웨딩 스타일을 완성합니다.'], ['A natural garden bouquet of pure calla lilies, tulips, flowing sweet peas and soft pink.', 'Pink tulips, nerine and sweet peas bring romance to the clean elegance of white flowers.', 'Calm white and warm pink complete a soft, graceful spring-garden wedding style.']),
     feature: t(['스위트피의 자연스럽게 흐르는 라인을 중심으로 꽃의 방향과 움직임을 살려 디자인했습니다.', '화이트 플라워의 정돈된 아름다움과 핑크 플라워의 섬세한 포인트가 조화를 이루며, 자연스럽게 피어난 꽃의 풍경 같은 가든 부케 형태를 완성합니다.', '부케로 사용한 후에는 화병에 꽂아 공간을 장식하는 플라워 오브제로도 활용할 수 있어 특별한 순간의 기억을 오래 간직할 수 있습니다.'], ['Flowing sweet-pea lines guide the flowers’ natural direction and movement.', 'Refined whites and delicate pink accents create a garden bouquet like a naturally blooming landscape.', 'After use, it can be displayed in a vase as a lasting floral object.']),
     spaces: t(['웨딩 촬영 부케', '본식 웨딩 부케', '세컨드 부케', '브라이덜 샤워', '기념일 촬영', '화병 장식용 플라워 오브제'], ['Wedding photoshoots', 'Wedding ceremony bouquet', 'Second bouquet', 'Bridal showers', 'Anniversary photography', 'Floral object for vase display']),
