@@ -33,10 +33,14 @@ const VEHICLE_DELIVERY = t([
 ])
 const PARCEL_DELIVERY = t([
   '전국 택배 발송 가능합니다.',
+  '기본 택배 배송은 무료입니다.',
+  '퀵 배송을 원하시는 경우 카카오 T 퀵 차량 배송이 가능하며, 배송비는 아래 지역별 안내를 확인해 주세요.',
   '안전한 배송을 위해 완성된 형태 그대로 꼼꼼하게 포장하여 발송됩니다.',
   '배송 과정에서 흔들림으로 인해 일부 소재의 위치가 변동되거나, 드물게 작은 소재가 분리될 수 있습니다. 손으로 가볍게 방향을 정리하거나 분리된 소재를 원래 위치에 다시 꽂아주시면 자연스러운 형태로 연출 가능합니다.',
 ], [
   'Nationwide parcel delivery is available within Korea.',
+  'Standard parcel delivery is free of charge.',
+  'Kakao T Quick vehicle delivery is available on request. Please see the regional fees below.',
   'Each finished piece is carefully packed in its completed form for safe delivery.',
   'Some materials may shift or occasionally detach in transit. They can be gently repositioned or reinserted to restore the natural form.',
 ])
@@ -91,6 +95,7 @@ const BOUQUET_SPACES = t([
 ])
 const WRAPPING = t('기본 상품은 부케 본품으로 제공되며,\n포장이 필요한 경우 별도 요청 부탁드립니다.', 'The standard item includes the bouquet only.\nPlease request wrapping separately if required.')
 const bouquet = (config) => base({
+  freeParcel: true,
   about: BOUQUET_ABOUT,
   featureTitle: t('Bouquet Design'),
   spaces: BOUQUET_SPACES,
@@ -115,7 +120,7 @@ const VASE_SPACES = t([
   'Living and dining spaces', 'Cafés and restaurants', 'Showrooms and brand spaces', 'Hotels and reception areas', 'Housewarming and opening gifts', 'Seasonal floral object',
 ])
 const PACKAGING = t('꽃과 화병은 안전한 배송을 위해 각각 포장하여 발송됩니다.\n화병 없이 꽃다발만 구매를 원하시는 경우 주문 시 별도 문의 부탁드립니다.', 'Flowers and vase are packed separately for safe delivery.\nPlease enquire when ordering if you would like the flowers without the vase.')
-const vase = (config) => base({ about: VASE_ABOUT, spaces: VASE_SPACES, delivery: PARCEL_DELIVERY, custom: FLOWER_CUSTOM, ...config })
+const vase = (config) => base({ freeParcel: true, about: VASE_ABOUT, spaces: VASE_SPACES, delivery: PARCEL_DELIVERY, custom: FLOWER_CUSTOM, ...config })
 const vaseDetails = (size, collection = 'Vase Arrangement', extras = [['Packaging', PACKAGING]]) => details({ collection, size, design: HANDMADE, included: t('Flower Arrangement + Vase'), extras })
 
 const BASKET_ABOUT = t([
@@ -136,7 +141,7 @@ const BASKET_FEATURE = t([
 ])
 const BASKET_SPACES = t(['거실 및 다이닝 공간 장식', '카페 및 쇼룸 스타일링', '집들이 및 개업 선물', '기념일 및 특별한 선물', '브랜드 공간 연출'], ['Living and dining spaces', 'Café and showroom styling', 'Housewarming and opening gifts', 'Anniversary and special gifts', 'Brand space styling'])
 const BASKET_CUSTOM = t(['메이플레르의 디자인과 컬러 무드를 유지하는 범위 내에서 일부 꽃 컬러의 소폭 조정이 가능합니다.', '전체적인 디자인 변경이나 새로운 구성의 제작은 Custom Order를 통해 별도로 상담 가능합니다.'], ['Selected flower colours can be adjusted while preserving Mayfleur’s design mood.', 'Significant changes or new compositions are available through Custom Order consultation.'])
-const basket = (config) => base({ about: BASKET_ABOUT, featureTitle: t('Front Facing Design | 정면 중심 디자인', 'Front Facing Design'), feature: BASKET_FEATURE, spaces: BASKET_SPACES, delivery: PARCEL_DELIVERY, custom: BASKET_CUSTOM, ...config })
+const basket = (config) => base({ freeParcel: true, about: BASKET_ABOUT, featureTitle: t('Front Facing Design | 정면 중심 디자인', 'Front Facing Design'), feature: BASKET_FEATURE, spaces: BASKET_SPACES, delivery: PARCEL_DELIVERY, custom: BASKET_CUSTOM, ...config })
 
 export const productEditorial = {
   '핑크 보라 센터피스': centerpiece({
@@ -206,6 +211,7 @@ export const productEditorial = {
     spaces: t(['브라이덜샤워 테이블 장식', '돌상 및 백일상 스타일링', '생일 및 파티 테이블 연출', '공간 대여 스튜디오 스타일링', '웨딩 테이블 장식', '카페 및 쇼룸 테이블 연출'], ['Bridal shower tables', 'Korean first-birthday tables', 'Birthday and party tables', 'Rental studio styling', 'Wedding tables', 'Café and showroom tables']),
     details: details({ collection: 'Medium Object', size: t('약 W45 × D20 × H30~40cm', 'Approx. W45 × D20 × H30–40cm'), design: t('Handmade Floral Arrangement\nLong & Low Design (낮고 길게 연출되는 테이블 디자인)', 'Handmade Floral Arrangement\nLong & Low Design'), included: t('Complete Floral Arrangement') }),
     delivery: PARCEL_DELIVERY,
+    freeParcel: true,
   }),
 
   '카라 튤립 은방울 부케': bouquet({
@@ -324,6 +330,7 @@ export const productEditorial = {
     spaces: t(['현관 및 벽면 장식', '거실 및 다이닝 공간', '카페 및 쇼룸 스타일링', '브랜드 공간 연출', '계절별 공간 데코레이션', '집들이 및 특별한 선물'], ['Entrances and wall décor', 'Living and dining spaces', 'Cafés and showrooms', 'Brand spaces', 'Seasonal decoration', 'Housewarming and special gifts']),
     details: [['Collection', t('All Around Design')], ['Size', t('Mini Wreath\n35cm : 100,000원\nStandard Wreath\n40cm : 150,000원\nMedium Wreath\n45cm : 200,000원\n50cm : 250,000원\nLarge Wreath\n55cm : 300,000원~\n※ 기본 사이즈 기준이며, 사용 소재·꽃의 볼륨·디자인 구성에 따라 금액이 달라질 수 있습니다.', 'Mini Wreath\n35cm: KRW 100,000\nStandard Wreath\n40cm: KRW 150,000\nMedium Wreath\n45cm: KRW 200,000\n50cm: KRW 250,000\nLarge Wreath\n55cm: from KRW 300,000\nPrices may vary with materials, volume and composition.')], ['Material', ARTIFICIAL], ['Design', HANDMADE], ['Included', t('Wreath Arrangement')]],
     delivery: PARCEL_DELIVERY,
+    freeParcel: true,
     custom: t(['메이플레르의 디자인과 컬러 무드를 유지하는 범위 내에서 일부 꽃 컬러 또는 소재의 소폭 조정이 가능합니다.', '전체적인 디자인 변경이나 새로운 구성의 제작은 Custom Order를 통해 별도로 상담 가능합니다.'], ['Selected flower colours or materials can be adjusted while preserving Mayfleur’s design mood.', 'Significant changes or new compositions are available through Custom Order consultation.']),
   }),
   '캔들라브라': base({

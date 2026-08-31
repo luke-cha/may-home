@@ -38,8 +38,9 @@ const orderGuide = {
         '완성 후 출고 전 최종 확인 이미지를 전달드립니다.',
       ]],
       ['02 | Delivery', [
-        '대부분의 작품은 전국 택배 발송이 가능합니다.',
-        '세라믹 화기, 토분 등 파손 위험이 높은 일부 작품은 서울·경기 지역에 한하여 카카오 T 퀵(차량 배송)으로 진행됩니다.',
+        '전국 택배 발송이 가능한 상품은 기본 택배 배송을 무료로 제공합니다.',
+        '택배 가능 상품도 요청 시 카카오 T 퀵 차량 배송이 가능하며, 퀵 배송비는 지역에 따라 별도로 책정됩니다.',
+        '세라믹 화기, 토분 등 파손 위험이 높은 일부 작품은 서울·경기 지역에 한하여 카카오 T 퀵 차량 배송으로 진행됩니다.',
         '퀵 배송비는 지역에 따라 상이하며,\n20만 원 이상 주문 시 최대 15,000원,\n30만 원 이상 주문 시 최대 20,000원까지 지원해 드립니다.',
       ]],
       ['03 | Order & Cancellation Policy', [
@@ -67,7 +68,8 @@ const orderGuide = {
         'A final confirmation image will be sent before dispatch.',
       ]],
       ['02 | Delivery', [
-        'Most pieces can be shipped nationwide within Korea.',
+        'Products eligible for nationwide parcel shipping include free standard parcel delivery.',
+        'Kakao T Quick vehicle delivery is also available on request, with regional fees charged separately.',
         'Selected pieces with a higher risk of damage, including ceramic vessels and terracotta pots, are delivered within Seoul and Gyeonggi via Kakao T Quick vehicle delivery.',
         'Quick-delivery fees vary by location.\nOrders over KRW 200,000 receive support of up to KRW 15,000, and orders over KRW 300,000 receive support of up to KRW 20,000.',
       ]],
@@ -423,7 +425,7 @@ function EditorialProductDetail({ product, editorial, lang, guide }) {
     {editorial.feature && <section className="editorial-copy-section"><span className="eyebrow">{editorial.featureTitle?.[lang] || editorial.featureTitle?.en || 'Design'}</span><div>{paragraphs(editorial.feature)}</div></section>}
     {editorial.spaces && <section className="editorial-recommended"><span className="eyebrow">Recommended Space</span><ul>{(editorial.spaces[lang] || editorial.spaces.ko).map((item) => <li key={item}>{item}</li>)}</ul></section>}
     <section className="editorial-product-details"><span className="eyebrow">Product Details</span><dl>{editorial.details.map(([term, values]) => <div key={term}><dt>{term}</dt><dd>{term === 'Collection' && product.category === 'Centerpieces' ? <ObjectSizeGuide lang={lang} value={values[lang]} /> : values[lang]}</dd></div>)}</dl></section>
-    {(editorial.delivery || editorial.custom) && <section className="editorial-delivery-custom">{editorial.delivery && <article><span className="eyebrow">Delivery</span>{paragraphs(editorial.delivery)}<details className="contact-delivery-fees product-delivery-fees"><summary>{ko ? '배송비 보기' : 'View Delivery Fees'} <b aria-hidden="true" /></summary><QuickDeliveryFeeGuide ko={ko} /></details></article>}{editorial.custom && <article><span className="eyebrow">Custom Option</span>{paragraphs(editorial.custom)}</article>}</section>} 
+    {(editorial.delivery || editorial.custom) && <section className="editorial-delivery-custom">{editorial.delivery && <article><span className="eyebrow">Delivery</span>{paragraphs(editorial.delivery)}<details className="contact-delivery-fees product-delivery-fees"><summary>{editorial.freeParcel ? (ko ? '퀵 배송비 보기' : 'View Quick Delivery Fees') : (ko ? '배송비 보기' : 'View Delivery Fees')} <b aria-hidden="true" /></summary>{editorial.freeParcel && <p className="product-quick-fee-note">{ko ? '무료 택배 대신 퀵 배송을 원하시는 경우 아래 지역별 배송비가 적용됩니다.' : 'If you prefer Quick delivery instead of free parcel shipping, the regional fees below apply.'}</p>}<QuickDeliveryFeeGuide ko={ko} /></details></article>}{editorial.custom && <article><span className="eyebrow">Custom Option</span>{paragraphs(editorial.custom)}</article>}</section>} 
     <OrderGuide guide={guide} />
   </div>
 }
@@ -437,12 +439,12 @@ function ProductGuide({ lang }) {
   const items = ko ? [
     ['주문 제작', '모든 작품은 주문 후 제작되는 핸드메이드 오브제이며, 제작 기간은 평균 7–15일입니다. 주문 상황에 따라 달라질 수 있습니다.'],
     ['디자인 안내', '전체적인 색감과 무드를 유지하는 범위에서 소재가 대체될 수 있으며 일부 색상 변경은 사전 협의가 가능합니다.'],
-    ['배송', '조화 상품은 전국 택배가 가능하며, 일부 센터피스(세라믹·도자기)는 서울·경기 지역에 한해 차량 배송으로 진행합니다.'],
+    ['배송', '부케, 화병꽂이, 꽃바구니, 리스 및 택배 가능한 센터피스는 전국 무료 택배로 발송합니다. 요청 시 카카오 T 퀵 배송도 가능하며, 퀵 배송비는 지역에 따라 별도로 적용됩니다. 파손 위험이 높은 일부 센터피스는 차량 배송으로 진행합니다.'],
     ['교환 및 환불', '주문 제작 특성상 제작 시작 이후 단순 변심에 의한 교환·환불은 어렵습니다.'],
   ] : [
     ['Made to order', 'Every piece is handcrafted after confirmation. Production typically takes 7–15 days and may vary depending on current order volume.'],
     ['Design notes', 'Materials may be substituted while retaining the overall palette and mood. Selected colour changes can be discussed.'],
-    ['Delivery', 'Bouquets, vase arrangements and wreaths ship nationwide. Centerpieces and baskets require vehicle delivery.'],
+    ['Delivery', 'Bouquets, vase arrangements, baskets, wreaths and parcel-eligible centrepieces include free nationwide parcel delivery. Kakao T Quick is available on request with separate regional fees. Selected fragile centrepieces require vehicle delivery.'],
     ['Returns', 'As each piece is made to order, cancellations and returns are unavailable once production begins.'],
   ]
   return <section className="guide container"><SectionTitle eyebrow="Collection Guide" title={ko ? '주문 전 확인해 주세요' : 'Before placing your order'} /><div>{items.map(([title, body], i) => <article key={title}><span>0{i + 1}</span><h3>{title}</h3><p>{body}</p></article>)}</div></section>
