@@ -237,7 +237,7 @@ export const productEditorial = {
     details: bouquetDetails(t('약 W20~22 × H50~55cm\n(디자인에 따라 사이즈는 달라질 수 있습니다.)', 'Approx. W20–22 × H50–55cm\n(Size may vary by design.)')),
   }),
   '호접 부케': bouquet({
-    title: t('호접란 티어드롭 부케', 'Teardrop Orchid Bouquet'), price: '120,000원', priceOptions: prices(['Standard', '12만원', 'KRW 120,000']),
+    title: t('호접란 티어드롭 부케', 'Teardrop Orchid Bouquet'), price: '130,000원', priceOptions: prices(['Standard', '13만원', 'KRW 130,000']),
     theme: t(['호접란, 튤립, 스카비오사, 줄맨드라미가 조화롭게 어우러진 티어드롭 웨딩 부케입니다.', '물방울을 닮은 부드러운 실루엣을 모티브로, 깔끔하고 단정한 형태 속에 자연스러운 꽃의 움직임을 담았습니다.', '케스케이드보다 컴팩트한 비율로 제작되어 우아하면서도 부담 없이 들기 좋은 디자인입니다.'], ['A teardrop wedding bouquet of orchids, tulips, scabiosa and textured celosia.', 'Its soft droplet silhouette balances a clean form with natural movement.', 'More compact than a cascade, it is elegant and comfortable to carry.']),
     feature: t(['호접란의 유려한 라인을 중심으로 튤립과 스카비오사, 줄맨드라미를 자연스럽게 배치하여 균형감 있는 티어드롭 형태를 완성했습니다.', '절제된 실루엣과 섬세한 꽃의 흐름이 조화를 이루며, 클래식하면서도 내추럴한 웨딩 스타일을 연출합니다.'], ['Flowing orchids lead tulips, scabiosa and celosia into a balanced teardrop form.', 'A restrained silhouette and delicate movement create a classic, natural wedding style.']),
     details: bouquetDetails(t('디자인에 따라 사이즈는 달라질 수 있습니다.', 'Size may vary by design.')),
