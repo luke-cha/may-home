@@ -180,6 +180,12 @@ const portfolioProjects = directFolders('05 Portfolio/', 1)
     raw: name, name: cleanFolderName(name), media: numericMediaSort(under(`05 Portfolio/${name}/`)),
   }))
 const serviceOrder = ['Floral Styling', 'Brand Collaboration', 'Corporate Workshops', 'Global Workshops']
+const serviceContactRoutes = {
+  'Floral Styling': '#contact/brand-collaboration',
+  'Brand Collaboration': '#contact/brand-collaboration',
+  'Corporate Workshops': '#contact/workshop',
+  'Global Workshops': '#contact/global-workshop',
+}
 const services = directFolders('06 Services/', 1).map((name) => ({
   raw: name, name: label(name), media: numericMediaSort(under(`06 Services/${name}/`)),
 })).sort((a, b) => serviceOrder.indexOf(a.name) - serviceOrder.indexOf(b.name))
@@ -591,7 +597,7 @@ function ProjectDetail({ project, lang }) {
 function Services({ lang }) {
   const ko = lang === 'ko'
   return <div className="page fade-in services-page"><PageHead title="Services" />
-    <section className="services container">{services.map((service, i) => { const copy = serviceCopy[service.name]; const photos = imagesOnly(service.media); return <article key={service.name} className="service"><div className="service-copy"><div className="service-heading"><span className="service-no">0{i + 1}</span><h2>{service.name}</h2></div><p>{copy?.[lang] || copy?.en}</p>{copy?.listTitle && <span className="service-list-title">{copy.listTitle}</span>}<div className="service-list">{copy?.list.map((item) => <span key={item}>{item}</span>)}</div><a className="button ghost" href="#contact">{service.name === 'Global Workshops' ? 'Host Inquiry' : 'Inquiry'}</a></div><div className="service-images">{photos.slice(0, 4).map((file) => <Media key={file} file={file} alt={service.name} />)}</div></article>})}</section>
+    <section className="services container">{services.map((service, i) => { const copy = serviceCopy[service.name]; const photos = imagesOnly(service.media); return <article key={service.name} className="service"><div className="service-copy"><div className="service-heading"><span className="service-no">0{i + 1}</span><h2>{service.name}</h2></div><p>{copy?.[lang] || copy?.en}</p>{copy?.listTitle && <span className="service-list-title">{copy.listTitle}</span>}<div className="service-list">{copy?.list.map((item) => <span key={item}>{item}</span>)}</div><a className="button ghost" href={serviceContactRoutes[service.name]}>{service.name === 'Global Workshops' ? 'Host Inquiry' : 'Inquiry'}</a></div><div className="service-images">{photos.slice(0, 4).map((file) => <Media key={file} file={file} alt={service.name} />)}</div></article>})}</section>
 
   </div>
 }
@@ -866,9 +872,10 @@ function KakaoInquiryBridge({ formRef, type, ko }) {
 }
 
 function Contact({ lang, detail = [] }) {
-  const ko = lang === 'ko'; const [sent, setSent] = useState(false); const [type, setType] = useState('Shop'); const formRef = useRef(null)
+  const ko = lang === 'ko'; const contactType = detail[0] === 'brand-collaboration' ? 'Brand Collaboration' : detail[0] === 'workshop' ? 'Workshop' : detail[0] === 'global-workshop' ? 'Global Workshop' : 'Shop'; const [sent, setSent] = useState(false); const [type, setType] = useState(contactType); const formRef = useRef(null)
   const initialOrderType = detail[0] === 'artificial' ? 'artificial' : 'fresh'
   const initialProduct = detail.slice(1).join(' ')
+  useEffect(() => setType(contactType), [contactType])
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
     <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form ref={formRef} encType="multipart/form-data" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
         <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','Shop','샵'], ['Workshop','Flower Workshop','플라워워크샵'], ['Brand Collaboration','Brand Collaboration & Floral Styling','브랜드 협업 & 플라워 스타일링'], ['Global Workshop','Global Workshop','Global Workshop'], ['Other','Other','기타']].map(([item, en, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : en}</button>)}</div></fieldset>
