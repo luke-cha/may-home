@@ -22,7 +22,7 @@ const categoryNames = {
   'Flower Basket Arrangements': ['Basket Arrangements', '꽃바구니'],
   'Vase Arrangements': ['Vase Arrangements', '화병 어레인지먼트'],
   Wreaths: ['Wreaths', '리스'],
-  'Floral Objects': ['Floral Objects', '플로럴 오브제'],
+  'Floral Objects': ['Candelabra', '캔들라브라'],
   'Wedding Arch': ['Wedding Arch', '웨딩 아치'],
 }
 
