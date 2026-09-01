@@ -763,7 +763,7 @@ function OrderInquiry({ ko, initialOrderType = 'fresh', initialProduct = '' }) {
     <div className="order-notes"><p>{ko ? '※ 생화 꽃다발은 15만 원 이상부터 주문 가능합니다.' : '※ Fresh flower bouquets are available for orders over KRW 150,000.'}</p><p>{ko ? '※ 생화 및 조화 맞춤 제작(Custom Order)은 20만 원 이상부터 진행됩니다.' : '※ Custom orders for fresh and artificial flowers are available from KRW 200,000.'}</p></div>
     <div className="order-fields">
       <label>{ko ? '문의 상품 *' : 'Product Inquiry *'}<input required name="product" value={productName} onChange={(event) => setProductName(event.target.value)} /></label>
-      <label>{ko ? '예상 예산 *' : 'Estimated Budget *'}<input required name="budget" inputMode="numeric" /></label>
+      <label>{ko ? '예상 예산 *' : 'Estimated Budget *'}<input required name="budget" placeholder={ko ? '예: 13만원' : 'e.g. KRW 130,000'} /></label>
       <label className="full">{ko ? '선호하는 색감 및 분위기' : 'Preferred Colours & Mood'}<textarea name="colourMood" rows="2" /></label>
       <label className="full">{ko ? '요청 사항' : 'Requests'}<textarea name="requests" rows="3" /></label>
       <label>{ko ? '주문자 성함 *' : 'Orderer Name *'}<input required name="ordererName" /></label>
@@ -800,7 +800,7 @@ function BrandCollaborationInquiry({ ko }) {
       <label className="full">{ko ? '프로젝트 내용' : 'Project Details'}<textarea name="collaborationDetails" rows="4" /></label>
       <label>{ko ? '희망 일정 *' : 'Preferred Date *'}<input required type="date" name="collaborationDate" /></label>
       <label>{ko ? '진행 장소' : 'Location'}<input name="collaborationLocation" /></label>
-      <label>{ko ? '예상 예산' : 'Estimated Budget'}<input name="collaborationBudget" inputMode="numeric" /></label>
+      <label>{ko ? '예상 예산' : 'Estimated Budget'}<input name="collaborationBudget" placeholder={ko ? '예: 100만원' : 'e.g. KRW 1,000,000'} /></label>
       <label className="full">{ko ? '요청 사항' : 'Additional Requests'}<textarea name="brandRequests" rows="3" /></label>
       <label>{ko ? '담당자 성함 *' : 'Contact Name *'}<input required name="brandContactName" /></label>
       <label>{ko ? '연락처 *' : 'Phone *'}<input required type="tel" name="brandPhone" /></label>
@@ -823,7 +823,7 @@ function WorkshopInquiry({ ko }) {
       <p className="field-note full">{ko ? '(평일 낮 시간 진행을 우선으로 하며, 일정에 따라 조율 가능합니다.)' : '(Weekday daytime sessions are preferred and can be coordinated depending on availability.)'}</p>
       <label className="full">{ko ? '진행 장소' : 'Location'}<input name="location" /></label>
       <p className="field-note full">{ko ? '※ 출장 진행만 가능합니다.' : '※ Workshops are available on-site only.'}</p>
-      <label>{ko ? '예상 예산' : 'Estimated Budget'}<input name="workshopBudget" inputMode="numeric" /></label>
+      <label>{ko ? '예상 예산' : 'Estimated Budget'}<input name="workshopBudget" placeholder={ko ? '예: 100만원' : 'e.g. KRW 1,000,000'} /></label>
       <label className="full">{ko ? '요청 사항' : 'Requests'}<textarea name="workshopRequests" rows="3" /></label>
       <label>{ko ? '담당자 성함 *' : 'Contact Name *'}<input required name="contactName" /></label>
       <label>{ko ? '연락처 *' : 'Phone *'}<input required type="tel" name="contactPhone" /></label>
