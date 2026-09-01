@@ -32,17 +32,15 @@ const VEHICLE_DELIVERY = t([
   'Orders within Seoul and Gyeonggi are delivered safely via Kakao T Quick vehicle delivery.',
 ])
 const PARCEL_DELIVERY = t([
-  '전국 택배 발송 가능합니다.',
-  '기본 택배 배송은 무료입니다.',
-  '퀵 배송을 원하시는 경우 카카오 T 퀵 차량 배송이 가능하며, 배송비는 아래 지역별 안내를 확인해 주세요.',
-  '안전한 배송을 위해 완성된 형태 그대로 꼼꼼하게 포장하여 발송됩니다.',
-  '배송 과정에서 흔들림으로 인해 일부 소재의 위치가 변동되거나, 드물게 작은 소재가 분리될 수 있습니다. 손으로 가볍게 방향을 정리하거나 분리된 소재를 원래 위치에 다시 꽂아주시면 자연스러운 형태로 연출 가능합니다.',
+  '전국 택배 발송이 가능하며, 기본 택배 배송은 무료입니다.',
+  '퀵 배송을 원하시는 경우 카카오 T 퀵 차량 배송으로 진행되며, 배송비는 지역별 안내를 확인해 주세요.',
+  '상품은 완성된 형태를 최대한 유지할 수 있도록 꼼꼼하게 포장하여 안전하게 발송합니다.',
+  '배송 과정에서 흔들림으로 인해 일부 소재의 위치가 변동되거나, 드물게 작은 소재가 분리될 수 있습니다. 이 경우 손으로 가볍게 방향을 정리하거나 분리된 소재를 원래 위치에 다시 꽂아주시면 자연스러운 형태로 연출하실 수 있습니다.',
 ], [
-  'Nationwide parcel delivery is available within Korea.',
-  'Standard parcel delivery is free of charge.',
-  'Kakao T Quick vehicle delivery is available on request. Please see the regional fees below.',
-  'Each finished piece is carefully packed in its completed form for safe delivery.',
-  'Some materials may shift or occasionally detach in transit. They can be gently repositioned or reinserted to restore the natural form.',
+  'Nationwide parcel delivery is available within Korea, and standard parcel shipping is free of charge.',
+  'If you prefer Quick delivery, your order will be sent by Kakao T Quick vehicle service. Please refer to the regional delivery fees below.',
+  'Each product is packed carefully and shipped safely to preserve its completed form as much as possible.',
+  'Some materials may shift or occasionally detach due to movement during transit. In this case, gently adjust their direction or reinsert detached materials in their original position to restore the natural form.',
 ])
 const OBJECT_CUSTOM = t([
   '메이플레르의 디자인과 컬러 무드를 유지하는 범위 내에서 일부 화기 또는 꽃 컬러의 소폭 조정이 가능합니다.',
