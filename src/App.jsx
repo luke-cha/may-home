@@ -415,7 +415,7 @@ function ObjectSizeGuide({ lang, value }) {
 
 function WeddingArchPackage({ editorial, lang }) {
   const ko = lang === 'ko'; const info = editorial.archPackage
-  return <section className="wedding-arch-package"><div><span>{ko ? '기본 구성' : 'Included'}</span><ul>{info.included[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div><span>{ko ? '별도 안내' : 'Quoted Separately'}</span><ul>{info.separate[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p>{info.note[lang]}</p></section>
+  return <section className="wedding-arch-package"><div><span>{ko ? '기본 구성' : 'Included'}</span><ul>{info.included[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div><span>{ko ? '별도 안내' : 'Quoted Separately'}</span><ul>{info.separate[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div className="wedding-arch-package-notes">{info.notes[lang].map((note) => <p key={note}>{note}</p>)}</div></section>
 }
 
 function EditorialProductDetail({ product, editorial, lang, guide }) {
