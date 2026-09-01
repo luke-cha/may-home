@@ -23,6 +23,7 @@ const categoryNames = {
   'Vase Arrangements': ['Vase Arrangements', '화병 어레인지먼트'],
   Wreaths: ['Wreaths', '리스'],
   'Floral Objects': ['Floral Objects', '플로럴 오브제'],
+  'Wedding Arch': ['Wedding Arch', '웨딩 아치'],
 }
 
 const orderGuide = {
@@ -412,19 +413,32 @@ function ObjectSizeGuide({ lang, value }) {
   return <details className="object-size-guide" open><summary><span>{value}</span><small>Size Guide <b aria-hidden="true" /></small></summary><div className="object-size-guide-panel"><h3>Object Size Guide</h3>{sizes.map(([name, size, description]) => <article className={name === value ? 'current' : ''} key={name}><strong>{name}</strong><span>{size}</span><p>{description}</p></article>)}</div></details>
 }
 
+function WeddingArchPackage({ editorial, lang }) {
+  const ko = lang === 'ko'; const info = editorial.archPackage
+  return <section className="wedding-arch-package"><div><span>{ko ? '기본 구성' : 'Included'}</span><ul>{info.included[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div><span>{ko ? '별도 안내' : 'Quoted Separately'}</span><ul>{info.separate[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p>{info.note[lang]}</p></section>
+}
+
 function EditorialProductDetail({ product, editorial, lang, guide }) {
   const ko = lang === 'ko'; const heroFile = imagesOnly(product.media)[0]; const galleryMedia = product.media.filter((file) => file !== heroFile); const [selectedSize, setSelectedSize] = useState(editorial.priceOptions[0][0])
   const inquiryHref = `#contact/artificial/${encodeURIComponent(editorial.title[lang])}/${encodeURIComponent(selectedSize)}`
   const paragraphs = (items) => (items?.[lang] || items?.ko || []).map((item) => <p key={item}>{item}</p>)
+  const detailValue = (term, values) => {
+    const value = values[lang]
+    if (term !== 'Vessel Option') return value
+    const phrase = ko ? '재고 소진으로 동일 화기로 제작이 어렵습니다.' : 'sold out and the exact same vessel is unavailable.'
+    const [before, after] = value.split(phrase)
+    return before === undefined || after === undefined ? value : <>{before}<strong className="vessel-stock-notice">{phrase}</strong>{after}</>
+  }
   return <div className="page fade-in product-detail editorial-product-detail container"><a className="back" href="#shop">← {ko ? '샵으로 돌아가기' : 'Back to Shop'}</a>
     <section className="product-order-notice"><span className="eyebrow">— Mayfleur Order Guide</span><div>{guide.intro.map((line) => <p key={line}>{line}</p>)}</div></section>
-    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><div className="editorial-price-options"><span>{ko ? '사이즈별 주문 가격' : 'Size & Price'}</span><ul>{editorial.priceOptions.map(([size, prices]) => <li className={selectedSize === size ? 'selected' : ''} key={size}><button type="button" onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size}><small>{size}</small><strong>{prices[lang]}</strong></button></li>)}</ul></div><div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일 (주문 상황에 따라 달라질 수 있습니다.)' : 'Approximately 7–15 days (may vary depending on order volume)'}</dd></div></dl><a className="button primary" href={inquiryHref}>{ko ? '주문 문의하기' : 'Order Inquiry'}</a></div></section>
+    <section className="editorial-product-hero"><div className="editorial-product-image"><Media file={heroFile} alt={editorial.title[lang]} eager /></div><div className="editorial-product-summary"><span className="eyebrow">Artificial Flower Collection</span><h1>{editorial.title.en}</h1><h2>{editorial.title.ko}</h2><div className="editorial-price-options"><span>{editorial.isWeddingArch ? 'Custom Design / Price' : (ko ? '사이즈별 주문 가격' : 'Size & Price')}</span><ul>{editorial.priceOptions.map(([size, prices]) => <li className={selectedSize === size ? 'selected' : ''} key={size}><button type="button" onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size}><small>{size}</small><strong>{prices[lang]}</strong></button></li>)}</ul></div>{editorial.isWeddingArch && <WeddingArchPackage editorial={editorial} lang={lang} />}<div>{editorial.cardLines[lang].map((line) => <span key={line}>{line}</span>)}</div>{!editorial.isWeddingArch && <><dl><div><dt>{ko ? '제작 기간' : 'Production'}</dt><dd>{ko ? '평균 7–15일 (주문 상황에 따라 달라질 수 있습니다.)' : 'Approximately 7–15 days (may vary depending on order volume)'}</dd></div></dl><a className="button primary" href={inquiryHref}>{ko ? '주문 문의하기' : 'Order Inquiry'}</a></>}</div></section>
     {editorial.about && <section className="editorial-copy-section"><span className="eyebrow">About This Piece</span><div>{paragraphs(editorial.about)}</div></section>}
-    {editorial.theme && <section className="editorial-copy-section"><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>}
+    {editorial.theme && <section className={`editorial-copy-section${editorial.isWeddingArch ? ' wedding-arch-theme' : ''}`}><span className="eyebrow">Design Theme</span><div>{paragraphs(editorial.theme)}</div></section>}
+    {editorial.isWeddingArch && <section className="wedding-arch-production"><span className="eyebrow">Production</span><h2>{ko ? '제작 기간' : 'Production Period'}</h2><p>{editorial.productionTime[lang]}</p><a className="button primary" href="#contact/brand-collaboration">{ko ? '웨딩 아치 상담하기' : 'Wedding Arch Consultation'} →</a></section>}
     <section className="editorial-media-gallery">{galleryMedia.map((file, i) => <figure key={file}><Media file={file} alt={`${editorial.title[lang]} ${i + 2}`} /></figure>)}</section>
     {editorial.feature && <section className="editorial-copy-section"><span className="eyebrow">{editorial.featureTitle?.[lang] || editorial.featureTitle?.en || 'Design'}</span><div>{paragraphs(editorial.feature)}</div></section>}
     {editorial.spaces && <section className="editorial-recommended"><span className="eyebrow">Recommended Space</span><ul>{(editorial.spaces[lang] || editorial.spaces.ko).map((item) => <li key={item}>{item}</li>)}</ul></section>}
-    <section className="editorial-product-details"><span className="eyebrow">Product Details</span><dl>{editorial.details.map(([term, values]) => <div key={term}><dt>{term}</dt><dd>{term === 'Collection' && product.category === 'Centerpieces' ? <ObjectSizeGuide lang={lang} value={values[lang]} /> : values[lang]}</dd></div>)}</dl></section>
+    <section className="editorial-product-details"><span className="eyebrow">Product Details</span><dl>{editorial.details.map(([term, values]) => <div key={term}><dt>{term}</dt><dd>{term === 'Collection' && product.category === 'Centerpieces' ? <ObjectSizeGuide lang={lang} value={values[lang]} /> : detailValue(term, values)}</dd></div>)}</dl></section>
     {(editorial.delivery || editorial.custom) && <section className="editorial-delivery-custom">{editorial.delivery && <article><span className="eyebrow">Delivery</span>{paragraphs(editorial.delivery)}<details className="contact-delivery-fees product-delivery-fees"><summary>{editorial.freeParcel ? (ko ? '퀵 배송비 보기' : 'View Quick Delivery Fees') : (ko ? '배송비 보기' : 'View Delivery Fees')} <b aria-hidden="true" /></summary>{editorial.freeParcel && <p className="product-quick-fee-note">{ko ? '무료 택배 대신 퀵 배송을 원하시는 경우 아래 지역별 배송비가 적용됩니다.' : 'If you prefer Quick delivery instead of free parcel shipping, the regional fees below apply.'}</p>}<QuickDeliveryFeeGuide ko={ko} /></details></article>}{editorial.custom && <article><span className="eyebrow">Custom Option</span>{paragraphs(editorial.custom)}</article>}</section>} 
     <OrderGuide guide={guide} />
   </div>
