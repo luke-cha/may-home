@@ -95,9 +95,9 @@ Google Fonts를 사용하지 않고 `src/assets/fonts/`의 woff2를 로컬 로�
 1. GitHub 저장소 → **Settings → Pages**
 2. **Source** 를 **GitHub Actions** 로 변경
 
-배포 URL: `https://luke-cha.github.io/may-home/`
+공식 URL: `https://mayfleur.co.kr/`
 
-`vite.config.js`의 `base`는 GitHub Actions 환경에서만 `/may-home/`로 설정되고, 로컬에서는 `/`를 사용합니다. 저장소 이름을 바꾸면 이 값도 함께 수정해야 합니다.
+GitHub Pages 호스팅은 그대로 유지하며, `contents/CNAME`과 GitHub Pages의 Custom domain 설정으로 도메인을 연결합니다. `vite.config.js`의 `base`는 커스텀 도메인의 루트 경로인 `/`를 사용합니다.
 
 > 참고: `contents/`가 약 335MB이므로 빌드 산출물이 큽니다. Pages 사이트 용량 제한(1GB)에는 여유가 있으나 배포에 수 분이 소요될 수 있습니다. 용량을 줄이려면 원본 이미지를 사전 리사이즈/WebP 변환하는 단계를 추가하는 것을 권장합니다.
 
