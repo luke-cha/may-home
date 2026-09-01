@@ -346,6 +346,20 @@ export const productEditorial = {
     spaces: t(['웨딩 세레모니', '포토존', '웨딩홀', '스몰웨딩', '이벤트 공간'], ['Wedding ceremonies', 'Photo zones', 'Wedding halls', 'Small weddings', 'Event spaces']),
     details: [['Design Type', t('Front Facing · 정면형', 'Front Facing')], ['Arch Height', t('Approx. 180cm')], ['Finished Height', t('Approx. 200–220cm')]],
     productionTime: t('상담 후 일정에 따라 안내드립니다.', 'The production schedule will be confirmed after consultation.'),
+    orderGuide: {
+      ko: { sections: [
+        ['01 | Design & Production', ['모든 웨딩 아치는 공간과 웨딩 콘셉트에 맞춰 제작되는 주문 제작 플라워 디자인입니다.', '상담을 통해 원하시는 색감과 분위기, 공간의 규모와 형태를 확인한 후 디자인 및 견적을 안내드립니다.', '기본 디자인을 바탕으로 플라워 구성과 컬러, 볼륨 조정이 가능합니다.', '조화 및 소재는 수급 상황에 따라 유사한 소재로 변경될 수 있으며, 전체적인 색감과 분위기를 유지하여 제작합니다.', '제작 기간은 행사 일정 및 디자인에 따라 상담 후 안내드립니다.']],
+        ['02 | Delivery & Installation', ['아치 구조물 및 플라워 장식이 포함된 상품입니다.', '현장 운송비, 철거 및 회수 비용은 행사 장소와 일정에 따라 별도 안내드립니다.', '지방 출장, 야간 및 특수 설치가 필요한 경우 추가 비용이 발생할 수 있습니다.', '설치 및 철거 일정은 행사장 운영 시간과 현장 상황에 따라 사전 협의합니다.']],
+        ['03 | Order & Cancellation', ['모든 웨딩 아치는 주문 후 고객님의 행사에 맞춰 제작되는 주문 제작 상품입니다.', '주문 확정 후 소재 준비 및 제작이 시작되므로, 제작 시작 이후에는 단순 변심에 의한 취소·교환·환불이 어렵습니다.', '행사 일정과 장소가 확정된 후 상담을 진행해 주세요.']],
+        ['04 | Product Guide', ['플라워의 형태와 배치는 샘플 이미지와 일부 차이가 있을 수 있습니다.', '조화 특성상 소재의 미세한 차이, 접착 흔적 등이 있을 수 있습니다.', '실제 완성 형태와 색감은 공간 및 조명 환경에 따라 다소 차이가 있을 수 있습니다.']],
+      ] },
+      en: { sections: [
+        ['01 | Design & Production', ['Every wedding arch is a bespoke floral design created for the space and wedding concept.', 'After discussing your preferred palette and atmosphere as well as the scale and form of the space, we provide a design proposal and quote.', 'The floral composition, colour and volume can be adjusted based on the standard design.', 'Artificial flowers and materials may be replaced with similar alternatives depending on availability while preserving the overall palette and atmosphere.', 'The production period is confirmed after consultation according to the event schedule and design.']],
+        ['02 | Delivery & Installation', ['The product includes the arch structure and floral decoration.', 'On-site transport, dismantling and collection fees are quoted separately according to the event location and schedule.', 'Additional fees may apply for travel outside the Seoul area, night-time work or special installation.', 'Installation and dismantling schedules are agreed in advance according to venue operating hours and on-site conditions.']],
+        ['03 | Order & Cancellation', ['Every wedding arch is made to order for the customer’s event.', 'Materials are prepared and production begins after order confirmation, so cancellation, exchange or refund due to a change of mind is unavailable once production has begun.', 'Please inquire after the event date and location have been confirmed.']],
+        ['04 | Product Guide', ['The floral form and placement may differ slightly from the sample images.', 'Artificial flower materials may have minor variations or visible adhesive traces.', 'The finished form and colour may appear slightly different according to the space and lighting conditions.']],
+      ] },
+    },
   }),
   '캔들라브라': base({
     title: t('연보라 캔들라브라', 'Lavender Candelabra'), price: '300,000원', priceOptions: prices(['W40~45 × H40~45cm', '30만원', 'KRW 300,000']),

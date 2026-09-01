@@ -440,7 +440,7 @@ function EditorialProductDetail({ product, editorial, lang, guide }) {
     {editorial.spaces && <section className="editorial-recommended"><span className="eyebrow">Recommended Space</span><ul>{(editorial.spaces[lang] || editorial.spaces.ko).map((item) => <li key={item}>{item}</li>)}</ul></section>}
     <section className="editorial-product-details"><span className="eyebrow">Product Details</span><dl>{editorial.details.map(([term, values]) => <div key={term}><dt>{term}</dt><dd>{term === 'Collection' && product.category === 'Centerpieces' ? <ObjectSizeGuide lang={lang} value={values[lang]} /> : detailValue(term, values)}</dd></div>)}</dl></section>
     {(editorial.delivery || editorial.custom) && <section className="editorial-delivery-custom">{editorial.delivery && <article><span className="eyebrow">Delivery</span>{paragraphs(editorial.delivery)}<details className="contact-delivery-fees product-delivery-fees"><summary>{editorial.freeParcel ? (ko ? '퀵 배송비 보기' : 'View Quick Delivery Fees') : (ko ? '배송비 보기' : 'View Delivery Fees')} <b aria-hidden="true" /></summary>{editorial.freeParcel && <p className="product-quick-fee-note">{ko ? '무료 택배 대신 퀵 배송을 원하시는 경우 아래 지역별 배송비가 적용됩니다.' : 'If you prefer Quick delivery instead of free parcel shipping, the regional fees below apply.'}</p>}<QuickDeliveryFeeGuide ko={ko} /></details></article>}{editorial.custom && <article><span className="eyebrow">Custom Option</span>{paragraphs(editorial.custom)}</article>}</section>} 
-    <OrderGuide guide={guide} />
+    <OrderGuide guide={editorial.orderGuide?.[lang] || guide} />
   </div>
 }
 
