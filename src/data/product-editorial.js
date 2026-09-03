@@ -344,7 +344,7 @@ export const productEditorial = {
     },
     theme: t(['A Garden Between Spring & Summer', '봄과 여름 사이, 화사하게 피어난 정원', '핑크 작약의 풍성한 아름다움에 하늘빛 클레마티스와 보라 장미, 그린 수국을 더해 다채로운 색감의 플로럴 아치를 완성했습니다.', '봄의 화사함과 여름의 싱그러움이 자연스럽게 어우러지는 컬러 팔레트로, 풍성하면서도 생동감 있는 정원의 모습을 표현했습니다.', '서로 다른 색과 꽃의 형태가 조화롭게 어우러져 공간을 더욱 화사하고 로맨틱하게 연출하는 웨딩 플라워 디자인입니다.'], ['A Garden Between Spring & Summer', 'A radiant garden blooming between spring and summer', 'Lush pink peonies are layered with sky-blue clematis, purple roses and green hydrangeas to create a floral arch rich in colour.', 'A palette where the brightness of spring meets the freshness of summer expresses a generous, vibrant garden in bloom.', 'Different colours and floral forms come together in harmony, creating a luminous and romantic wedding setting.']),
     spaces: t(['웨딩 세레모니', '포토존', '웨딩홀', '스몰웨딩', '이벤트 공간'], ['Wedding ceremonies', 'Photo zones', 'Wedding halls', 'Small weddings', 'Event spaces']),
-    details: [['Design Type', t('Front Facing · 정면형', 'Front Facing')], ['Arch Height', t('Approx. 180cm')], ['Finished Height', t('Approx. 200–220cm\n완성 높이는 플라워 구성에 따라 달라질 수 있습니다.', 'Approx. 200–220cm\nFinished height may vary according to the floral composition.')]],
+    details: [['Design Type', t('Front Facing · 정면형', 'Front Facing')], ['Arch Frame', t('W 180 × H 210cm')], ['Finished Size', t('Approx. W 200–220 × H 230–250cm')]],
     productionTime: t('상담 후 일정에 따라 안내드립니다.', 'The production schedule will be confirmed after consultation.'),
     orderGuide: {
       ko: { sections: [
