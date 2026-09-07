@@ -163,9 +163,9 @@ export const productEditorial = {
   }),
   '연보라 하늘 센터피스': centerpiece({
     title: t('연보라 & 하늘 센터피스', 'Lavender Sky Centerpiece'), price: '230,000원',
-    priceOptions: prices(['W45 × H45cm', '23만원', 'KRW 230,000'], ['W50 × H50cm', '30만원', 'KRW 300,000'], ['W55 × H55cm', '35만원', 'KRW 350,000']),
+    priceOptions: prices(['W45 × H45cm', '23만원', 'KRW 230,000'], ['W50 × H50cm', '28만원', 'KRW 280,000'], ['W55 × H55cm', '33만원', 'KRW 330,000']),
     theme: t(['연보라빛 하늘과 은은한 블루 컬러가 만나 신비롭고 몽환적인 분위기를 담은 센터피스입니다.', '부드럽게 번지는 파스텔 컬러와 섬세한 꽃의 조화가 공간에 차분하고 우아한 무드를 더합니다.'], ['Lavender sky and subtle blue tones create a mysterious, dreamlike centrepiece.', 'Soft pastels and delicate flowers add a calm and elegant mood to the space.']),
-    details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 23만원\n약 W50 × H50cm 30만원\n약 W55 × H55cm 35만원', 'Approx. W45 × H45cm KRW 230,000\nApprox. W50 × H50cm KRW 300,000\nApprox. W55 × H55cm KRW 350,000') }),
+    details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 23만원\n약 W50 × H50cm 28만원\n약 W55 × H55cm 33만원', 'Approx. W45 × H45cm KRW 230,000\nApprox. W50 × H50cm KRW 280,000\nApprox. W55 × H55cm KRW 330,000') }),
   }),
   '노랑 달항아리 센터피스': centerpiece({
     title: t('화사한 노랑 달항아리 센터피스', 'Sunshine Centerpiece'), price: '200,000원',
@@ -184,9 +184,9 @@ export const productEditorial = {
   }),
   '피치 화이트 센터피스': centerpiece({
     title: t('피치 & 화이트 센터피스', 'Peach White Centerpiece'), price: '230,000원',
-    priceOptions: prices(['W45 × H45cm', '23만원', 'KRW 230,000'], ['W50 × H50cm', '33만원', 'KRW 330,000'], ['W55 × H55cm', '33만원', 'KRW 330,000']),
+    priceOptions: prices(['W45 × H45cm', '23만원', 'KRW 230,000'], ['W50 × H50cm', '28만원', 'KRW 280,000'], ['W55 × H55cm', '33만원', 'KRW 330,000']),
     theme: t(['부드러운 피치와 깨끗한 화이트 컬러가 조화를 이루는 내추럴 센터피스입니다.', '화려함보다 은은한 아름다움을 담아 공간에 자연스럽게 어우러지는 한 폭의 꽃 그림 같은 디자인입니다.'], ['Soft peach and clean white tones create a natural centrepiece.', 'Its understated beauty settles into a space like a gentle floral painting.']),
-    details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 23만원\n약 W50 × H50cm 33만원\n약 W55 × H55cm 33만원', 'Approx. W45 × H45cm KRW 230,000\nApprox. W50 × H50cm KRW 330,000\nApprox. W55 × H55cm KRW 330,000'), extras: [['Vessel Option', t(VESSEL_OPTION.ko.join('\n'), VESSEL_OPTION.en.join('\n'))]] }),
+    details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 23만원\n약 W50 × H50cm 28만원\n약 W55 × H55cm 33만원', 'Approx. W45 × H45cm KRW 230,000\nApprox. W50 × H50cm KRW 280,000\nApprox. W55 × H55cm KRW 330,000'), extras: [['Vessel Option', t(VESSEL_OPTION.ko.join('\n'), VESSEL_OPTION.en.join('\n'))]] }),
   }),
   '핑크 피치 센터피스': centerpiece({
     title: t('핑크 & 피치 센터피스', 'Pink Peach Centerpiece'), price: '250,000원',
