@@ -191,7 +191,7 @@ export const productEditorial = {
   '루즈 센터피스': centerpiece({
     title: t('루즈 센터피스', 'ROUGE Centerpiece'), price: '150,000원',
     priceOptions: prices(['기본 구성', '15만원', 'KRW 150,000']),
-    theme: t(['루즈 컬러의 깊고 로맨틱한 분위기를 담은 센터피스입니다.', '선명한 레드 톤과 자연스러운 소재감이 어우러져 작은 공간에도 강렬하고 우아한 포인트를 더합니다.'], ['A centrepiece with a deep, romantic rouge palette.', 'Vivid red tones and natural textures create a bold yet elegant accent for a space.']),
+    theme: t(['바리스타 장미를 쏙 닮은 깊이 있는 루즈 색감의 장미로 완성한 센터피스입니다.', '생화처럼 부드러운 촉감과 섬세한 색감을 지닌 고급 장미를 메인으로, 자연스러운 라인감을 살려 우아하게 디자인했습니다. 자칫 무거워 보일 수 있는 루즈 컬러에 하늘빛 필러 소재를 더해 밝고 산뜻한 포인트를 주어, 깊이감과 화사함이 조화롭게 어우러집니다.', '차분하고 깊어진 계절의 분위기와 잘 어울리는 디자인으로, 가을 무드의 홈 인테리어는 물론 매장이나 다양한 공간의 디스플레이 오브제로 추천드립니다.'], ['A centrepiece completed with deep rouge roses reminiscent of Barista roses.', 'Premium roses with a soft, fresh-flower-like touch and delicate colour take centre stage, arranged with natural lines for an elegant silhouette. Sky-blue filler materials add a bright, fresh accent to the rouge palette, balancing depth with a light, radiant mood.', 'This design suits the calm, deep atmosphere of the season and is recommended for autumn-inspired home interiors as well as shop displays and various spatial styling settings.']),
     details: details({ collection: 'Line Centerpiece', size: t('기본 구성 15만원', 'Standard KRW 150,000') }),
   }),
   '피치 화이트 센터피스': centerpiece({
