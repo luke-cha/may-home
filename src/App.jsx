@@ -326,7 +326,7 @@ const orderProcess = {
 function OrderProcess({ lang, fresh = false }) {
   const ko = lang === 'ko'; const steps = orderProcess[lang].map((step, index) => fresh && index === 5 ? [step[0], ko ? '제작 완료 후 카카오 T 퀵으로 안전하게 배송됩니다.' : 'Once production is complete, your order is delivered safely by Kakao T Quick.'] : step)
   const notes = ko ? [
-    ...(fresh ? [] : ['조화 맞춤 제작(Custom Order)은 20만원 이상부터 진행됩니다.', '샘플 디자인은 기존 형태를 유지하는 범위 내에서 색상 및 일부 소재의 소폭 조정이 가능합니다.']),
+    ...(fresh ? [] : ['조화 맞춤 제작(Custom Order)은 10만원 이상부터 진행됩니다.', '샘플 디자인은 기존 형태를 유지하는 범위 내에서 색상 및 일부 소재의 소폭 조정이 가능합니다.']),
     '모든 주문은 상담 후 상품 구성과 최종 금액이 확정됩니다.',
     '현재 결제는 계좌이체로만 진행됩니다.',
     '현금영수증 발급을 원하시는 경우, 입금 시 발급 요청번호(휴대폰번호 또는 사업자등록번호)를 알려주세요.',
