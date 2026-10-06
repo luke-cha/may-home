@@ -149,10 +149,10 @@ export const productEditorial = {
     details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 25만원\n약 W50 × H50cm 30만원\n약 W55 × H55cm 35만원', 'Approx. W45 × H45cm KRW 250,000\nApprox. W50 × H50cm KRW 300,000\nApprox. W55 × H55cm KRW 350,000') }),
   }),
   '핑크 화이트 심플 센터피스': centerpiece({
-    title: t('봄의 여백 센터피스', 'Blush Moment'), price: '180,000원',
-    priceOptions: prices(['W40 × H50cm', '18만원', 'KRW 180,000']),
+    title: t('봄의 여백 센터피스', 'Blush Moment'), price: '150,000원',
+    priceOptions: prices(['W40 × H50cm', '15만원', 'KRW 150,000']),
     theme: t(['봄의 여백 센터피스', '풍성하고 화려한 꽃 대신, 선과 라인이 만들어내는 아름다움에 집중한 봄의 센터피스입니다.', '밝고 화사한 튤립을 포인트로 자연스러운 흐름을 살리고, 동양적인 선과 여백의 미를 담아 절제된 아름다움을 표현했습니다.', '공간을 가득 채우기보다 여백을 남겨 작은 공간에서도 은은하게 존재감을 드러내는 꽃장식입니다.'], ['Blush Moment', 'Rather than relying on abundant, elaborate flowers, this spring centrepiece focuses on the beauty created by graceful lines and silhouettes.', 'Bright tulips add a luminous accent while natural movement, Eastern-inspired lines and considered negative space express restrained beauty.', 'Instead of filling the entire space, the design leaves room to breathe, creating a subtle presence even in a small setting.']),
-    details: details({ collection: 'Medium Object', size: t('약 W40 × H50cm 18만원', 'Approx. W40 × H50cm KRW 180,000') }),
+    details: details({ collection: 'Medium Object', size: t('약 W40 × H50cm 15만원', 'Approx. W40 × H50cm KRW 150,000') }),
   }),
   '하늘 블루 센터피스': centerpiece({
     title: t('하늘 블루 가든 센터피스', 'Sky Blue Garden Centerpiece'), price: '500,000원',
