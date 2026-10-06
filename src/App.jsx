@@ -770,29 +770,9 @@ function OrderInquiry({ ko, initialOrderType = 'fresh', initialProduct = '' }) {
   const [delivery, setDelivery] = useState(initialOrderType === 'fresh' ? 'quick' : 'parcel')
   const [productName, setProductName] = useState(initialProduct)
   const changeOrderType = (value) => { setOrderType(value); setDelivery(value === 'fresh' ? 'quick' : 'parcel') }
-  const shopOrderNotes = ko ? [
-    orderType === 'fresh' ? '생화 맞춤 제작(Custom Order)은 15만 원 이상부터 진행됩니다.' : '조화 맞춤 제작(Custom Order)은 10만 원 이상부터 진행됩니다.',
-    '샘플 디자인은 기존 형태를 유지하는 범위 내에서 색상 및 일부 소재의 조정이 가능합니다.',
-    '모든 주문은 상담 후 상품 구성과 최종 금액이 확정됩니다.',
-    '현재 결제는 계좌이체로만 진행됩니다.',
-    '현금영수증 발급을 원하시는 경우, 입금 시 발급 요청번호(휴대폰번호 또는 사업자등록번호)를 알려주세요.',
-    '배송비는 배송 지역 및 상품에 따라 달라질 수 있으며, 주문 금액에 따라 배송비 지원이 적용됩니다.',
-    '현재 방문 수령은 운영하지 않습니다.',
-    '생화는 카카오 T 퀵 차량 배송만 가능합니다.',
-  ] : [
-    orderType === 'fresh' ? 'Custom orders for fresh flowers are available from KRW 150,000.' : 'Custom orders for artificial flowers are available from KRW 100,000.',
-    'Sample designs can be adjusted in colour and selected materials while maintaining the original form.',
-    'All orders are confirmed after consultation, including the final product composition and total price.',
-    'Payment is currently available by bank transfer only.',
-    'If you need a cash receipt, please provide the issue number (mobile number or business registration number) when making the transfer.',
-    'Delivery fees may vary depending on the delivery area and product, and delivery support may apply depending on the order amount.',
-    'Direct collection is currently unavailable.',
-    'Fresh flowers are delivered by Kakao T Quick vehicle service only.',
-  ]
   return <section className="order-inquiry">
     <span className="order-inquiry-title">/ Order Inquiry</span>
     <fieldset className="order-choice"><legend>{ko ? '주문 유형 *' : 'Order Type *'}</legend><div className="radio-row"><label><input required type="radio" name="orderType" value="fresh" checked={orderType === 'fresh'} onChange={() => changeOrderType('fresh')} />{ko ? '생화' : 'Fresh Flowers'}</label><label><input type="radio" name="orderType" value="artificial" checked={orderType === 'artificial'} onChange={() => changeOrderType('artificial')} />{ko ? '조화' : 'Artificial Flowers'}</label></div></fieldset>
-    <div className="order-notes">{shopOrderNotes.map((note) => <p key={note}>※ {note}</p>)}</div>
     <div className="order-fields">
       <label>{ko ? '문의 상품 *' : 'Product Inquiry *'}<input required name="product" value={productName} onChange={(event) => setProductName(event.target.value)} /></label>
       <label>{ko ? '예상 예산 *' : 'Estimated Budget *'}<input required name="budget" placeholder={ko ? '예: 13만원' : 'e.g. KRW 130,000'} /></label>
@@ -810,7 +790,6 @@ function OrderInquiry({ ko, initialOrderType = 'fresh', initialProduct = '' }) {
       <div><span>{ko ? '생화 :' : 'Fresh Flowers:'}</span><label className={orderType !== 'fresh' ? 'disabled' : ''}><input required={orderType === 'fresh'} disabled={orderType !== 'fresh'} type="radio" name="delivery" value="quick" checked={orderType === 'fresh' && delivery === 'quick'} onChange={() => setDelivery('quick')} />{ko ? '카카오 T 퀵' : 'Kakao T Quick'}</label></div>
       <div><span>{ko ? '조화 :' : 'Artificial Flowers:'}</span><label className={orderType !== 'artificial' ? 'disabled' : ''}><input required={orderType === 'artificial'} disabled={orderType !== 'artificial'} type="radio" name="delivery" value="parcel" checked={orderType === 'artificial' && delivery === 'parcel'} onChange={() => setDelivery('parcel')} />{ko ? '택배' : 'Parcel'}</label><label className={orderType !== 'artificial' ? 'disabled' : ''}><input disabled={orderType !== 'artificial'} type="radio" name="delivery" value="quick" checked={orderType === 'artificial' && delivery === 'quick'} onChange={() => setDelivery('quick')} />{ko ? '카카오 T 퀵' : 'Kakao T Quick'}</label></div>
     </fieldset>
-    <div className="order-notes delivery-support">{shopOrderNotes.slice(5).map((note) => <p key={note}>※ {note}</p>)}</div>
     <details className="contact-delivery-fees" open><summary>/ DELIVERY <b aria-hidden="true" /></summary><div className="contact-quick-delivery-intro">{ko ? <><p>상품의 종류와 크기에 따라 택배 또는 카카오 T 퀵으로 안전하게 배송되며, 방문 수령은 운영하지 않습니다.</p><p>배송비는 배송 지역에 따라 별도로 책정됩니다.</p><p>원하시는 도착 시간을 기준으로 배송을 예약하며, 기사 배차 및 교통 상황에 따라 실제 도착 시간은 다소 앞당겨지거나 지연될 수 있습니다.</p></> : <><p>Products are delivered safely by parcel or Kakao T Quick depending on their type and size. Direct collection is unavailable.</p><p>Delivery fees are calculated separately according to the delivery area.</p><p>We schedule delivery based on your preferred arrival time, but the actual arrival may be slightly earlier or delayed depending on driver availability and traffic conditions.</p></>}</div><QuickDeliveryFeeGuide ko={ko} /></details>
     <PhotoAttachment ko={ko} name="shopPhotos" />
   </section>
