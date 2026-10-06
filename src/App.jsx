@@ -170,11 +170,16 @@ const sortShopProducts = (categoryName, products) => {
   const fixedOrder = new Map([
     ['핑크 보라 센터피스', 0],
     ['연보라 하늘 센터피스', 1],
+    ['핑크 화이트 심플 센터피스', 2],
+    ['포도 와인 카라 센터피스', 3],
+    ['핑크 하늘 센터피스', 4],
+    ['루즈 센터피스', 5],
+    ['노랑 달항아리 센터피스', 6],
     ['하늘 블루 센터피스', 999],
   ])
   return products.map((product, index) => ({ product, index })).sort((a, b) => {
-    const aa = fixedOrder.has(a.product.name) ? fixedOrder.get(a.product.name) : a.index + 2
-    const bb = fixedOrder.has(b.product.name) ? fixedOrder.get(b.product.name) : b.index + 2
+    const aa = fixedOrder.has(a.product.name) ? fixedOrder.get(a.product.name) : a.index + 7
+    const bb = fixedOrder.has(b.product.name) ? fixedOrder.get(b.product.name) : b.index + 7
     return aa - bb
   }).map(({ product }) => product)
 }
