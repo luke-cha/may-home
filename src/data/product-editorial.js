@@ -170,7 +170,7 @@ export const productEditorial = {
   '포도 와인 카라 센터피스': centerpiece({
     title: t('포도 달항아리 센터피스', 'GRAPE & WINE Centerpiece'), price: '150,000원',
     priceOptions: prices(['기본 구성', '15만원', 'KRW 150,000']),
-    theme: t(['깊은 포도빛과 와인 컬러가 어우러진 우아한 무드의 센터피스입니다.', '진한 컬러 포인트와 자연스러운 꽃의 흐름으로 공간에 차분하고 세련된 분위기를 더합니다.'], ['An elegant centrepiece blending deep grape and wine tones.', 'Rich colour accents and natural floral movement bring a calm, refined mood to the space.']),
+    theme: t(['단아한 달항아리에 싱그러운 포도를 포인트로 담아낸 센터피스입니다.', '풍성하게 늘어지는 포도를 메인으로 그린 소재와 열매, 우아한 카라를 더해 자연스러우면서도 유니크한 분위기를 완성했습니다. 싱그러운 그린 컬러 사이로 깊이 있는 와인빛을 더해 차분하면서도 고급스러운 매력을 느낄 수 있습니다.', '동양적인 달항아리의 단아함과 감각적인 플라워 디자인이 조화를 이루어, 특별한 선물은 물론 전시회 및 다양한 공간의 디스플레이 오브제로 추천드립니다.'], ['A centrepiece featuring fresh grape accents in an elegant moon jar.', 'Abundant trailing grapes are paired with green materials, berries and graceful calla lilies to create a natural yet unique mood. Deep wine tones among fresh greens add a calm and luxurious appeal.', 'The refined beauty of an Eastern-inspired moon jar harmonises with expressive floral design, making it suitable as a special gift or display object for exhibitions and various spaces.']),
     details: details({ collection: 'Line Centerpiece', size: t('기본 구성 15만원', 'Standard KRW 150,000') }),
   }),
   '노랑 달항아리 센터피스': centerpiece({
