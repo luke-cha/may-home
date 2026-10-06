@@ -773,6 +773,7 @@ function OrderInquiry({ ko, initialOrderType = 'fresh', initialProduct = '' }) {
   return <section className="order-inquiry">
     <span className="order-inquiry-title">/ Order Inquiry</span>
     <fieldset className="order-choice"><legend>{ko ? '주문 유형 *' : 'Order Type *'}</legend><div className="radio-row"><label><input required type="radio" name="orderType" value="fresh" checked={orderType === 'fresh'} onChange={() => changeOrderType('fresh')} />{ko ? '생화' : 'Fresh Flowers'}</label><label><input type="radio" name="orderType" value="artificial" checked={orderType === 'artificial'} onChange={() => changeOrderType('artificial')} />{ko ? '조화' : 'Artificial Flowers'}</label></div></fieldset>
+    <div className="order-notes"><p>{ko ? (orderType === 'fresh' ? '※ 생화 맞춤 제작(Custom Order)은 15만 원 이상부터 진행됩니다.' : '※ 조화 맞춤 제작(Custom Order)은 10만 원 이상부터 진행됩니다.') : (orderType === 'fresh' ? '※ Custom orders for fresh flowers are available from KRW 150,000.' : '※ Custom orders for artificial flowers are available from KRW 100,000.')}</p></div>
     <div className="order-fields">
       <label>{ko ? '문의 상품 *' : 'Product Inquiry *'}<input required name="product" value={productName} onChange={(event) => setProductName(event.target.value)} /></label>
       <label>{ko ? '예상 예산 *' : 'Estimated Budget *'}<input required name="budget" placeholder={ko ? '예: 13만원' : 'e.g. KRW 130,000'} /></label>
