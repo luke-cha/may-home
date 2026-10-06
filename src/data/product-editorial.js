@@ -168,10 +168,10 @@ export const productEditorial = {
     details: details({ collection: 'Medium Object', size: t('약 W45 × H45cm 23만원\n약 W50 × H50cm 28만원\n약 W55 × H55cm 33만원', 'Approx. W45 × H45cm KRW 230,000\nApprox. W50 × H50cm KRW 280,000\nApprox. W55 × H55cm KRW 330,000') }),
   }),
   '포도 와인 카라 센터피스': centerpiece({
-    title: t('포도 와인 센터피스', 'GRAPE & WINE Centerpiece'), price: '150,000원',
+    title: t('포도 달항아리 센터피스', 'GRAPE & WINE Centerpiece'), price: '150,000원',
     priceOptions: prices(['기본 구성', '15만원', 'KRW 150,000']),
     theme: t(['깊은 포도빛과 와인 컬러가 어우러진 우아한 무드의 센터피스입니다.', '진한 컬러 포인트와 자연스러운 꽃의 흐름으로 공간에 차분하고 세련된 분위기를 더합니다.'], ['An elegant centrepiece blending deep grape and wine tones.', 'Rich colour accents and natural floral movement bring a calm, refined mood to the space.']),
-    details: details({ collection: 'Small Object', size: t('기본 구성 15만원', 'Standard KRW 150,000') }),
+    details: details({ collection: 'Line Centerpiece', size: t('기본 구성 15만원', 'Standard KRW 150,000') }),
   }),
   '노랑 달항아리 센터피스': centerpiece({
     title: t('화사한 노랑 달항아리 센터피스', 'Sunshine Centerpiece'), price: '200,000원',
@@ -192,7 +192,7 @@ export const productEditorial = {
     title: t('루즈 센터피스', 'ROUGE Centerpiece'), price: '150,000원',
     priceOptions: prices(['기본 구성', '15만원', 'KRW 150,000']),
     theme: t(['루즈 컬러의 깊고 로맨틱한 분위기를 담은 센터피스입니다.', '선명한 레드 톤과 자연스러운 소재감이 어우러져 작은 공간에도 강렬하고 우아한 포인트를 더합니다.'], ['A centrepiece with a deep, romantic rouge palette.', 'Vivid red tones and natural textures create a bold yet elegant accent for a space.']),
-    details: details({ collection: 'Small Object', size: t('기본 구성 15만원', 'Standard KRW 150,000') }),
+    details: details({ collection: 'Line Centerpiece', size: t('기본 구성 15만원', 'Standard KRW 150,000') }),
   }),
   '피치 화이트 센터피스': centerpiece({
     title: t('피치 & 화이트 센터피스', 'Peach White Centerpiece'), price: '230,000원',

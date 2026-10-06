@@ -423,10 +423,12 @@ function ObjectSizeGuide({ lang, value }) {
   const ko = lang === 'ko'
   const sizes = ko ? [
     ['Small Object', '약 30–40cm', '미니 테이블 오브제'],
+    ['Line Centerpiece', '약 40–50cm', '라인 센터피스, 공간 포인트'],
     ['Medium Object', '약 45–55cm', '메인 센터피스, 공간 포인트'],
     ['Large Object', '약 60cm 이상', '공간 중심 플라워 오브제'],
   ] : [
     ['Small Object', 'Approx. 30–40cm', 'Mini table object'],
+    ['Line Centerpiece', 'Approx. 40–50cm', 'Line centerpiece or spatial accent'],
     ['Medium Object', 'Approx. 45–55cm', 'Main centrepiece or spatial accent'],
     ['Large Object', 'Approx. 60cm and above', 'Statement floral object for a space'],
   ]
