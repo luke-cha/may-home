@@ -908,7 +908,7 @@ function KakaoInquiryBridge({ formRef, type, ko }) {
   return <section className="kakao-inquiry-bridge"><div><span className="eyebrow">Kakao Inquiry</span><h3>{ko ? `${kakaoTypeNames[type][0]} 문의를 카카오톡으로 보내기` : `Send Your ${kakaoTypeNames[type][1]} Inquiry via Kakao`}</h3><p>{ko ? '작성한 문의 내용이 카카오톡용 형식으로 정리됩니다. 내용을 복사한 뒤 카카오채널을 열어 채팅창에 붙여넣어 주세요.' : 'Your form details will be organized for KakaoTalk. Copy them, open our Kakao Channel, and paste them into the chat.'}</p><small>{ko ? '사진은 카카오톡 채팅창에서 별도로 첨부해 주세요.' : 'Please attach photos separately in the KakaoTalk chat.'}</small></div><div className="kakao-inquiry-actions"><button className={`button${copied ? ' copied' : ''}`} type="button" onClick={copyInquiry}>{copied ? (ko ? '복사 완료 ✓' : 'Copied ✓') : (ko ? '문의 내용 복사' : 'Copy Inquiry')}</button><a className="button kakao-open-button" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 열기' : 'Open Kakao Channel'} →</a></div></section>
 }
 
-const EMAILJS = { service: 'service_503rlpn', template: 'template_5q0mau9', key: '8k5--MtKQciw7gyeC' }
+const EMAILJS = { service: 'service_7bq4epd', template: 'template_5q0mau9', key: '8k5--MtKQciw7gyeC' }
 const inquiryContactKeys = { Shop: ['ordererName', 'ordererPhone', null], Workshop: ['contactName', 'contactPhone', 'contactEmail'], 'Brand Collaboration': ['brandContactName', 'brandPhone', 'brandEmail'], 'Global Workshop': ['globalContactName', 'globalPhone', 'globalEmail'], Other: ['name', 'phone', 'email'] }
 async function sendInquiryEmail(form, type) {
   const data = new FormData(form); const get = (key) => (key ? String(data.get(key) || '').trim() : '')
