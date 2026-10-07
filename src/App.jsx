@@ -908,16 +908,35 @@ function KakaoInquiryBridge({ formRef, type, ko }) {
   return <section className="kakao-inquiry-bridge"><div><span className="eyebrow">Kakao Inquiry</span><h3>{ko ? `${kakaoTypeNames[type][0]} 문의를 카카오톡으로 보내기` : `Send Your ${kakaoTypeNames[type][1]} Inquiry via Kakao`}</h3><p>{ko ? '작성한 문의 내용이 카카오톡용 형식으로 정리됩니다. 내용을 복사한 뒤 카카오채널을 열어 채팅창에 붙여넣어 주세요.' : 'Your form details will be organized for KakaoTalk. Copy them, open our Kakao Channel, and paste them into the chat.'}</p><small>{ko ? '사진은 카카오톡 채팅창에서 별도로 첨부해 주세요.' : 'Please attach photos separately in the KakaoTalk chat.'}</small></div><div className="kakao-inquiry-actions"><button className={`button${copied ? ' copied' : ''}`} type="button" onClick={copyInquiry}>{copied ? (ko ? '복사 완료 ✓' : 'Copied ✓') : (ko ? '문의 내용 복사' : 'Copy Inquiry')}</button><a className="button kakao-open-button" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">{ko ? '카카오채널 열기' : 'Open Kakao Channel'} →</a></div></section>
 }
 
+const EMAILJS = { service: 'service_503rlpn', template: 'template_5q0mau9', key: '8k5--MtKQciw7gyeC' }
+const inquiryContactKeys = { Shop: ['ordererName', 'ordererPhone', null], Workshop: ['contactName', 'contactPhone', 'contactEmail'], 'Brand Collaboration': ['brandContactName', 'brandPhone', 'brandEmail'], 'Global Workshop': ['globalContactName', 'globalPhone', 'globalEmail'], Other: ['name', 'phone', 'email'] }
+async function sendInquiryEmail(form, type) {
+  const data = new FormData(form); const get = (key) => (key ? String(data.get(key) || '').trim() : '')
+  const lines = kakaoInquiryFields[type].map(([name, labelKo]) => `${labelKo}: ${String(data.get(name) || '').trim() || '-'}`)
+  const photos = [...form.querySelectorAll('input[type="file"]')].reduce((sum, input) => sum + (input.files?.length || 0), 0)
+  if (photos) lines.push(`참고 사진: ${photos}장 (이메일에는 첨부되지 않음 - 고객에게 카카오/이메일 회신으로 요청)`)
+  const [nameKey, phoneKey, emailKey] = inquiryContactKeys[type]
+  const title = kakaoTypeNames[type][0]
+  const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ service_id: EMAILJS.service, template_id: EMAILJS.template, user_id: EMAILJS.key, template_params: {
+      from_name: get(nameKey) || '-', phone: get(phoneKey) || '-', email: get(emailKey) || 'no-reply@mayfleur.co.kr', subject: `[MAYFLEUR 홈페이지] ${title} 문의`, message: lines.join('\n'),
+    } }),
+  })
+  if (!res.ok) throw new Error(await res.text())
+}
+
 function Contact({ lang, detail = [] }) {
-  const ko = lang === 'ko'; const contactType = detail[0] === 'brand-collaboration' ? 'Brand Collaboration' : detail[0] === 'workshop' ? 'Workshop' : detail[0] === 'global-workshop' ? 'Global Workshop' : 'Shop'; const [sent, setSent] = useState(false); const [type, setType] = useState(contactType); const formRef = useRef(null)
+  const ko = lang === 'ko'; const contactType = detail[0] === 'brand-collaboration' ? 'Brand Collaboration' : detail[0] === 'workshop' ? 'Workshop' : detail[0] === 'global-workshop' ? 'Global Workshop' : 'Shop'; const [sent, setSent] = useState(false); const [sending, setSending] = useState(false); const [sendError, setSendError] = useState(false); const [type, setType] = useState(contactType); const formRef = useRef(null)
   const initialOrderType = detail[0] === 'artificial' ? 'artificial' : 'fresh'
   const initialProduct = detail.slice(1).join(' ')
   useEffect(() => setType(contactType), [contactType])
   return <div className="page fade-in contact-page"><PageHead eyebrow={`— ${ko ? '문의' : 'Contact'}`} title={ko ? '문의하기' : 'Get in Touch'} sub={ko ? '프로젝트, 공간 또는 문의 내용을 알려주세요 — 모든 메시지를 정성껏 읽습니다.' : 'Tell us about your project, space, or inquiry — we read every message.'} />
-    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form ref={formRef} encType="multipart/form-data" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
+    <section className="contact-grid container">{sent ? <div className="thanks"><span>✽</span><h2>{ko ? '감사합니다.' : 'Thank you.'}</h2><p>{ko ? '메시지가 접수되었습니다. 곧 연락드리겠습니다.' : 'Your message has been received. We will be in touch soon.'}</p><button className="text-link" onClick={() => setSent(false)}>{ko ? '새 문의 작성' : 'Write another message'}</button></div> : <form ref={formRef} encType="multipart/form-data" onSubmit={async (e) => { e.preventDefault(); if (sending) return; setSending(true); setSendError(false); try { await sendInquiryEmail(e.currentTarget, type); setSent(true) } catch { setSendError(true) } finally { setSending(false) } }}>
         <fieldset><legend>{ko ? '문의 유형' : 'Inquiry Type'}</legend><div className="type-buttons">{[['Shop','Shop','샵'], ['Workshop','Flower Workshop','플라워워크샵'], ['Brand Collaboration','Brand Collaboration & Floral Styling','브랜드 협업 & 플라워 스타일링'], ['Global Workshop','Global Workshop','Global Workshop'], ['Other','Other','기타']].map(([item, en, kr]) => <button type="button" className={type === item ? 'active' : ''} onClick={() => setType(item)} key={item}>{ko ? kr : en}</button>)}</div></fieldset>
         {type === 'Shop' ? <OrderInquiry ko={ko} initialOrderType={initialOrderType} initialProduct={initialProduct} /> : type === 'Workshop' ? <WorkshopInquiry ko={ko} /> : type === 'Global Workshop' ? <GlobalWorkshopInquiry /> : type === 'Brand Collaboration' ? <BrandCollaborationInquiry ko={ko} /> : <><label>{ko ? '이름' : 'Name'}<input required name="name" placeholder={ko ? '성함' : 'Your name'} /></label><label>Email<input required type="email" name="email" placeholder="you@email.com" /></label><label>{ko ? '연락처' : 'Phone'}<input required type="tel" name="phone" placeholder={ko ? '연락 가능한 번호' : 'Your phone number'} /></label><label>{ko ? '메시지' : 'Message'}<textarea required name="message" rows="6" placeholder={ko ? '문의 내용을 입력해 주세요.' : 'Write your message…'} /></label><PhotoAttachment ko={ko} name="inquiryPhotos" /></>}
-        <button className="button primary contact-submit" type="submit">{ko ? '문의 보내기' : 'Send Inquiry'}</button>
+        {sendError && <p role="alert" className="contact-error">{ko ? '전송에 실패했습니다. 잠시 후 다시 시도하시거나 카카오채널/이메일로 문의해 주세요.' : 'Sending failed. Please try again or contact us via Kakao Channel / email.'}</p>}
+        <button className="button primary contact-submit" type="submit" disabled={sending}>{sending ? (ko ? '전송 중…' : 'Sending…') : (ko ? '문의 보내기' : 'Send Inquiry')}</button>
       </form>}
       <aside><span className="eyebrow">{ko ? '직접 연락하기' : 'Or reach us directly'}</span><div><small>Kakao Channel</small><a className="kakao-contact-link" href={KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer" aria-label={ko ? '메이플레르 카카오채널 열기' : 'Open Mayfleur Kakao Channel'}><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" /><path d="M13 14.5h22a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H23l-7.5 5v-5H13a5 5 0 0 1-5-5v-10a5 5 0 0 1 5-5Z" /><text x="24" y="28.5" textAnchor="middle">Ch</text></svg></a></div><KakaoInquiryBridge formRef={formRef} type={type} ko={ko} /><div><small>Instagram</small><a href="https://www.instagram.com/may.fleur" target="_blank" rel="noreferrer">@may.fleur</a></div><div><small>Email</small><a href="mailto:mayfleurstudio@gmail.com">mayfleurstudio@gmail.com</a></div><div><small>Based</small><span>Seoul · Korea</span></div></aside></section>
   </div>
