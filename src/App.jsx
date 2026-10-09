@@ -788,6 +788,7 @@ function OrderInquiry({ ko, initialOrderType = 'fresh', initialProduct = '' }) {
       <label className="full">{ko ? '요청 사항' : 'Requests'}<textarea name="requests" rows="3" /></label>
       <label>{ko ? '주문자 성함 *' : 'Orderer Name *'}<input required name="ordererName" /></label>
       <label>{ko ? '주문자 연락처 *' : 'Orderer Phone *'}<input required type="tel" name="ordererPhone" /></label>
+      <label>{ko ? '주문자 이메일 *' : 'Orderer Email *'}<input required type="email" name="ordererEmail" placeholder="you@email.com" /></label>
       <label>{ko ? '받는 분 성함' : 'Recipient Name'}<input name="recipientName" /></label>
       <label>{ko ? '받는 분 연락처' : 'Recipient Phone'}<input type="tel" name="recipientPhone" /></label>
       <label className="full">{ko ? '배송 주소 *' : 'Delivery Address *'}<textarea required name="address" rows="2" /></label>
@@ -873,7 +874,7 @@ function GlobalWorkshopInquiry() {
 }
 
 const kakaoInquiryFields = {
-  Shop: [['orderType', '주문 유형', 'Order type'], ['product', '문의 상품', 'Product'], ['budget', '예상 예산', 'Estimated budget'], ['colourMood', '색감 및 분위기', 'Colours & mood'], ['requests', '요청 사항', 'Requests'], ['ordererName', '주문자 성함', 'Orderer name'], ['ordererPhone', '주문자 연락처', 'Orderer phone'], ['recipientName', '받는 분 성함', 'Recipient name'], ['recipientPhone', '받는 분 연락처', 'Recipient phone'], ['address', '배송 주소', 'Delivery address'], ['deliveryDate', '희망 수령일', 'Preferred delivery date'], ['delivery', '배송 방법', 'Delivery method']],
+  Shop: [['orderType', '주문 유형', 'Order type'], ['product', '문의 상품', 'Product'], ['budget', '예상 예산', 'Estimated budget'], ['colourMood', '색감 및 분위기', 'Colours & mood'], ['requests', '요청 사항', 'Requests'], ['ordererName', '주문자 성함', 'Orderer name'], ['ordererPhone', '주문자 연락처', 'Orderer phone'], ['ordererEmail', '주문자 이메일', 'Orderer email'], ['recipientName', '받는 분 성함', 'Recipient name'], ['recipientPhone', '받는 분 연락처', 'Recipient phone'], ['address', '배송 주소', 'Delivery address'], ['deliveryDate', '희망 수령일', 'Preferred delivery date'], ['delivery', '배송 방법', 'Delivery method']],
   Workshop: [['workshopType', '워크샵 유형', 'Workshop type'], ['preferredProgramme', '희망 프로그램 또는 작품', 'Preferred programme or piece'], ['participants', '참여 인원', 'Participants'], ['workshopDate', '희망 날짜 및 시간', 'Preferred date & time'], ['location', '진행 장소', 'Location'], ['workshopBudget', '예상 예산', 'Estimated budget'], ['workshopRequests', '요청 사항', 'Requests'], ['contactName', '담당자 성함', 'Contact name'], ['contactPhone', '연락처', 'Phone'], ['contactEmail', '이메일', 'Email']],
   'Brand Collaboration': [['collaborationType', '협업 유형', 'Collaboration type'], ['brandName', '브랜드명 / 업체명', 'Brand / company'], ['collaborationDetails', '프로젝트 내용', 'Project details'], ['collaborationDate', '희망 일정', 'Preferred date'], ['collaborationLocation', '진행 장소', 'Location'], ['collaborationBudget', '예상 예산', 'Estimated budget'], ['brandRequests', '요청 사항', 'Requests'], ['brandContactName', '담당자 성함', 'Contact name'], ['brandPhone', '연락처', 'Phone'], ['brandEmail', '이메일', 'Email']],
   'Global Workshop': [['globalOrganization', 'Organization / Name', 'Organization / Name'], ['globalContactName', 'Contact Person', 'Contact Person'], ['globalEmail', 'Email', 'Email'], ['globalPhone', 'Phone', 'Phone'], ['globalLocation', 'Country & City', 'Country & City'], ['globalDates', 'Preferred Dates', 'Preferred Dates'], ['globalParticipants', 'Expected Participants', 'Expected Participants'], ['globalVenue', 'Workshop Venue', 'Workshop Venue'], ['globalDetails', 'Workshop Details', 'Workshop Details'], ['globalBudget', 'Workshop Budget', 'Workshop Budget'], ['globalRequests', 'Additional Requests', 'Additional Requests']],
@@ -909,7 +910,7 @@ function KakaoInquiryBridge({ formRef, type, ko }) {
 }
 
 const EMAILJS = { service: 'service_7bq4epd', template: 'template_axxqhwp', key: 'vt_Hx3MRoglkd1d3p' }
-const inquiryContactKeys = { Shop: ['ordererName', 'ordererPhone', null], Workshop: ['contactName', 'contactPhone', 'contactEmail'], 'Brand Collaboration': ['brandContactName', 'brandPhone', 'brandEmail'], 'Global Workshop': ['globalContactName', 'globalPhone', 'globalEmail'], Other: ['name', 'phone', 'email'] }
+const inquiryContactKeys = { Shop: ['ordererName', 'ordererPhone', 'ordererEmail'], Workshop: ['contactName', 'contactPhone', 'contactEmail'], 'Brand Collaboration': ['brandContactName', 'brandPhone', 'brandEmail'], 'Global Workshop': ['globalContactName', 'globalPhone', 'globalEmail'], Other: ['name', 'phone', 'email'] }
 function buildInquiryParams(form, type) {
   const data = new FormData(form); const get = (key) => (key ? String(data.get(key) || '').trim() : '')
   const lines = kakaoInquiryFields[type].map(([name, labelKo]) => `${labelKo}: ${String(data.get(name) || '').trim() || '-'}`)
@@ -917,7 +918,7 @@ function buildInquiryParams(form, type) {
   if (photos) lines.push(`참고 사진: ${photos}장 (이메일에는 첨부되지 않음 - 고객에게 카카오/이메일 회신으로 요청)`)
   const [nameKey, phoneKey, emailKey] = inquiryContactKeys[type]
   const title = kakaoTypeNames[type][0]
-  return { from_name: get(nameKey) || '-', phone: get(phoneKey) || '-', email: get(emailKey) || 'no-reply@mayfleur.co.kr', subject: `[MAYFLEUR 홈페이지] ${title} 문의`, message: lines.join('\n') }
+  return { from_name: get(nameKey) || '-', phone: get(phoneKey) || '-', email: get(emailKey) || 'mayfleurstudio@gmail.com', subject: `[MAYFLEUR 홈페이지] ${title} 문의`, message: lines.join('\n') }
 }
 async function sendInquiryEmail(params) {
   const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
